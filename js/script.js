@@ -1,5 +1,10 @@
 const questions = document.getElementById("input_file");
-questions.addEventListener("change", getData, false);
+questions.addEventListener("change", displayQuiz, false);
+
+function displayQuiz() {
+  document.getElementById("prompt").style.display = "none";
+  getData();
+}
 
 function getData() {
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {

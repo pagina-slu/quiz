@@ -4,10 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
     <title>Pagina quiz</title>
 </head>
 <body>
-    <input type="file" name="input_file" id="input_file" accept=".csv">
+    <div id="prompt"><input type="file" name="input_file" id="input_file" accept=".csv"></div>
+    <main id="quiz-wrapper">
+        <div id="quiz">
+            <div class="question-wrapper">
+                <label for="q1" class="question">Who founded the World Wide Web Consortium?</label>
+                <div class="input-wrapper">
+                    <div class="input">
+                        <input type="text" name="q1" id="q1">
+                    </div>
+                </div>
+            </div>
+            <div class="question-wrapper">
+                <label for="q2" class="question">1xx status codes are:</label>
+                <div class="input-wrapper">
+                    <div class="input">
+                        <input type="radio" name="q2" id="informational" value="Informational">
+                        <label for="informational">Informational</label>
+                    </div>
+                    <div class="input">
+                        <input type="radio" name="q2" id="successful" value="Successful">
+                        <label for="informational">Successful</label>
+                    </div>
+                    <div class="input">
+                        <input type="radio" name="q2" id="redirection" value="Redirection">
+                        <label for="informational">Redirection</label>
+                    </div>
+                    <div class="input">
+                        <input type="radio" name="q2" id="client-side-errors" value="Client-side Errors">
+                        <label for="informational">Client-side Errors</label>
+                    </div>
+                    <div class="input">
+                        <input type="radio" name="q2" id="server-side-errors" value="Server-side Errors">
+                        <label for="informational">Server-side Errors</label>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>p&#0224;gina &#0169; 2022</p>
+      </footer>
     <script src="js/script.js"></script>
 </body>
 </html>

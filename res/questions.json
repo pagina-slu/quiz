@@ -1,0 +1,19 @@
+[
+    {
+        "type": "identification",
+        "question": "Who founded the World Wide Web Consortium?",
+        "answer": "Tim Berners-Lee"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "1xx status codes are:",
+        "options": [
+            "Informational",
+            "Successful",
+            "Redirection",
+            "Client-side Errors",
+            "Server-side Errors"
+        ],
+        "answer": "Informational"
+    }
+]

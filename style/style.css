@@ -10,30 +10,148 @@ html {
   scroll-behavior: smooth;
   width: 100%;
 }
-h1{
-  margin: 10px;
-}
-#quiz-wrapper {
+
+body {
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
-  font-size: 1.6rem;
 }
 
-#quiz {
+main {
+  width: 80%;
+}
+
+#category-wrapper {
+  margin-top: 15rem;
+  padding: 5rem;
+}
+
+#category {
+  font-size: 3.4rem;
+}
+
+/* Login */
+#login-form-btn {
+  padding: 7px;
+  color: #fff;
+  margin: 20px;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  background: url("../res/instructor.png") no-repeat;
+  background-size: 40px;
+  background-position: center;
+}
+
+#login-form-btn:hover {
+  background: url("../res/instructor2.png") no-repeat;
+  background-size: 40px;
+  background-position: center;
+  border: 3px solid blue;
+  cursor: pointer;
+}
+
+#overlay {
+  background-color: #000;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  opacity: 0.7;
+}
+
+#login {
+  background-color: #fff;
+  width: 30%;
+  margin: auto;
+  border: 3px solid blue;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  margin-top: 100px;
+}
+
+#overlay,
+#login {
+  display: none;
+}
+
+#cross {
+  position: absolute;
+  left: 94%;
+  top: 0px;
+  color: #cc2e2e;
+  font-size: 18;
+  font-weight: bold;
+  background-color: transparent;
+  border: 0;
+}
+
+form,
+input[type="button"] {
+  margin: 0 !important;
+}
+
+.username,
+.password {
+  background-color: #fff;
+  display: block;
+  border: 2px solid blue;
+  border-radius: 10px;
+  padding: 5px;
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+#login-btn {
+  background-color: blue;
+  padding: 7px;
+  color: #fff;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+h1 {
+  margin: 10px;
+}
+
+#quiz-wrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
   width: 80vw;
 }
 
 .question-wrapper {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  justify-content: space-between;
+  border: 1px solid;
+  padding: 2rem 2rem 2rem 5rem;
+  gap: 2rem;
+}
+
+.question {
+  font-size: 1.6rem;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  width: 100%;
+  border: solid 1px;
 }
 
 input[type="text"] {
-  border-width: 0 0 0.1rem 0;
+  font-size: 1.6rem;
+  height: 50px;
+  width: 500px;
 }
 
 /* Footer */
@@ -42,7 +160,7 @@ footer {
   text-align: center;
   border-top: 2px solid black;
   padding: 2rem 0;
-  position: relative;
+  position: absolute;
   left: 0;
   bottom: 0;
 }
@@ -51,73 +169,3 @@ footer p {
   font-size: 1.4rem;
 }
 
-/* login*/
-
-#login-form-btn{
-	padding: 7px;
-	color: #fff;
-	margin: 20px;
-	border-radius: 5px;
-  width: 50px;
-  height: 50px;
-  background:url("../res/instructor.png") no-repeat;
-  background-size: 40px;
-  background-position: center;
-
-}
-
-#login-form-btn:hover{
-  background:url("../res/instructor2.png") no-repeat;
-  background-size: 40px;
-  background-position: center;
-	border: 3px solid blue
-}
-#overlay{
-	background-color: #000;
-	height: 100%;
-	width: 100%;
-	position: fixed;
-	top: 0px;
-	opacity: 0.7;
-}
-#login{
-	background-color: #fff;
-	width: 30%;
-	margin: auto;
-	border: 3px solid blue;
-	border-radius: 10px;
-	padding: 20px;
-	text-align: center;
-	position: relative;
-  margin-top: 100px;
-}
-#overlay,#login{display: none;}
-#cross{
-	position: absolute;
-    left: 94%;
-    top: 0px;
-    color: #cc2e2e;
-	font-size: 18;
-	font-weight: bold;
-	background-color: transparent;
-	border: 0
-}
-
-form,input[type="button"]{margin:0 !important}
-.txt,.pswd{
-	background-color: #fff;
-	display: block;
-	border: 2px solid blue;
-	border-radius: 10px;
-	padding: 5px;
-	margin: auto;
-	margin-bottom: 15px
-}
-
-#login-btn{
-  background-color: blue;
-  padding: 7px;
-	color: #fff;
-	margin: 20px;
-	border-radius: 5px;
-}

@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
-    <title>Pagina quiz</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>p&#0224;gina quiz</title>
+  </head>
+  <body>
+    <main>
+      <div id="category-wrapper">
+        <span id="category">Web Systems Development</span>
+      </div>
+      <div id="quiz-wrapper">
+        <div class="question-wrapper">
+          <label for="q1" class="question"
+            >Who founded the World Wide Web Consortium?</label
+          >
+          <div class="input-wrapper">
+            <div class="input">
+              <input type="text" name="q1" id="q1" />
+            </div>
+          </div>
+        </div>
+        <div class="button-wrapper">
+            <a href="" class="button">
+                <img src="res/arrow-left-circle.svg" alt="" srcset="">
+            </a>
+            <input type="number" name="question-number" id="question-number" value="1"/>
+            <span>of x</span>
+            <a href="" class="button">
+                <img src="res/arrow-right-circle.svg" alt="" srcset="">
+            </a>
+        </div>
+      </div>
+    </main>
     <!--
-    <main id="quiz-wrapper">
+    <div id="quiz-wrapper">
         <div id="quiz">
             <div class="question-wrapper">
                 <label for="q1" class="question">Who founded the World Wide Web Consortium?</label>
@@ -46,28 +73,26 @@
                 
             </div>
         </div>
-    </main>
+    </div>
     -->
-    <section >
-            <button id="login-form-btn"></button>
-            <div id="overlay"></div>
-            <div id="login">
-                <button id="cross">&cross;</button>
-                <h1> Quiz Instructor  </h1>
-                <form>
-                    <input type="text" placeholder="Username" class="txt"/>
-                    <input type="password" placeholder="Password" class="pswd"/>
-                    <input type="button" value="Log in" id="login-btn"/>
-                </form>
-            </div>
-    </section>
-    <footer>
-        <p>p&#0224;gina &#0169; 2022</p>
-    </footer>
+    <div>
+      <button id="login-form-btn"></button>
+      <div id="overlay"></div>
+      <div id="login">
+        <button id="cross">&cross;</button>
+        <h1>Quiz Instructor</h1>
+        <form>
+          <input type="text" placeholder="Username" class="username" />
+          <input type="password" placeholder="Password" class="password" />
+          <input type="button" value="Log in" id="login-btn" />
+        </form>
+      </div>
+    </div>
 
+    <footer>
+      <p>p&#0224;gina &#0169; 2022</p>
+    </footer>
     <script src="js/script.js"></script>
     <script src="js/login.js"></script>
-   
-    
-</body>
+  </body>
 </html>

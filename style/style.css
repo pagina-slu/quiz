@@ -10,7 +10,9 @@ html {
   scroll-behavior: smooth;
   width: 100%;
 }
-
+h1{
+  margin: 10px;
+}
 #quiz-wrapper {
   display: flex;
   flex-direction: column;
@@ -51,21 +53,26 @@ footer p {
 
 /* login*/
 
-#btn{
-	background-color: #2ecc71;
-	border: none;
+#login-form-btn{
 	padding: 7px;
 	color: #fff;
 	margin: 20px;
 	border-radius: 5px;
-	font-size: 16
+  width: 50px;
+  height: 50px;
+  background:url("../res/instructor.png") no-repeat;
+  background-size: 40px;
+  background-position: center;
+
 }
-#btn:hover{
-	background-color: #fff;
-	color: #2ecc71;
-	border: 2px solid #2ecc71
+
+#login-form-btn:hover{
+  background:url("../res/instructor2.png") no-repeat;
+  background-size: 40px;
+  background-position: center;
+	border: 3px solid blue
 }
-#ovrly{
+#overlay{
 	background-color: #000;
 	height: 100%;
 	width: 100%;
@@ -77,15 +84,14 @@ footer p {
 	background-color: #fff;
 	width: 30%;
 	margin: auto;
-	border: 3px solid #2ecc71;
+	border: 3px solid blue;
 	border-radius: 10px;
 	padding: 20px;
 	text-align: center;
 	position: relative;
   margin-top: 100px;
-	/* top: -310px; */
 }
-#ovrly,#login{display: none;}
+#overlay,#login{display: none;}
 #cross{
 	position: absolute;
     left: 94%;
@@ -96,14 +102,22 @@ footer p {
 	background-color: transparent;
 	border: 0
 }
-h1{margin-top: 0px}
+
 form,input[type="button"]{margin:0 !important}
 .txt,.pswd{
 	background-color: #fff;
 	display: block;
-	border: 2px solid #2ecc71;
+	border: 2px solid blue;
 	border-radius: 10px;
 	padding: 5px;
 	margin: auto;
 	margin-bottom: 15px
+}
+
+#login-btn{
+  background-color: blue;
+  padding: 7px;
+	color: #fff;
+	margin: 20px;
+	border-radius: 5px;
 }

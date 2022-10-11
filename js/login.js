@@ -1,5 +1,5 @@
-var btn = document.getElementById('btn');
-var ovrly = document.getElementById('ovrly');
+var btn = document.getElementById('login-form-btn');
+var ovrly = document.getElementById('overlay');
 var cross = document.getElementById('cross');
 var login = document.getElementById('login');
 btn.addEventListener('click', openForm);

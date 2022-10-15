@@ -38,11 +38,13 @@ main {
   color: #fff;
   margin: 20px;
   border-radius: 5px;
-  width: 50px;
-  height: 50px;
+  width: 7rem;
+  height: 7rem;
   background: url("../res/instructor.png") no-repeat;
-  background-size: 40px;
+  background-size: 6rem;
   background-position: center;
+  position: absolute;
+  right: 14rem;
 }
 
 #login-form-btn:hover {
@@ -59,7 +61,9 @@ main {
   width: 100%;
   position: fixed;
   top: 0px;
+  left: 0px;
   opacity: 0.7;
+
 }
 
 #login {
@@ -70,8 +74,11 @@ main {
   border-radius: 10px;
   padding: 20px;
   text-align: center;
-  position: relative;
-  margin-top: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+
 }
 
 #overlay,
@@ -106,6 +113,11 @@ input[type="button"] {
   margin-bottom: 15px;
 }
 
+input.username[type="text"], input.password[type="password"] {
+  font-size: 1.6rem;
+  width: auto;
+  height: auto;
+}
 #login-btn {
   background-color: blue;
   padding: 7px;

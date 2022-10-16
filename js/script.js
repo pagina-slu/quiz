@@ -10,7 +10,7 @@ function readJSONfile(path) {
   return JSONobject;
 }
 
-const questions = readJSONfile("../res/questions.json");
+const questions = readJSONfile("../res/webtech.json");
 
 console.log(questions)
 
@@ -29,7 +29,7 @@ fetch('./res/webtech.json')
 
 
 function appendDataMultipleChoice(data) {
-var mainContainer = document.getElementById(""); //Insert id for multple questions
+    var mainContainer = document.getElementById(""); //Insert id for multple questions
     for (var i = 0; i < data.length; i++) {
         let div = document.createElement("h1");
         if (data[i].type ==="multiple-choice") {
@@ -49,4 +49,4 @@ var mainContainer = document.getElementById(""); //Insert id for multple questio
             }
         }
     }
-  }
+}

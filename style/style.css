@@ -126,6 +126,9 @@ input.username[type="text"], input.password[type="password"] {
   border-radius: 5px;
 }
 
+#login-btn:active{
+  background-color:darkblue;
+}
 h1 {
   margin: 10px;
 }

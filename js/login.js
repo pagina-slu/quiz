@@ -29,3 +29,30 @@ function fadeIn(element) {
 		}
 	}, 200);
 }
+
+
+
+// var uelement = document.getElementById('uname');
+// var pelement = document.getElementById('upass');
+
+// if(uelement != null){
+// 	uname = uelement.value;
+// }
+// if(pelement != null){
+// 	upassword = pelement.value;
+// }
+// console.log(uname);
+// console.log(upassword);
+
+var loginButton = document.getElementById('login-btn');
+loginButton.addEventListener('click', loginUser);
+
+function loginUser(){
+	let uname = document.getElementById('uname').value;
+	let upassword = document.getElementById('upass').value;
+	if(uname =="instructor" && upassword=="admin"){
+		window.location.assign("admin.html");
+	} else{
+		alert("Sorry! You entered a wrong username or pasword");
+	}
+}

@@ -34,7 +34,11 @@ nextQuestion.addEventListener("click", () => {
     console.log(currentIndex);
     removeAllChildNodes(questionWrapper);
     currentQuestion = questions[currentIndex];
-    if(currentIndex<questions.length){
+    if(currentIndex<0 || currentIndex>questions.length-1){
+      alert("question index out of bounds: "+currentIndex);
+    }
+
+    else if(currentIndex<questions.length){
       console.log(currentQuestion.type);
       switch (currentQuestion.type) {
           case "identification":
@@ -52,7 +56,11 @@ previousQuestion.addEventListener("click", () => {
     removeAllChildNodes(questionWrapper);
     currentIndex--;
     console.log(currentIndex + " back");
-    if(currentIndex>=0 && currentIndex<questions.length){
+    if(currentIndex<0 || currentIndex>questions.length-1){
+      alert("question index out of bounds: "+currentIndex);
+    }
+
+    else if(currentIndex>=0 && currentIndex<questions.length){
       currentQuestion = questions[currentIndex];
       console.log(currentQuestion.type);
       switch (currentQuestion.type) {

@@ -140,7 +140,7 @@ h1 {
   width: 80vw;
 }
 
-.question-wrapper {
+#question-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

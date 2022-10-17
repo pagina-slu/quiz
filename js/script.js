@@ -1,52 +1,86 @@
 function displayQuiz() {
-  getData();
+    getData();
 }
 
 function readJSONfile(path) {
-  var request = new XMLHttpRequest();
-  request.open("GET", path, false);
-  request.send(null);
-  var JSONobject = JSON.parse(request.responseText);
-  return JSONobject;
+    var request = new XMLHttpRequest();
+    request.open("GET", path, false);
+    request.send(null);
+    var JSONobject = JSON.parse(request.responseText);
+    return JSONobject;
 }
 
-const questions = readJSONfile("../res/questions.json");
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+const questions = readJSONfile("../res/webtech.json");
 
 console.log(questions)
 
+let previousQuestion = document.getElementById("previous-button");
+let nextQuestion = document.getElementById("next-button");
 
-// Fetch data from json file
-fetch('./res/webtech.json')
-.then(function (response) {
-    return response.json();
-})
-.then(function (data) {
-    appendData(data);
-})
-.catch(function (err) {
-    console.log('error: ' + err);
+let currentIndex = 0;
+let currentQuestion = questions[currentIndex];
+
+let questionWrapper = document.getElementById("question-wrapper");
+nextQuestion.addEventListener("click", () => {
+    removeAllChildNodes(questionWrapper);
+    currentIndex++;
+    currentQuestion = questions[currentIndex];
+    console.log(currentQuestion.type);
+    switch (currentQuestion.type) {
+        case "identification":
+
+            break;
+        case "multiple-choice":
+            questionWrapper = (multipleChoice(currentQuestion));
+            break;
+    }
 });
 
+previousQuestion.addEventListener("click", () => {
+    removeAllChildNodes(questionWrapper);
+    currentIndex--;
+    currentQuestion = questions[currentIndex];
+    console.log(currentQuestion.type);
+    switch (currentQuestion.type) {
+        case "identification":
 
-function appendDataMultipleChoice(data) {
-var mainContainer = document.getElementById(""); //Insert id for multple questions
-    for (var i = 0; i < data.length; i++) {
-        let div = document.createElement("h1");
-        if (data[i].type ==="multiple-choice") {
-            div.innerHTML = data[i].question;
-            mainContainer.appendChild(div);
-            for (let index = 0; index < data[i].options.length; index++) {
-
-                let radiobox = document.createElement('input');
-                let label = document.createElement('label');
-                radiobox.type = 'radio';
-                radiobox.innerHTML = data[i].options[index];
-                label.innerHTML = data[i].options[index]
-                let newline = document.createElement('br');
-                mainContainer.appendChild(label);
-                mainContainer.appendChild(radiobox);
-                mainContainer.appendChild(newline);
-            }
-        }
+            break;
+        case "multiple-choice":
+            questionWrapper = (multipleChoice(currentQuestion), currentIndex);
+            break;
     }
-  }
+});
+
+function multipleChoice(data, index) {
+    let questionWrapper = document.getElementById("question-wrapper");
+    let label = document.createElement("label");
+    label.className = "question";
+    label.innerHTML = data.question;
+    questionWrapper.appendChild(label);
+
+    let inputWrapper = document.createElement("div");
+    for (let i = 0; i < data.options.length; i++) {
+        let inputDiv = document.createElement("div");
+        inputDiv.className = "input";
+        let input = document.createElement("input");
+        input.type = "radio";
+        input.name = `q${index++}`;
+        input.value = data.options[i];
+
+        let label = document.createElement('label');
+        label.innerHTML = data.options[i];
+        label.for = data.answer;
+        inputDiv.appendChild(input);
+        inputDiv.appendChild(label);
+        inputWrapper.appendChild(inputDiv);
+    }
+    questionWrapper.appendChild(inputWrapper);
+    console.log(questionWrapper);
+    return questionWrapper;
+}

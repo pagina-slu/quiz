@@ -154,6 +154,7 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid;
+  border-bottom: none;
   border-radius: 10px 10px 0 0;
   padding: 3rem 0 3rem 3rem;
   gap: 4rem;

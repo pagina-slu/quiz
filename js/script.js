@@ -25,36 +25,45 @@ let nextQuestion = document.getElementById("next-button");
 
 let currentIndex = 0;
 let currentQuestion = questions[currentIndex];
-
 let questionWrapper = document.getElementById("question-wrapper");
-nextQuestion.addEventListener("click", () => {
-    removeAllChildNodes(questionWrapper);
-    currentIndex++;
-    currentQuestion = questions[currentIndex];
-    console.log(currentQuestion.type);
-    switch (currentQuestion.type) {
-        case "identification":
 
-            break;
-        case "multiple-choice":
-            questionWrapper = (multipleChoice(currentQuestion));
-            break;
+
+nextQuestion.addEventListener("click", () => {
+    currentIndex++;
+    console.log(currentIndex);
+    removeAllChildNodes(questionWrapper);
+    currentQuestion = questions[currentIndex];
+    if(currentIndex<questions.length){
+      console.log(currentQuestion.type);
+      switch (currentQuestion.type) {
+          case "identification":
+              questionWrapper = identification(currentQuestion);
+              break;
+          case "multiple-choice":
+              questionWrapper = (multipleChoice(currentQuestion));
+              break;
+      }
     }
+    console.log("new index= "+currentIndex);
 });
 
 previousQuestion.addEventListener("click", () => {
     removeAllChildNodes(questionWrapper);
     currentIndex--;
-    currentQuestion = questions[currentIndex];
-    console.log(currentQuestion.type);
-    switch (currentQuestion.type) {
-        case "identification":
-
-            break;
-        case "multiple-choice":
-            questionWrapper = (multipleChoice(currentQuestion), currentIndex);
-            break;
+    console.log(currentIndex);
+    if(currentIndex>=0 && currentIndex<questions.length){
+      currentQuestion = questions[currentIndex];
+      console.log(currentQuestion.type);
+      switch (currentQuestion.type) {
+          case "identification":
+              questionWrapper = identification(currentQuestion);
+              break;
+          case "multiple-choice":
+              questionWrapper = (multipleChoice(currentQuestion), currentIndex);
+              break;
+      }
     }
+    console.log("new index= "+currentIndex);
 });
 
 function multipleChoice(data, index) {
@@ -83,4 +92,15 @@ function multipleChoice(data, index) {
     questionWrapper.appendChild(inputWrapper);
     console.log(questionWrapper);
     return questionWrapper;
+}
+
+function identification(data){
+  let questionWrapper = document.getElementById("question-wrapper");
+  let label = document.createElement('label');
+  let input = document.createElement('input');
+  label.innerHTML = data.question;
+  input.type = "text";
+  questionWrapper.appendChild(label);
+  questionWrapper.appendChild(input);
+  return questionWrapper;
 }

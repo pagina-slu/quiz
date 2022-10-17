@@ -31,48 +31,54 @@ startQuiz(); //starts the quiz by reading and appending of JSON data
 
 nextQuestion.addEventListener("click", () => {
     currentIndex++;
-    console.log(currentIndex);
-    removeAllChildNodes(questionWrapper);
-    currentQuestion = questions[currentIndex];
-    if(currentIndex<0 || currentIndex>questions.length-1){
-      alert("question index out of bounds: "+currentIndex);
+    if(currentIndex > questions.length-1){
+        alert("question index out of bounds: "+currentIndex);
+        currentIndex--;
     }
-
-    else if(currentIndex<questions.length){
-      console.log(currentQuestion.type);
-      switch (currentQuestion.type) {
-          case "identification":
-              questionWrapper = identification(currentQuestion);
-              break;
-          case "multiple-choice":
-              questionWrapper = (multipleChoice(currentQuestion));
-              break;
-      }
+    else{
+        removeAllChildNodes(questionWrapper);
+        currentQuestion = questions[currentIndex];
+        if(currentIndex<questions.length){
+          console.log(currentQuestion.type);
+          switch (currentQuestion.type) {
+              case "identification":
+                  questionWrapper = identification(currentQuestion);
+                  break;
+              case "multiple-choice":
+                  questionWrapper = (multipleChoice(currentQuestion));
+                  break;
+          }
+        }
+        console.log(currentIndex);
     }
-    console.log("new index= "+currentIndex);
 });
 
 previousQuestion.addEventListener("click", () => {
-    removeAllChildNodes(questionWrapper);
     currentIndex--;
-    console.log(currentIndex + " back");
-    if(currentIndex<0 || currentIndex>questions.length-1){
-      alert("question index out of bounds: "+currentIndex);
+    if(currentIndex < 0){
+        alert("question index out of bounds: "+currentIndex);
+        currentIndex++;
     }
-
-    else if(currentIndex>=0 && currentIndex<questions.length){
-      currentQuestion = questions[currentIndex];
-      console.log(currentQuestion.type);
-      switch (currentQuestion.type) {
-          case "identification":
-              questionWrapper = identification(currentQuestion);
-              break;
-          case "multiple-choice":
-              questionWrapper = (multipleChoice(currentQuestion), currentIndex);
-              break;
-      }
+    else{
+        removeAllChildNodes(questionWrapper);
+        if(currentIndex<0 || currentIndex>questions.length-1){
+          alert("question index out of bounds: "+currentIndex);
+        }
+    
+        else if(currentIndex>=0 && currentIndex<questions.length){
+          currentQuestion = questions[currentIndex];
+          console.log(currentQuestion.type);
+          switch (currentQuestion.type) {
+              case "identification":
+                  questionWrapper = identification(currentQuestion);
+                  break;
+              case "multiple-choice":
+                  questionWrapper = (multipleChoice(currentQuestion), currentIndex);
+                  break;
+          }
+        }
+        console.log(currentIndex);
     }
-    console.log("new index= "+currentIndex);
 });
 
 // FUNCTIONS

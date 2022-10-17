@@ -27,6 +27,7 @@ let currentIndex = 0;
 let currentQuestion = questions[currentIndex];
 let questionWrapper = document.getElementById("question-wrapper");
 
+startQuiz(); //starts the quiz by reading and appending of JSON data
 
 nextQuestion.addEventListener("click", () => {
     currentIndex++;
@@ -65,6 +66,20 @@ previousQuestion.addEventListener("click", () => {
     }
     console.log("new index= "+currentIndex);
 });
+
+// FUNCTIONS
+
+//starts the reading and appending of JSON data
+function startQuiz(){
+  switch (currentQuestion.type) {
+    case "identification":
+        questionWrapper = identification(currentQuestion);
+        break;
+    case "multiple-choice":
+        questionWrapper = (multipleChoice(currentQuestion), currentIndex);
+        break;
+  }
+}
 
 function multipleChoice(data, index) {
     let questionWrapper = document.getElementById("question-wrapper");

@@ -1,0 +1,43 @@
+Identification
+Style of programming. Language Paradigm
+Based on the concept of objects (state and behavior). Object-oriented
+Utilizes control flow constructs. Structured
+Mimics a function in mathematics. Functional
+Uses facts and rules. Logic
+The implementation of the design phase in the SDLC. Application development stage
+
+Multiple Choice
+Translate source code (written in a programming language) into the computer language (object code)
+Compiler
+Interpreter
+Assembler
+Decompiler
+Used in assembly language to convert the source code into the machine language
+Compiler
+Interpreter
+Assembler
+Decompiler
+“reverse-engineer” the translation performed by compilers and assemblers
+Compiler
+Interpreter
+Assembler
+Decompiler
+Translate source code into the target machine code “on-the-fly” (reads source code, converts it and executes it directly)
+Compiler
+Interpreter
+Assembler
+Decompiler
+
+True or False
+Obfuscators are used to reduce the size of a program’s source code without modifying the program's functionality. False
+Obfuscators perform deliberate modifications to program code to make it more difficult to
+understand, without changing the code’s functionality. True
+Code Beautifier is used to improve the presentation of source code for purposes of readability and conformance to some coding standards. True
+Code Minifier is used to reduce the size of a program’s source code without modifying the program’s functionality.
+Transpiler translate source code into the target machine code “on-the-fly” (reads source code, converts it and executes it directly). False
+“Refactoring is a disciplined technique for restructuring an existing body of code, altering its internal structure without changing its external behavior.” True
+Software decay refers to the gradual improvement of software over time or its decreasing inability to respond to its changing environment. False
+There is only one type of testing. False
+Debugging involves finding and removing bugs. True
+Most IDEs don’t provide a programmer with a debugger tool in performing debugging. False
+

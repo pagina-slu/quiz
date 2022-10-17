@@ -15,21 +15,6 @@ function closeForm(){
 	ovrly.style.display = "none";
 	login.style.display = "none";
 }
-	
-
-function fadeIn(element) {
-	var opacity = 0;
-	var intervalID = setInterval(function() {
-
-		if (opacity < 1) {
-			opacity = opacity + 0.1
-			element.style.opacity = opacity;
-		} else {
-			clearInterval(intervalID);
-		}
-	}, 200);
-}
-
 
 var loginButton = document.getElementById('login-btn');
 loginButton.addEventListener('click', loginUser);

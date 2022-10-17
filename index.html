@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/loginstyle.css" />
+    <link rel="stylesheet" href="style/category.css" />
     <title>p&#0224;gina quiz</title>
   </head>
   <body>
@@ -13,7 +14,7 @@
     <div>
         <button id="login-form-btn"></button>
         <div id="overlay"></div>
-        <div id="login">
+        <div id="login">  
           <button id="cross">&cross;</button>
           <h1>Quiz Instructor</h1>
           <form>
@@ -23,14 +24,15 @@
           </form>
         </div>
       </div>
-      <!-- Instuctor log in -->
-    <main>
+      <!-- Category selector -->
+    <main id="main">
+      <div id="title-wrapper"></div>
       <div id="category-wrapper">
         <span id="category">Web Systems Development</span>
       </div>
       <div id="quiz-wrapper">
         <div id="question-wrapper">
-          <!-- dynamic question -->
+        <!-- dynamic question -->
         </div>
         <div class="button-wrapper">
             <a class="button" id="previous-button">

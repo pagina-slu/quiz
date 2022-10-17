@@ -1,7 +1,48 @@
-function displayQuiz() {
-    getData();
+
+window.onload = function(){
+    document.getElementById('quiz-wrapper').innerHTML = ''; 
+    document.getElementById('category-wrapper').innerHTML = '';
+    
+    var title = document.createElement("h1");
+    title.innerHTML = "Choose a category";
+    document.getElementById('title-wrapper').appendChild(title);
+
+    let btn1 = document.createElement("button");
+    btn1.innerHTML = "AppDev";
+    btn1.onclick = function () {
+        document.getElementById('title-wrapper').innerHTML = '';
+        document.getElementById('category-wrapper').innerHTML = '';
+        generateButtonWrapper();
+        readJSONfile("../res/appdev.json");
+    }
+    document.getElementById('category-wrapper').appendChild(btn1);
+
+    let btn2 = document.createElement("button");
+    btn2.innerHTML = "WedDev";
+    btn2.onclick = function () {
+        document.getElementById('title-wrapper').innerHTML = '';
+        document.getElementById('category-wrapper').innerHTML = '';
+        readJSONfile("../res/webtech.json");
+        generateButtonWrapper();
+    }
+    document.getElementById('category-wrapper').appendChild(btn2);
+
 }
 
+function generateButtonWrapper(){
+    alert("called");
+    let buttonwrapper = document.createElement("div");
+    buttonwrapper.innerHTML = `
+    <a class="button" id="previous-button">
+                <img src="res/arrow-left-circle.svg" alt="" srcset="">
+            </a>
+            <input type="number" name="question-number" id="question-number" value="1"/>
+            <span>of x</span>
+            <a class="button" id="next-button">
+                <img src="res/arrow-right-circle.svg" alt="" srcset="">
+            </a>`;
+    document.getElementById("quiz-wrapper").appendChild(buttonwrapper);
+}
 function readJSONfile(path) {
     var request = new XMLHttpRequest();
     request.open("GET", path, false);
@@ -16,7 +57,7 @@ function removeAllChildNodes(parent) {
     }
 }
 
-const questions = readJSONfile("../res/webtech.json");
+let questions = readJSONfile("../res/webtech.json");
 
 console.log(questions)
 

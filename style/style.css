@@ -23,8 +23,8 @@ main {
   width: 80%;
 }
 
-#category-wrapper {
-  margin-top: 15rem;
+#category-wrapper, #title-wrapper {
+  margin-top: 5rem;
   padding: 5rem;
 }
 
@@ -36,6 +36,10 @@ h1 {
   margin: 10px;
 }
 
+#title{
+  margin-top: 15rem;
+  padding: 5rem;
+}
 #quiz-wrapper {
   display: flex;
   flex-direction: column;

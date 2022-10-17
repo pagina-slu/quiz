@@ -50,7 +50,7 @@ nextQuestion.addEventListener("click", () => {
 previousQuestion.addEventListener("click", () => {
     removeAllChildNodes(questionWrapper);
     currentIndex--;
-    console.log(currentIndex);
+    console.log(currentIndex + " back");
     if(currentIndex>=0 && currentIndex<questions.length){
       currentQuestion = questions[currentIndex];
       console.log(currentQuestion.type);
@@ -96,6 +96,7 @@ function multipleChoice(data, index) {
 
 function identification(data){
   let questionWrapper = document.getElementById("question-wrapper");
+  removeAllChildNodes(questionWrapper);
   let label = document.createElement('label');
   let input = document.createElement('input');
   label.innerHTML = data.question;

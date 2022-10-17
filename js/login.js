@@ -31,19 +31,6 @@ function fadeIn(element) {
 }
 
 
-
-// var uelement = document.getElementById('uname');
-// var pelement = document.getElementById('upass');
-
-// if(uelement != null){
-// 	uname = uelement.value;
-// }
-// if(pelement != null){
-// 	upassword = pelement.value;
-// }
-// console.log(uname);
-// console.log(upassword);
-
 var loginButton = document.getElementById('login-btn');
 loginButton.addEventListener('click', loginUser);
 

@@ -1,37 +1,37 @@
-var path1 = '../res/questions/webtech.json';
+var path1 = '../res/questions/';
 window.onload = function(){
     document.getElementById('quiz-wrapper').innerHTML = ''; 
     document.getElementById('category-wrapper').innerHTML = '';
-    document.getElementById('title-wrapper').innerHTML = '<span id="category">Web Systems Development</span>';
+    document.getElementById('title-wrapper').innerHTML = '<span id="category">Choose a category</span>';
 
     let btn1 = document.createElement("button");
     btn1.innerHTML = "AppDev";
     document.getElementById('category-wrapper').appendChild(btn1);
 
-    btn1.onclick = function () {
-        document.getElementById('category-wrapper').innerHTML = '';
-        document.getElementById('category').innerHTML = 'Appdev';
-        generateQuizWrapper();
-        path1 += 'appdev.json';
-    }
-   
-
     let btn2 = document.createElement("button");
     btn2.innerHTML = "Webtech";
     document.getElementById('category-wrapper').appendChild(btn2);
+
+    btn1.onclick = function () {
+        document.getElementById('category-wrapper').remove();
+        document.getElementById('category').innerHTML = 'Appdev';
+        generateQuizWrapper();
+        path1 += 'appdev.json';
+        startQuiz(); //starts the quiz by reading and appending of JSON data
+    }
     btn2.onclick = function () {
-        document.getElementById('category-wrapper').innerHTML = '';
+        document.getElementById('category-wrapper').remove();
         document.getElementById('category').innerHTML = 'Web Systems Development';
         path1 += 'webtech.json';
         generateQuizWrapper();
+        startQuiz(); //starts the quiz by reading and appending of JSON data
     }
     
 }
 
 function generateQuizWrapper(){
-
     let buttonwrapper = document.createElement("div");
-    buttonwrapper.setAttribute("id", "button-wrapper");
+    buttonwrapper.setAttribute("class", "button-wrapper");
     let questionwrapper = document.createElement("div");
     questionwrapper.setAttribute("id", "question-wrapper");
 
@@ -62,19 +62,32 @@ function removeAllChildNodes(parent) {
     }
 }
 
-let questions = readJSONfile(path1);
+
+
+// FUNCTIONS
+
+//starts the reading and appending of JSON data
+function startQuiz(){
+var questions = readJSONfile(path1);
 console.log(questions);
 
-let previousQuestion = document.getElementById("previous-button");
-let nextQuestion = document.getElementById("next-button");
+var previousQuestion = document.getElementById("previous-button");
+var nextQuestion = document.getElementById("next-button");
 
 let currentIndex = 0;
 let currentQuestion = questions[currentIndex];
 let questionWrapper = document.getElementById("question-wrapper");
+console.log(questionWrapper);   
+  switch (currentQuestion.type) {
+    case "identification":
+        questionWrapper = identification(currentQuestion);
+        break;
+    case "multiple-choice":
+        questionWrapper = (multipleChoice(currentQuestion), currentIndex);
+        break;
+  }
 
-startQuiz(); //starts the quiz by reading and appending of JSON data
-
-nextQuestion.addEventListener("click", () => {
+  nextQuestion.addEventListener("click", () => {
     currentIndex++;
     if(currentIndex > questions.length-1){
         alert("question index out of bounds: "+currentIndex);
@@ -125,19 +138,6 @@ previousQuestion.addEventListener("click", () => {
         console.log(currentIndex);
     }
 });
-
-// FUNCTIONS
-
-//starts the reading and appending of JSON data
-function startQuiz(){
-  switch (currentQuestion.type) {
-    case "identification":
-        questionWrapper = identification(currentQuestion);
-        break;
-    case "multiple-choice":
-        questionWrapper = (multipleChoice(currentQuestion), currentIndex);
-        break;
-  }
 }
 
 function multipleChoice(data, index) {

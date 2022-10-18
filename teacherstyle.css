@@ -6,8 +6,11 @@
   margin: 0;
   padding: 0;
   background-color: #b399d4;
+  box-sizing: border-box;
+  transition: .2s linear;
 
 }
+
 li, a, button{
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
@@ -57,4 +60,34 @@ button{
 
 button:hover{
     background-color:#0088a9;
+}
+
+body{
+    
+}
+
+.wrapper{
+    margin: 10px auto;
+    padding: 0 10%;
+    padding-bottom:10px;
+    text-transform: capitalize;
+}
+
+h1{
+    color: #fff;
+    font-size: 45px;
+    padding-bottom: 15px;
+    text-shadow: 0 15px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.container{
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(270, 1fr));
+
+}
+
+.box{
+    height:70px
 }

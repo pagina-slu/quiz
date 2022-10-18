@@ -1,37 +1,40 @@
-
+var path1 = '../res/questions/webtech.json';
 window.onload = function(){
     document.getElementById('quiz-wrapper').innerHTML = ''; 
     document.getElementById('category-wrapper').innerHTML = '';
-    
-    var title = document.createElement("h1");
-    title.innerHTML = "Choose a category";
-    document.getElementById('title-wrapper').appendChild(title);
+    document.getElementById('title-wrapper').innerHTML = '<span id="category">Web Systems Development</span>';
 
     let btn1 = document.createElement("button");
     btn1.innerHTML = "AppDev";
-    btn1.onclick = function () {
-        document.getElementById('title-wrapper').innerHTML = '';
-        document.getElementById('category-wrapper').innerHTML = '';
-        generateButtonWrapper();
-        readJSONfile("../res/appdev.json");
-    }
     document.getElementById('category-wrapper').appendChild(btn1);
 
-    let btn2 = document.createElement("button");
-    btn2.innerHTML = "WedDev";
-    btn2.onclick = function () {
-        document.getElementById('title-wrapper').innerHTML = '';
+    btn1.onclick = function () {
         document.getElementById('category-wrapper').innerHTML = '';
-        readJSONfile("../res/webtech.json");
-        generateButtonWrapper();
+        document.getElementById('category').innerHTML = 'Appdev';
+        generateQuizWrapper();
+        path1 += 'appdev.json';
     }
-    document.getElementById('category-wrapper').appendChild(btn2);
+   
 
+    let btn2 = document.createElement("button");
+    btn2.innerHTML = "Webtech";
+    document.getElementById('category-wrapper').appendChild(btn2);
+    btn2.onclick = function () {
+        document.getElementById('category-wrapper').innerHTML = '';
+        document.getElementById('category').innerHTML = 'Web Systems Development';
+        path1 += 'webtech.json';
+        generateQuizWrapper();
+    }
+    
 }
 
-function generateButtonWrapper(){
-    alert("called");
+function generateQuizWrapper(){
+
     let buttonwrapper = document.createElement("div");
+    buttonwrapper.setAttribute("id", "button-wrapper");
+    let questionwrapper = document.createElement("div");
+    questionwrapper.setAttribute("id", "question-wrapper");
+
     buttonwrapper.innerHTML = `
     <a class="button" id="previous-button">
                 <img src="res/arrow-left-circle.svg" alt="" srcset="">
@@ -41,8 +44,10 @@ function generateButtonWrapper(){
             <a class="button" id="next-button">
                 <img src="res/arrow-right-circle.svg" alt="" srcset="">
             </a>`;
+    document.getElementById("quiz-wrapper").appendChild(questionwrapper);
     document.getElementById("quiz-wrapper").appendChild(buttonwrapper);
 }
+
 function readJSONfile(path) {
     var request = new XMLHttpRequest();
     request.open("GET", path, false);
@@ -57,9 +62,8 @@ function removeAllChildNodes(parent) {
     }
 }
 
-let questions = readJSONfile("../res/webtech.json");
-
-console.log(questions)
+let questions = readJSONfile(path1);
+console.log(questions);
 
 let previousQuestion = document.getElementById("previous-button");
 let nextQuestion = document.getElementById("next-button");

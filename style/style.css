@@ -22,24 +22,42 @@ body {
 main {
   width: 80%;
 }
-
-#category-wrapper, #title-wrapper {
-  margin-top: 5rem;
+#title-wrapper {
+  margin-top: 15rem;
+  padding: 5rem;
+}
+#category-wrapper {
+  display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  margin-top: 1rem;
   padding: 5rem;
 }
 
 #category {
   font-size: 3.4rem;
 }
+button:hover{
+  background-color: blue;
+  color: white;
+}
+
+button{
+  width: 20vw;
+  height: 20vh ;
+  margin: 3rem;
+  font-size: 3rem;
+  border-color: blue;
+  /* Pagandahin pa */
+}
 
 h1 {
   margin: 10px;
 }
 
-#title{
-  margin-top: 15rem;
-  padding: 5rem;
-}
 #quiz-wrapper {
   display: flex;
   flex-direction: column;

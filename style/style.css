@@ -17,6 +17,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: 
+  #eee8f7;
 }
 
 main {
@@ -25,6 +27,15 @@ main {
 #title-wrapper {
   margin-top: 15rem;
   padding: 5rem;
+}
+#category-wrapper {
+  background-color: white;
+  margin-top: 15rem;
+  margin-bottom: 2rem;
+  padding: 3rem;
+  border: 1px solid black;
+  border-top: 10px solid #5c33ae;
+  border-radius: 10px;
 }
 #category-wrapper {
   display: flex;
@@ -45,6 +56,29 @@ button:hover{
   color: white;
 }
 
+/* Login */
+#login-form-btn {
+  padding: 7px;
+  color: #fff;
+  margin: 20px;
+  border-radius: 5px;
+  width: 7rem;
+  height: 7rem;
+  background: url("../res/instructor.png") no-repeat;
+  background-size: 6rem;
+  background-position: center;
+  position: absolute;
+  right: 8rem;
+}
+
+#login-form-btn:hover {
+  background: url("../res/instructor2.png") no-repeat;
+  background-size: 6rem;
+  background-position: center;
+  border-color: blue;
+  cursor: pointer;
+}
+
 button{
   width: 20vw;
   height: 20vh ;
@@ -54,6 +88,69 @@ button{
   /* Pagandahin pa */
 }
 
+#login {
+  background-color: #fff;
+  width: 30%;
+  margin: auto;
+  border: 3px solid blue;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+
+}
+
+#overlay,
+#login {
+  display: none;
+}
+
+#cross {
+  position: absolute;
+  left: 94%;
+  top: 0px;
+  color: #cc2e2e;
+  font-size: 18;
+  font-weight: bold;
+  background-color: transparent;
+  border: 0;
+}
+
+form,
+input[type="button"] {
+  margin: 0 !important;
+}
+
+.username,
+.password {
+  background-color: #fff;
+  display: block;
+  border: 2px solid blue;
+  border-radius: 10px;
+  padding: 5px;
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+input.username[type="text"], input.passw2ord[type="password"] {
+  font-size: 1.6rem;
+  width: auto;
+  height: auto;
+}
+#login-btn {
+  background-color: blue;
+  padding: 7px;
+  color: #fff;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+#login-btn:active{
+  background-color:darkblue;
+}
 h1 {
   margin: 10px;
 }
@@ -62,36 +159,72 @@ h1 {
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
+  border-radius: 20px;
   width: 80vw;
 }
 
 #question-wrapper {
   display: flex;
+  background-color: white;
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid;
-  padding: 2rem 2rem 2rem 5rem;
-  gap: 2rem;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  padding: 3rem 0 3rem 3rem;
+  gap: 4rem;
 }
 
 .question {
   font-size: 1.6rem;
 }
 
+.button {
+  margin: 2rem;
+}
+
 .button-wrapper {
   display: flex;
+  background-color: white;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 75px;
   width: 100%;
   border: solid 1px;
+  border-radius: 0 0 10px 10px;
+}
+
+.button-wrapper span {
+  font-size: 2rem;
+  line-height: 4rem;
+}
+
+#question-number {
+  border: none;
+  width: 2rem;
+  text-align: center;
+  font-size: 2rem;
+  line-height: 4rem;
+}
+
+/* Chrome, Safari, Edge, Opera https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 input[type="text"] {
   font-size: 1.6rem;
   height: 50px;
   width: 500px;
+  padding-left: 1rem;
 }
 
 /* Footer */

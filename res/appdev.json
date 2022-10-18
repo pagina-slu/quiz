@@ -1,0 +1,83 @@
+[
+    {
+        "type": "identification",
+        "question": "Style of programming",
+        "answer": "Language Paradigm"
+    },
+
+    {
+        "type": "identification",
+        "question": "Based on the concept of objects (state and behavior)",
+        "answer": "Object-oriented"
+    },
+
+    {
+        "type": "identification",
+        "question": "Utilizes control flow constructs.",
+        "answer": "Structured"
+    },
+    {
+        "type": "identification",
+        "question": "Mimics a function in mathematics. ",
+        "answer": "Functional"
+    },
+    {
+        "type": "identification",
+        "question": "Uses facts and rules.",
+        "answer": "Logic"
+    },
+    {
+        "type": "identification",
+        "question": "The implementation of the design phase in the SDLC",
+        "answer": "Application development stage"
+    },
+
+
+    {
+        "type": "multiple-choice",
+        "question": "Translate source code (written in a programming language) into the computer language (object code)",
+        "options": [
+            "Compiler",
+            "Interpreter",
+            "Assembler",
+            "Decompiler"
+        ],
+        "answer": "Compiler"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "Used in assembly language to convert the source code into the machine language",
+        "options": [
+            "Compiler",
+            "Interpreter",
+            "Assembler",
+            "Decompiler"
+        ],
+        "answer": "Assembler"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "“reverse-engineer” the translation performed by compilers and assemblers",
+        "options": [
+            "Compiler",
+            "Interpreter",
+            "Assembler",
+            "Decompiler"
+            
+        ],
+        "answer": "Decompiler"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "Translate source code into the target machine code “on-the-fly” (reads source code, converts it and executes it directly)",
+        "options": [
+            "Compiler",
+            "Interpreter",
+            "Assembler",
+            "Decompiler"
+        ],
+        "answer": "Interpreter"
+    }
+
+    
+]

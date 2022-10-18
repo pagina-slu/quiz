@@ -4,6 +4,29 @@
         "question": "Who founded the World Wide Web Consortium?",
         "answer": "Tim Berners-Lee"
     },
+
+    {
+        "type": "identification",
+        "question": "Type of programming language used to combine existing components together.",
+        "answer": "Scripting Language"
+    },
+
+    {
+        "type": "identification",
+        "question": "Most widely used client-side scripting language and is also used in server-side scripting.",
+        "answer": "JavaScript"
+    },
+    {
+        "type": "identification",
+        "question": "Conceptualized JavaScript in 1995",
+        "answer": "Brendan Eich"
+    },
+    {
+        "type": "identification",
+        "question": "Downloads script asynchronously with HTML and other web resources.",
+        "answer": "async"
+    },
+
     {
         "type": "multiple-choice",
         "question": "1xx status codes are:",
@@ -15,5 +38,128 @@
             "Server-side Errors"
         ],
         "answer": "Informational"
-    }
+    },
+    {
+        "type": "multiple-choice",
+        "question": "2xx status codes are:",
+        "options": [
+            "Informational",
+            "Successful",
+            "Redirection",
+            "Client-side Errors",
+            "Server-side Errors"
+        ],
+        "answer": "Successful"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "3xx status codes are:",
+        "options": [
+            "Informational",
+            "Successful",
+            "Redirection",
+            "Client-side Errors",
+            "Server-side Errors"
+        ],
+        "answer": "Redirection"
+    },
+        {
+            "type": "multiple-choice",
+            "question": "4xx status codes are:",
+            "options": [
+                "Informational",
+                "Successful",
+                "Redirection",
+                "Client-side Errors",
+                "Server-side Errors"
+            ],
+            "answer": "Server-side Errors"
+        },
+        
+        {
+            "type": "multiple-choice",
+            "question": "What port does HTTP use?",
+            "options": [
+                "80",
+                "443",
+                "8080",
+                "1010"
+            ],
+            "answer": "80"
+        },
+        
+        {
+            "type": "multiple-choice",
+            "question": "What port does HTTPS use?",
+            "options": [
+                "80",
+                "443",
+                "8080",
+                "1010"
+            ],
+            "answer": "443"
+        },
+
+        {
+            "type": "multiple-choice",
+            "question": "What port does HTTPS use?",
+            "options": [
+                "Myvirtuallearning.org",
+                "Google.com",
+                "Facebook.com",
+                "Info.cern.ch"
+            ],
+            "answer": "Info.cern.ch"
+        },
+
+        {
+            "type": "multiple-choice",
+            "question": "What programming paradigm specifies “what” is required?",
+            "options": [
+                "Imperative",
+                "Declarative"
+            ],
+            "answer": "Declarative"
+        },
+
+        {
+            "type": "multiple-choice",
+            "question": "What programming paradigm specifies “how” something is achieved?",
+            "options": [
+                "Imperative",
+                "Declarative"
+            ],
+            "answer": "Imperative"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "Imperative programming defines what needs to be accomplished by the program without defining how it needs to be implemented",
+            "options": [
+                "True",
+                "False"
+            ],
+            "answer": "False"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "Tim Berners Lee founded the World Wide Web Consortium",
+            "options": [
+                "True",
+                "False"
+            ],
+            "answer": "True"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "Tim Berners Lee founded the World Wide Web Consortium",
+            "options": [
+                "True",
+                "False"
+            ],
+            "answer": "True"
+        }
+        
 ]

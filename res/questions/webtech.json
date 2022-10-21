@@ -135,31 +135,36 @@
         {
             "type": "true-or-false",
             "question": "Imperative programming defines what needs to be accomplished by the program without defining how it needs to be implemented",
-            "options": [
-                "True",
-                "False"
-            ],
             "answer": "False"
         },
 
         {
             "type": "true-or-false",
             "question": "Tim Berners Lee founded the World Wide Web Consortium",
-            "options": [
-                "True",
-                "False"
-            ],
+            "answer": "True"
+        },       
+
+        {
+            "type": "true-or-false",
+            "question": "DELETE is part of Safe Methods",
+            "answer": "False"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "Web Clients are applications used to access web resources",
             "answer": "True"
         },
 
         {
             "type": "true-or-false",
-            "question": "Tim Berners Lee founded the World Wide Web Consortium",
-            "options": [
-                "True",
-                "False"
-            ],
+            "question": "World Wide Web is founded in 1995",
+            "answer": "False"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "API stands for Application Programming Interface",
             "answer": "True"
         }
-        
 ]

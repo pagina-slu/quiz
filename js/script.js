@@ -88,6 +88,9 @@ function startQuiz() {
         case "multiple-choice":
             questionWrapper = (multipleChoice(currentQuestion), currentIndex);
             break;
+        case "true-or-false":
+            questionWrapper = (trueOrFalse(currentQuestion), currentIndex);
+            break;
     }
 
     let questionNumber = document.getElementById("question-number");
@@ -109,6 +112,9 @@ function startQuiz() {
                         break;
                     case "multiple-choice":
                         questionWrapper = (multipleChoice(currentQuestion));
+                        break;
+                    case "true-or-false":
+                        questionWrapper = (trueOrFalse(currentQuestion));
                         break;
                 }
             }
@@ -139,6 +145,9 @@ function startQuiz() {
                     case "multiple-choice":
                         questionWrapper = (multipleChoice(currentQuestion), currentIndex);
                         break;
+                    case "true-or-false":
+                        questionWrapper = (trueOrFalse(currentQuestion), currentIndex);
+                        break;
                 }
             }
             questionNumber.value = currentIndex + 1;
@@ -157,6 +166,9 @@ function startQuiz() {
                     break;
                 case "multiple-choice":
                     questionWrapper = (multipleChoice(currentQuestion), currentIndex);
+                    break;
+                case "true-or-false":
+                    questionWrapper = (trueOrFalse(currentQuestion), currentIndex);
                     break;
             }
         }
@@ -201,5 +213,35 @@ function identification(data) {
     input.type = "text";
     questionWrapper.appendChild(label);
     questionWrapper.appendChild(input);
+    return questionWrapper;
+}
+
+function trueOrFalse(data, index) {
+    let questionWrapper = document.getElementById("question-wrapper");
+    removeAllChildNodes(questionWrapper);
+    let label = document.createElement("label");
+    label.className = "question";
+    label.innerHTML = data.question;
+    questionWrapper.appendChild(label);
+    const options = ["True", "False"];
+
+    let inputWrapper = document.createElement("div");
+    for (let i = 0; i < options.length; i++) {
+        let inputDiv = document.createElement("div");
+        inputDiv.className = "input";
+        let input = document.createElement("input");
+        input.type = "radio";
+        input.name = `q${index++}`;
+        input.value = options[i];
+
+        let label = document.createElement('label');
+        label.innerHTML = options[i];
+        label.for = data.answer;
+        inputDiv.appendChild(input);
+        inputDiv.appendChild(label);
+        inputWrapper.appendChild(inputDiv);
+    }
+    questionWrapper.appendChild(inputWrapper);
+    console.log(questionWrapper);
     return questionWrapper;
 }

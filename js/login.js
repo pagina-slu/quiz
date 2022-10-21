@@ -23,7 +23,8 @@ function loginUser(){
 	let uname = document.getElementById('uname').value;
 	let upassword = document.getElementById('upass').value;
 	if(uname =="instructor" && upassword=="admin"){
-		window.location.assign("admin.html");
+		window.open("admin.html");
+		closeForm();
 	} else{
 		alert("Sorry! You entered a wrong username or pasword");
 	}

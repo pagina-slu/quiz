@@ -216,6 +216,52 @@ input[type="number"] {
   color: aliceblue;
 }
 
+#progress{
+  display: flex;
+  height: 10rem;
+  width: 10rem;
+  background: rgb(21, 255, 0);
+  border-radius: 50%;
+  overflow: hidden;
+  justify-content: center;
+  border: solid;
+  border-width: 2px;
+  border-color: black;
+  right: 1vw;
+  bottom: 1vh;
+  position: fixed;
+  z-index: 1;
+}
+
+#bar{
+  display: flex;
+  height: 10rem;
+  width: 10rem;
+  transform: translateY(-50%);
+  background: #ffffff;
+  justify-content: center;
+  transition: transform 1s ease-out;
+}
+
+#inner_circle{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  height: 8rem;
+  width: 8rem;
+  border-radius: 50%;
+  top: 0;
+  margin-top: 10%;
+  background: #222629;
+  z-index: 1;
+}
+
+#percent{
+  color: white;
+  font-size: 2.5rem;
+  margin-top: 30%;
+}
+
 /* Footer */
 footer {
   background-color: #86c232;

@@ -43,7 +43,6 @@ function startQuiz() {
        return "Your progress would be lost";
     }
     let quizWrapper = document.getElementById("quiz-wrapper");
-    let currentIndex = 0;
     console.log(questions);
     for (let i = 0; i < questions.length; i++) {
         switch (questions[i].type) {
@@ -58,6 +57,8 @@ function startQuiz() {
                 break;
         }
     }
+
+
 }
 
 function generateSubmitButton(){

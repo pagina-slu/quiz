@@ -5,9 +5,10 @@
     color: #fff;
     margin: 20px;
     border-radius: 5px;
+    border-style: solid;
     width: 7rem;
     height: 7rem;
-    background: url("../res/instructor.png") no-repeat;
+    background: url("../res/images/instructor.png") no-repeat;
     background-size: 6rem;
     background-position: center;
     position: absolute;
@@ -15,8 +16,8 @@
   }
   
   #login-form-btn:hover {
-    background: url("../res/instructor2.png") no-repeat;
-    background-size: 40px;
+    background: url("../res/images/instructor2.png") no-repeat;
+    background-size: 6rem;
     background-position: center;
     border: 3px solid blue;
     cursor: pointer;

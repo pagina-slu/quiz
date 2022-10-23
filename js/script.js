@@ -39,6 +39,9 @@ function removeAllChildNodes(parent) {
 // Functions
 // Start reading and appending the JSON
 function startQuiz() {
+    window.onbeforeunload = function() {
+       return "Your progress would be lost";
+    }
     let quizWrapper = document.getElementById("quiz-wrapper");
     let currentIndex = 0;
     console.log(questions);

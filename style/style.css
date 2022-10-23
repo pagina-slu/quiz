@@ -97,7 +97,7 @@ h1 {
   max-width: 100%;
 }
 
-.input {
+.input-wrapper .input {
   display: flex;
   align-items: center;
   width: 50%;
@@ -109,12 +109,12 @@ h1 {
   margin: 0.5rem 0;
 }
 
-.input:hover {
+.input-wrapper .input:hover {
   border: 1px dashed white;
   border-radius: 5px;
 }
 
-input[type="radio"] {
+.input-wrapper input[type="radio"] {
   appearance: none;
   border-radius: 50%;
   width: 1.6rem;
@@ -125,7 +125,7 @@ input[type="radio"] {
   margin-right: 1rem;
 }
 
-input[type="radio"]:checked {
+.input-wrapper input[type="radio"]:checked {
   border: 6px solid #86c232;
 }
 
@@ -171,7 +171,7 @@ input[type="number"] {
   color: white;
 }
 
-input[type="text"] {
+.input-wrapper input[type="text"] {
   background-color: transparent;
   border-color: white;
   border-style: solid;
@@ -183,7 +183,7 @@ input[type="text"] {
   padding-left: 1rem;
 }
 
-input[type="text"]:focus {
+.input-wrapper input[type="text"]:focus {
   outline: none;
   border-color: #86c232;
   border-radius: 5px;

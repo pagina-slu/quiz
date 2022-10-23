@@ -1,99 +1,130 @@
-
 /* Login */
 #login-form-btn {
-    padding: 7px;
-    color: #fff;
-    margin: 20px;
-    border-radius: 5px;
-    border-style: solid;
-    width: 7rem;
-    height: 7rem;
-    background: url("../res/images/instructor.png") no-repeat;
-    background-size: 6rem;
-    background-position: center;
-    position: absolute;
-    right: 14rem;
-  }
-  
-  #login-form-btn:hover {
-    background: url("../res/images/instructor2.png") no-repeat;
-    background-size: 6rem;
-    background-position: center;
-    border: 3px solid blue;
-    cursor: pointer;
-  }
-  
-  #overlay {
-    background-color: #000;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    opacity: 0.7;
-  
-  }
-  
-  #login {
-    background-color: #fff;
-    width: 30%;
-    margin: auto;
-    border: 3px solid blue;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -90%);
-  
-  }
-  
-  #overlay,
-  #login {
-    display: none;
-  }
-  
-  #cross {
-    position: absolute;
-    left: 94%;
-    top: 0px;
-    color: #cc2e2e;
-    font-size: 18;
-    font-weight: bold;
-    background-color: transparent;
-    border: 0;
-  }
-  
-  form,
-  input[type="button"] {
-    margin: 0 !important;
-  }
-  
-  .username,
-  .password {
-    background-color: #fff;
-    display: block;
-    border: 2px solid blue;
-    border-radius: 10px;
-    padding: 5px;
-    margin: auto;
-    margin-bottom: 15px;
-  }
-  
-  input.username[type="text"], input.password[type="password"] {
-    font-size: 1.6rem;
-    width: auto;
-    height: auto;
-  }
-  #login-btn {
-    background-color: blue;
-    padding: 7px;
-    color: #fff;
-    margin: 20px;
-    border-radius: 5px;
-  }
-  
-  #login-btn:active{
-    background-color:darkblue;
-  }
+  padding: 7px;
+  color: #fff;
+  margin: 20px;
+  border-radius: 5px;
+  border-style: solid;
+  width: 7rem;
+  height: 7rem;
+  background: url("../res/images/instructor.png") no-repeat;
+  background-size: 6rem;
+  background-position: center;
+  position: absolute;
+  right: 14rem;
+}
+
+#login-form-btn:hover {
+  background: url("../res/images/instructor2.png") no-repeat;
+  background-size: 6rem;
+  background-position: center;
+  border: 3px solid blue;
+  cursor: pointer;
+}
+
+#overlay {
+  background-color: #000;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  opacity: 0.7;
+}
+
+#login {
+  color: #222629;
+  background-color: #fff;
+  width: 30%;
+  margin: auto;
+
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+}
+
+#overlay,
+#login {
+  display: none;
+}
+
+#cross {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  color: #cc2e2e;
+  font-size: 18;
+  font-weight: bold;
+  background-color: transparent;
+  border: 0;
+}
+
+#login form {
+  margin-top: 3rem;
+}
+
+#login form input[type="button"] {
+  margin: 0 !important;
+}
+
+.username,
+.password {
+  background-color: transparent;
+  display: block;
+  border: none;
+  border-bottom: 2px solid black;
+  padding-left: 1rem;
+  margin: auto;
+  outline: none;
+  margin-bottom: 20px;
+}
+
+#login .input {
+  text-align: left;
+}
+
+#login .input.focus label {
+  transform: translateY(-2rem);
+  color: #86c232;
+  opacity: 1;
+  font-size: 1.5rem;
+}
+
+#login input {
+  font-size: 1.4rem;
+  width: 100%;
+  height: 3.5rem;
+  position: relative;
+}
+
+#login label {
+  position: absolute;
+  font-size: 1.7rem;
+  color: black;
+  line-height: 3.5rem;
+  padding-left: 1rem;
+  transition: 0.5s;
+  opacity: 0.5;
+}
+
+#login-btn {
+  background-color: #86c232;
+  padding: 7px;
+  color: white;
+  margin: 20px;
+  border: none;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+
+#login-btn:hover {
+  background-color: #61892f;
+}
+
+#login-btn:active {
+  background-color: #61892f;
+}

@@ -17,29 +17,34 @@
         <button id="cross">&cross;</button>
         <h1>Quiz Instructor</h1>
         <form>
-          <input
-            type="text"
-            placeholder="Username"
-            class="username"
-            id="uname"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            class="password"
-            id="upass"
-          />
+          <div class="input">
+            <label for="uname">Username:</label>
+            <input
+              type="text"
+              class="username"
+              id="uname"
+              name="uname"
+            />
+          </div>
+          <div class="input">
+            <label for="upass">Password:</label>
+            <input
+              type="password"
+              class="password"
+              id="upass"
+              name="upass"
+            />
+          </div>
+
           <input type="button" value="Log in" id="login-btn" />
         </form>
       </div>
     </div>
     <!-- Category selector -->
     <main id="main">
-      <div id="title-wrapper">
-      </div>
+      <div id="title-wrapper"></div>
       <div id="category-wrapper"></div>
-      <div id="quiz-wrapper">
-      </div>
+      <div id="quiz-wrapper"></div>
     </main>
     <footer>
       <p>p&#0224;gina &#0169; 2022</p>

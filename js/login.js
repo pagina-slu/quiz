@@ -9,7 +9,6 @@ cross.addEventListener('click', closeForm);
 function openForm(){
 	ovrly.style.display = "block";
 	login.style.display = "block";
-	
 }
 function closeForm(){
 	ovrly.style.display = "none";
@@ -29,3 +28,18 @@ function loginUser(){
 		alert("Sorry! You entered a wrong username or pasword");
 	}
 }
+
+// Make label float when input element has focus
+const INPUTS = document.querySelectorAll("#login .input input");
+console.log(INPUTS);
+INPUTS.forEach(input => {
+	input.addEventListener("focus", () => {
+		input.parentElement.classList.add("focus");
+	});
+	input.addEventListener("blur", () => {
+		console.log(input.value);
+		if (input.value === "") {
+		  input.parentElement.classList.remove("focus");
+		}
+	  });
+})

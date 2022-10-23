@@ -216,6 +216,13 @@ input[type="number"] {
   color: aliceblue;
 }
 
+#progress-container{
+  position: fixed;
+  right: 1vw;
+  bottom: 1vh;
+  z-index: 1;
+}
+
 #progress{
   display: flex;
   height: 10rem;
@@ -227,20 +234,18 @@ input[type="number"] {
   border: solid;
   border-width: 2px;
   border-color: black;
-  right: 1vw;
-  bottom: 1vh;
-  position: fixed;
-  z-index: 1;
+  position: relative;
 }
 
 #bar{
   display: flex;
   height: 10rem;
   width: 10rem;
-  transform: translateY(-50%);
   background: #ffffff;
   justify-content: center;
   transition: transform 1s ease-out;
+  position: absolute;
+  clip: rect(0,50px,100px,0);
 }
 
 #inner_circle{

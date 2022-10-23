@@ -45,8 +45,8 @@ function removeAllChildNodes(parent) {
     }
 }
 
-// FUNCTIONS
-//starts the reading and appending of JSON data
+// Functions
+// Start reading and appending the JSON
 function startQuiz() {
     let quizWrapper = document.getElementById("quiz-wrapper");
     let currentIndex = 0;
@@ -86,18 +86,15 @@ function generateInputWrapper() {
 }
 
 function multipleChoice(data, index) {
-    console.log(index);
     let questionWrapper = generateQuestionWrapper();
     let label = generateQuestionLabel(data.question, index);
-    questionWrapper.appendChild(label);
-
     let inputWrapper = generateInputWrapper();
     for (let i = 0; i < data.options.length; i++) {
         let inputDiv = document.createElement("div");
         inputDiv.className = "input";
         let input = document.createElement("input");
         input.type = "radio";
-        input.name = `q${index++}`;
+        input.name = `q${index + 1}`;
         input.value = data.options[i];
 
         let label = document.createElement('label');
@@ -107,33 +104,32 @@ function multipleChoice(data, index) {
         inputDiv.appendChild(label);
         inputWrapper.appendChild(inputDiv);
     }
+
+    questionWrapper.appendChild(label);
     questionWrapper.appendChild(inputWrapper);
-    console.log(questionWrapper);
     return questionWrapper;
 }
 
 function identification(data, index) {
-    console.log(index);
     let questionWrapper = generateQuestionWrapper();
     let label = generateQuestionLabel(data.question, index);
     let inputWrapper = generateInputWrapper();
+
     let input = document.createElement('input');
     input.type = "text";
-    questionWrapper.appendChild(label);
     inputWrapper.appendChild(input);
+
+    questionWrapper.appendChild(label);
     questionWrapper.appendChild(inputWrapper);
     return questionWrapper;
 }
 
 function trueOrFalse(data, index) {
-    console.log(index);
     let questionWrapper = generateQuestionWrapper();
-
     let label = generateQuestionLabel(data.question, index);
-    questionWrapper.appendChild(label);
-    const options = ["True", "False"];
-
     let inputWrapper = generateInputWrapper();
+
+    const options = ["True", "False"];
     for (let i = 0; i < options.length; i++) {
         let inputDiv = document.createElement("div");
         inputDiv.className = "input";
@@ -150,7 +146,8 @@ function trueOrFalse(data, index) {
         inputDiv.appendChild(label);
         inputWrapper.appendChild(inputDiv);
     }
+
+    questionWrapper.appendChild(label);
     questionWrapper.appendChild(inputWrapper);
-    console.log(questionWrapper);
     return questionWrapper;
 }

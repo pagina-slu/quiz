@@ -16,6 +16,7 @@ window.onload = function () {
             document.getElementById('title').innerHTML = category.name;
             questions = readJSONfile(category.path);
             startQuiz();
+            generateSubmitButton();
         }
         document.getElementById('category-wrapper').appendChild(categoryButton);
     });
@@ -54,6 +55,16 @@ function startQuiz() {
                 break;
         }
     }
+}
+
+function generateSubmitButton(){
+    let submitWrapper = document.getElementById("submit-wrapper");
+    let submitButton = document.createElement("button");
+    submitButton.setAttribute("id", "submit-button");
+
+    submitButton.innerHTML = "Submit";
+
+    submitWrapper.appendChild(submitButton);
 }
 
 function generateQuestionWrapper() {

@@ -190,6 +190,24 @@ input[type="number"] {
   border-width: 2px;
 }
 
+#submit-wrapper{
+  display: flex;
+  margin: 2rem;
+  margin-bottom: 5rem;
+  justify-content: center;
+}
+
+#submit-button{
+  font-size: 1.5rem;
+  width: 15rem;
+  height: 5rem;
+}
+
+#submit-button:hover{
+  background-color: #86c232;
+  color: aliceblue;
+}
+
 /* Footer */
 footer {
   background-color: #86c232;

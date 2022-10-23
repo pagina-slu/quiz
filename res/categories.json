@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Applications Development",
+        "path": "../res/questions/appdev.json"
+    },
+    {
+        "name": "Web Systems Development",
+        "path": "../res/questions/webtech.json"
+    }
+]

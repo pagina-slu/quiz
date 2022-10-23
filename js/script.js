@@ -5,30 +5,20 @@ window.onload = function () {
     document.getElementById('category-wrapper').innerHTML = '';
     document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
 
-    let btn1 = document.createElement("button");
-    btn1.classList = "category-button";
-    btn1.innerHTML = "Applications Development";
-    document.getElementById('category-wrapper').appendChild(btn1);
-
-    let btn2 = document.createElement("button");
-    btn2.classList = "category-button";
-    btn2.innerHTML = "Web Systems Development";
-    document.getElementById('category-wrapper').appendChild(btn2);
-
-    btn1.onclick = function () {
-        document.getElementById('category-wrapper').remove();
-        document.getElementById('title').innerHTML = 'Applications Development';
-        path1 += 'appdev.json';
-        questions = readJSONfile(path1);
-        startQuiz(); //starts the quiz by reading and appending of JSON data
-    }
-    btn2.onclick = function () {
-        document.getElementById('category-wrapper').remove();
-        document.getElementById('title').innerHTML = 'Web Systems Development';
-        path1 += 'webtech.json';
-        questions = readJSONfile(path1);
-        startQuiz(); //starts the quiz by reading and appending of JSON data
-    }
+    readJSONfile('../res/categories.json').forEach(category => {
+        console.log(category);
+        let categoryButton = document.createElement("button");
+        categoryButton.classList = "category-button";
+        categoryButton.innerHTML = category.name;
+        
+        categoryButton.onclick = () => {
+            document.getElementById('category-wrapper').remove();
+            document.getElementById('title').innerHTML = category.name;
+            questions = readJSONfile(category.path);
+            startQuiz();
+        }
+        document.getElementById('category-wrapper').appendChild(categoryButton);
+    });
 }
 
 function readJSONfile(path) {

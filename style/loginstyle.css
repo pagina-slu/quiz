@@ -1,24 +1,23 @@
 /* Login */
 #login-form-btn {
-  padding: 7px;
-  color: #fff;
   margin: 20px;
   border-radius: 5px;
   border-style: solid;
+  border-color: white;
   width: 7rem;
   height: 7rem;
   background: url("../res/images/instructor.png") no-repeat;
-  background-size: 6rem;
-  background-position: center;
+  background-size: cover;
+  background-position: contain;
   position: absolute;
   right: 14rem;
 }
 
 #login-form-btn:hover {
   background: url("../res/images/instructor2.png") no-repeat;
-  background-size: 6rem;
+  background-size: contain;
   background-position: center;
-  border: 3px solid blue;
+  border: 3px solid white;
   cursor: pointer;
 }
 

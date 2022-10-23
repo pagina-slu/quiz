@@ -18,7 +18,6 @@ window.onload = function () {
     btn1.onclick = function () {
         document.getElementById('category-wrapper').remove();
         document.getElementById('title').innerHTML = 'Applications Development';
-        generateQuizWrapper(); 1
         path1 += 'appdev.json';
         questions = readJSONfile(path1);
         startQuiz(); //starts the quiz by reading and appending of JSON data
@@ -27,17 +26,9 @@ window.onload = function () {
         document.getElementById('category-wrapper').remove();
         document.getElementById('title').innerHTML = 'Web Systems Development';
         path1 += 'webtech.json';
-        generateQuizWrapper();
         questions = readJSONfile(path1);
         startQuiz(); //starts the quiz by reading and appending of JSON data
     }
-}
-
-function generateQuizWrapper() {
-    let questionwrapper = document.createElement("div");
-    questionwrapper.setAttribute("id", "question-wrapper");
-    let quizWrapper = document.getElementById("quiz-wrapper");
-    quizWrapper.appendChild(questionwrapper);
 }
 
 function readJSONfile(path) {
@@ -63,13 +54,13 @@ function startQuiz() {
     for (let i = 0; i < questions.length; i++) {
         switch (questions[i].type) {
             case "identification":
-                quizWrapper.appendChild(identification(questions[i]));
+                quizWrapper.appendChild(identification(questions[i], i));
                 break;
             case "true-or-false":
-                quizWrapper.appendChild(trueOrFalse(questions[i]));
+                quizWrapper.appendChild(trueOrFalse(questions[i], i));
                 break;
             case "multiple-choice":
-                quizWrapper.appendChild(multipleChoice(questions[i]));
+                quizWrapper.appendChild(multipleChoice(questions[i], i));
                 break;
         }
     }
@@ -81,14 +72,26 @@ function generateQuestionWrapper() {
     return questionWrapper;
 }
 
-function multipleChoice(data, index) {
-    let questionWrapper = generateQuestionWrapper()
+function generateQuestionLabel(question, index) {
     let label = document.createElement("label");
     label.className = "question";
-    label.innerHTML = data.question;
+    label.innerHTML = `${index + 1}. ${question}`;
+    return label;
+}
+
+function generateInputWrapper() {
+    let inputWrapper = document.createElement("div");
+    inputWrapper.classList = "input-wrapper";
+    return inputWrapper;
+}
+
+function multipleChoice(data, index) {
+    console.log(index);
+    let questionWrapper = generateQuestionWrapper();
+    let label = generateQuestionLabel(data.question, index);
     questionWrapper.appendChild(label);
 
-    let inputWrapper = document.createElement("div");
+    let inputWrapper = generateInputWrapper();
     for (let i = 0; i < data.options.length; i++) {
         let inputDiv = document.createElement("div");
         inputDiv.className = "input";
@@ -109,29 +112,32 @@ function multipleChoice(data, index) {
     return questionWrapper;
 }
 
-function identification(data) {
-    let questionWrapper = generateQuestionWrapper()
-    let label = document.createElement('label');
+function identification(data, index) {
+    console.log(index);
+    let questionWrapper = generateQuestionWrapper();
+    let label = generateQuestionLabel(data.question, index);
+    let inputWrapper = generateInputWrapper();
     let input = document.createElement('input');
-    label.innerHTML = data.question;
     input.type = "text";
     questionWrapper.appendChild(label);
-    questionWrapper.appendChild(input);
+    inputWrapper.appendChild(input);
+    questionWrapper.appendChild(inputWrapper);
     return questionWrapper;
 }
 
 function trueOrFalse(data, index) {
-    let questionWrapper = generateQuestionWrapper()
-    let label = document.createElement("label");
-    label.className = "question";
-    label.innerHTML = data.question;
+    console.log(index);
+    let questionWrapper = generateQuestionWrapper();
+
+    let label = generateQuestionLabel(data.question, index);
     questionWrapper.appendChild(label);
     const options = ["True", "False"];
 
-    let inputWrapper = document.createElement("div");
+    let inputWrapper = generateInputWrapper();
     for (let i = 0; i < options.length; i++) {
         let inputDiv = document.createElement("div");
         inputDiv.className = "input";
+
         let input = document.createElement("input");
         input.type = "radio";
         input.name = `q${index++}`;

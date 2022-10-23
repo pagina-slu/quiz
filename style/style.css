@@ -17,9 +17,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #3aafa9;
+  background-color: #222629;
   position: relative;
-  color: #17252a;
+  color: white;
   padding-bottom: 5rem;
 }
 
@@ -37,7 +37,7 @@ main {
 }
 
 #title {
-  color: #17252a;
+  color: #86c232;
   font-weight: bold;
   font-size: 3.4rem;
 }
@@ -64,7 +64,7 @@ main {
 .category-button:hover {
   background-color: #17252a;
   border: none;
-  color: #feffff;
+  color: white;
 }
 
 /* Login */
@@ -170,9 +170,6 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid;
-  border-bottom: none;
-  border-radius: 10px 10px 0 0;
   padding: 3rem 0 3rem 3rem;
   gap: 4rem;
 }
@@ -225,16 +222,25 @@ input[type="number"] {
 
 input[type="text"] {
   background-color: transparent;
+  border-color: white;
+  border-style: solid;
   font-size: 1.6rem;
   height: 50px;
   width: 500px;
   padding-left: 1rem;
 }
 
+input[type="text"]:focus {
+  outline: none;
+  border-color: #86c232;
+  border-radius: 5px;
+  border-width: 2px;
+}
+
 /* Footer */
 footer {
-  background-color: #17252a;
-  color: #feffff;
+  background-color: #86c232;
+  color: #222629;
   width: 100%;
   text-align: center;
   padding: 2rem 0;

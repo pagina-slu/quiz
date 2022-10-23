@@ -62,7 +62,7 @@ main {
 }
 
 .category-button:hover {
-  background-color: #17252a;
+  background-color: #86c232;
   border: none;
   color: white;
 }
@@ -178,6 +178,44 @@ h1 {
   font-size: 1.6rem;
 }
 
+.input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.input-wrapper .input {
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+}
+
+.input:hover {
+  border: 1px dashed white;
+  border-radius: 5px;
+}
+
+input[type="radio"] {
+  appearance: none;
+  border-radius: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+
+  border: 2px solid white;
+  transition: 0.2s all linear;
+  margin-right: 1rem;
+}
+
+input[type="radio"]:checked {
+  border: 6px solid #86c232;
+}
+
 .button {
   margin: 2rem;
 }
@@ -224,9 +262,11 @@ input[type="text"] {
   background-color: transparent;
   border-color: white;
   border-style: solid;
+  caret-color: white;
+  color: white;
   font-size: 1.6rem;
   height: 50px;
-  width: 500px;
+  width: 100%;
   padding-left: 1rem;
 }
 

@@ -13,54 +13,64 @@ html {
 
 body {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: 
-  #eee8f7;
+  background-color: #3aafa9;
+  position: relative;
+  color: #17252a;
+  padding-bottom: 5rem;
 }
 
 main {
-  width: 80%;
-}
-#title-wrapper {
-  margin-top: 15rem;
-  padding: 5rem;
-}
-#category-wrapper {
-  background-color: white;
-  margin-top: 15rem;
-  margin-bottom: 2rem;
-  padding: 3rem;
-  border: 1px solid black;
-  border-top: 10px solid #5c33ae;
-  border-radius: 10px;
-}
-#category-wrapper {
+  width: 80vw;
+  height: 100%;
   display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-  margin-top: 1rem;
-  padding: 5rem;
+  flex-direction: column;
 }
 
-#category {
+#title-wrapper {
+  width: 80%;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+#title {
+  color: #17252a;
+  font-weight: bold;
   font-size: 3.4rem;
 }
-button:hover{
-  background-color: blue;
-  color: white;
+
+#category-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.category-button {
+  border: none;
+  border-radius: 10px;
+  font-size: 2.5rem;
+  min-height: 10rem;
+  margin: 3rem;
+  padding: 5rem;
+  text-align: center;
+  min-width: 25rem;
+  /* Pagandahin pa */
+}
+
+.category-button:hover {
+  background-color: #17252a;
+  border: none;
+  color: #feffff;
 }
 
 /* Login */
 #login-form-btn {
-  padding: 7px;
+  display: none;
   color: #fff;
-  margin: 20px;
   border-radius: 5px;
   width: 7rem;
   height: 7rem;
@@ -68,7 +78,8 @@ button:hover{
   background-size: 6rem;
   background-position: center;
   position: absolute;
-  right: 8rem;
+  right: 5rem;
+  z-index: 9999;
 }
 
 #login-form-btn:hover {
@@ -77,15 +88,6 @@ button:hover{
   background-position: center;
   border-color: blue;
   cursor: pointer;
-}
-
-button{
-  width: 20vw;
-  height: 20vh ;
-  margin: 3rem;
-  font-size: 3rem;
-  border-color: blue;
-  /* Pagandahin pa */
 }
 
 #login {
@@ -100,7 +102,6 @@ button{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -90%);
-
 }
 
 #overlay,
@@ -135,11 +136,13 @@ input[type="button"] {
   margin-bottom: 15px;
 }
 
-input.username[type="text"], input.passw2ord[type="password"] {
+input.username[type="text"],
+input.password[type="password"] {
   font-size: 1.6rem;
   width: auto;
   height: auto;
 }
+
 #login-btn {
   background-color: blue;
   padding: 7px;
@@ -148,8 +151,8 @@ input.username[type="text"], input.passw2ord[type="password"] {
   border-radius: 5px;
 }
 
-#login-btn:active{
-  background-color:darkblue;
+#login-btn:active {
+  background-color: darkblue;
 }
 h1 {
   margin: 10px;
@@ -163,9 +166,8 @@ h1 {
   width: 80vw;
 }
 
-#question-wrapper {
+.question-wrapper {
   display: flex;
-  background-color: white;
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid;
@@ -185,7 +187,6 @@ h1 {
 
 .button-wrapper {
   display: flex;
-  background-color: white;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -216,11 +217,14 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
+  background-color: transparent;
+  color: white;
 }
 
 input[type="text"] {
+  background-color: transparent;
   font-size: 1.6rem;
   height: 50px;
   width: 500px;
@@ -229,16 +233,15 @@ input[type="text"] {
 
 /* Footer */
 footer {
+  background-color: #17252a;
+  color: #feffff;
   width: 100%;
   text-align: center;
-  border-top: 2px solid black;
   padding: 2rem 0;
   position: absolute;
-  left: 0;
   bottom: 0;
 }
 
 footer p {
   font-size: 1.4rem;
 }
-

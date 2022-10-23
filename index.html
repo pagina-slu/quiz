@@ -11,83 +11,36 @@
   <body>
     <!-- Instuctor log in -->
     <div>
-        <button id="login-form-btn"></button>
-        <div id="overlay"></div>
-        <div id="login">  
-          <button id="cross">&cross;</button>
-          <h1>Quiz Instructor</h1>
-          <form>
-            <input type="text" placeholder="Username" class="username" id="uname"/>
-            <input type="password" placeholder="Password" class="password" id="upass"/>
-            <input type="button" value="Log in" id="login-btn" />
-          </form>
-        </div>
+      <button id="login-form-btn"></button>
+      <div id="overlay"></div>
+      <div id="login">
+        <button id="cross">&cross;</button>
+        <h1>Quiz Instructor</h1>
+        <form>
+          <input
+            type="text"
+            placeholder="Username"
+            class="username"
+            id="uname"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            class="password"
+            id="upass"
+          />
+          <input type="button" value="Log in" id="login-btn" />
+        </form>
       </div>
-      <!-- Category selector -->
+    </div>
+    <!-- Category selector -->
     <main id="main">
       <div id="title-wrapper">
-        <span id="category">Web Systems Development</span>
       </div>
-      <div id="category-wrapper">
-        
-      </div>
+      <div id="category-wrapper"></div>
       <div id="quiz-wrapper">
-        <div id="question-wrapper">
-        <!-- dynamic question -->
-        </div>
-        <div class="button-wrapper">
-            <a class="button" id="previous-button">
-                <img src="res/arrow-left-circle.svg" alt="" srcset="">
-            </a>
-            <input type="number" name="question-number" id="question-number" value="1"/>
-            <span>of x</span>
-            <a class="button" id="next-button">
-                <img src="res/arrow-right-circle.svg" alt="" srcset="">
-            </a>
-        </div>
       </div>
     </main>
-    <!--
-    <div id="quiz-wrapper">
-        <div id="quiz">
-            <div class="question-wrapper">
-                <label for="q1" class="question">Who founded the World Wide Web Consortium?</label>
-                <div class="input-wrapper">
-                    <div class="input">
-                        <input type="text" name="q1" id="q1">
-                    </div>
-                </div>
-            </div>
-            <div class="question-wrapper">
-                <label for="q2" class="question">1xx status codes are:</label>
-                <div class="input-wrapper">
-                    <div class="input">
-                        <input type="radio" name="q2" id="informational" value="Informational">
-                        <label for="informational">Informational</label>
-                    </div>
-                    <div class="input">
-                        <input type="radio" name="q2" id="successful" value="Successful">
-                        <label for="informational">Successful</label>
-                    </div>
-                    <div class="input">
-                        <input type="radio" name="q2" id="redirection" value="Redirection">
-                        <label for="informational">Redirection</label>
-                    </div>
-                    <div class="input">
-                        <input type="radio" name="q2" id="client-side-errors" value="Client-side Errors">
-                        <label for="informational">Client-side Errors</label>
-                    </div>
-                    <div class="input">
-                        <input type="radio" name="q2" id="server-side-errors" value="Server-side Errors">
-                        <label for="informational">Server-side Errors</label>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-    -->
-
     <footer>
       <p>p&#0224;gina &#0169; 2022</p>
     </footer>

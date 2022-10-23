@@ -3,54 +3,41 @@ var questions = "";
 window.onload = function () {
     document.getElementById('quiz-wrapper').innerHTML = '';
     document.getElementById('category-wrapper').innerHTML = '';
-    document.getElementById('title-wrapper').innerHTML = '<span id="category">Choose a category</span>';
+    document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
 
     let btn1 = document.createElement("button");
-    btn1.innerHTML = "AppDev";
+    btn1.classList = "category-button";
+    btn1.innerHTML = "Applications Development";
     document.getElementById('category-wrapper').appendChild(btn1);
 
     let btn2 = document.createElement("button");
-    btn2.innerHTML = "Webtech";
+    btn2.classList = "category-button";
+    btn2.innerHTML = "Web Systems Development";
     document.getElementById('category-wrapper').appendChild(btn2);
 
     btn1.onclick = function () {
         document.getElementById('category-wrapper').remove();
-        document.getElementById('category').innerHTML = 'Appdev';
-        generateQuizWrapper();
+        document.getElementById('title').innerHTML = 'Applications Development';
+        generateQuizWrapper(); 1
         path1 += 'appdev.json';
         questions = readJSONfile(path1);
         startQuiz(); //starts the quiz by reading and appending of JSON data
-        document.getElementById("question-count").innerHTML = questions.length;
     }
     btn2.onclick = function () {
         document.getElementById('category-wrapper').remove();
-        document.getElementById('category').innerHTML = 'Web Systems Development';
+        document.getElementById('title').innerHTML = 'Web Systems Development';
         path1 += 'webtech.json';
         generateQuizWrapper();
         questions = readJSONfile(path1);
         startQuiz(); //starts the quiz by reading and appending of JSON data
-        document.getElementById("question-count").innerHTML = questions.length;
     }
-
 }
 
 function generateQuizWrapper() {
-    let buttonwrapper = document.createElement("div");
-    buttonwrapper.setAttribute("class", "button-wrapper");
     let questionwrapper = document.createElement("div");
     questionwrapper.setAttribute("id", "question-wrapper");
-
-    buttonwrapper.innerHTML = `
-    <a class="button" id="previous-button">
-                <img src="res/arrow-left-circle.svg" alt="" srcset="">
-            </a>
-            <input type="number" name="question-number" id="question-number" value="1"/>
-            <span>of <span id="question-count">x</span></span>
-            <a class="button" id="next-button">
-                <img src="res/arrow-right-circle.svg" alt="" srcset="">
-            </a>`;
-    document.getElementById("quiz-wrapper").appendChild(questionwrapper);
-    document.getElementById("quiz-wrapper").appendChild(buttonwrapper);
+    let quizWrapper = document.getElementById("quiz-wrapper");
+    quizWrapper.appendChild(questionwrapper);
 }
 
 function readJSONfile(path) {
@@ -67,117 +54,35 @@ function removeAllChildNodes(parent) {
     }
 }
 
-
-
 // FUNCTIONS
-
 //starts the reading and appending of JSON data
 function startQuiz() {
-    var previousQuestion = document.getElementById("previous-button");
-    var nextQuestion = document.getElementById("next-button");
-
+    let quizWrapper = document.getElementById("quiz-wrapper");
     let currentIndex = 0;
-    let currentQuestion = questions[currentIndex];
-    console.log(questions.length);
-    let questionWrapper = document.getElementById("question-wrapper");
-    console.log(questionWrapper);
-    switch (currentQuestion.type) {
-        case "identification":
-            questionWrapper = identification(currentQuestion);
-            break;
-        case "multiple-choice":
-            questionWrapper = (multipleChoice(currentQuestion), currentIndex);
-            break;
-        case "true-or-false":
-            questionWrapper = (trueOrFalse(currentQuestion), currentIndex);
-            break;
+    console.log(questions);
+    for (let i = 0; i < questions.length; i++) {
+        switch (questions[i].type) {
+            case "identification":
+                quizWrapper.appendChild(identification(questions[i]));
+                break;
+            case "true-or-false":
+                quizWrapper.appendChild(trueOrFalse(questions[i]));
+                break;
+            case "multiple-choice":
+                quizWrapper.appendChild(multipleChoice(questions[i]));
+                break;
+        }
     }
+}
 
-    let questionNumber = document.getElementById("question-number");
-
-    nextQuestion.addEventListener("click", () => {
-        currentIndex++;
-        if (currentIndex > questions.length - 1) {
-            alert("question index out of bounds: " + currentIndex);
-            currentIndex--;
-        }
-        else {
-            removeAllChildNodes(questionWrapper);
-            currentQuestion = questions[currentIndex];
-            if (currentIndex < questions.length) {
-                console.log(currentQuestion.type);
-                switch (currentQuestion.type) {
-                    case "identification":
-                        questionWrapper = identification(currentQuestion);
-                        break;
-                    case "multiple-choice":
-                        questionWrapper = (multipleChoice(currentQuestion));
-                        break;
-                    case "true-or-false":
-                        questionWrapper = (trueOrFalse(currentQuestion));
-                        break;
-                }
-            }
-            questionNumber.value = currentIndex + 1;
-            console.log(currentIndex);
-        }
-    });
-
-    previousQuestion.addEventListener("click", () => {
-        currentIndex--;
-        if (currentIndex < 0) {
-            alert("question index out of bounds: " + currentIndex);
-            currentIndex++;
-        }
-        else {
-            removeAllChildNodes(questionWrapper);
-            if (currentIndex < 0 || currentIndex > questions.length - 1) {
-                alert("question index out of bounds: " + currentIndex);
-            }
-
-            else if (currentIndex >= 0 && currentIndex < questions.length) {
-                currentQuestion = questions[currentIndex];
-                console.log(currentQuestion.type);
-                switch (currentQuestion.type) {
-                    case "identification":
-                        questionWrapper = identification(currentQuestion);
-                        break;
-                    case "multiple-choice":
-                        questionWrapper = (multipleChoice(currentQuestion), currentIndex);
-                        break;
-                    case "true-or-false":
-                        questionWrapper = (trueOrFalse(currentQuestion), currentIndex);
-                        break;
-                }
-            }
-            questionNumber.value = currentIndex + 1;
-            console.log(currentIndex);
-        }
-    });
-
-    questionNumber.addEventListener("input", () => {
-        currentIndex = questionNumber.value - 1;
-        if (currentIndex >= 0 && currentIndex < questions.length) {
-            currentQuestion = questions[currentIndex];
-            console.log(currentQuestion.type);
-            switch (currentQuestion.type) {
-                case "identification":
-                    questionWrapper = identification(currentQuestion);
-                    break;
-                case "multiple-choice":
-                    questionWrapper = (multipleChoice(currentQuestion), currentIndex);
-                    break;
-                case "true-or-false":
-                    questionWrapper = (trueOrFalse(currentQuestion), currentIndex);
-                    break;
-            }
-        }
-    });
+function generateQuestionWrapper() {
+    let questionWrapper = document.createElement("div");
+    questionWrapper.classList = "question-wrapper";
+    return questionWrapper;
 }
 
 function multipleChoice(data, index) {
-    let questionWrapper = document.getElementById("question-wrapper");
-    removeAllChildNodes(questionWrapper);
+    let questionWrapper = generateQuestionWrapper()
     let label = document.createElement("label");
     label.className = "question";
     label.innerHTML = data.question;
@@ -205,8 +110,7 @@ function multipleChoice(data, index) {
 }
 
 function identification(data) {
-    let questionWrapper = document.getElementById("question-wrapper");
-    removeAllChildNodes(questionWrapper);
+    let questionWrapper = generateQuestionWrapper()
     let label = document.createElement('label');
     let input = document.createElement('input');
     label.innerHTML = data.question;
@@ -217,8 +121,7 @@ function identification(data) {
 }
 
 function trueOrFalse(data, index) {
-    let questionWrapper = document.getElementById("question-wrapper");
-    removeAllChildNodes(questionWrapper);
+    let questionWrapper = generateQuestionWrapper()
     let label = document.createElement("label");
     label.className = "question";
     label.innerHTML = data.question;

@@ -64,10 +64,14 @@ function generateSubmitButton(){
     let submitWrapper = document.getElementById("submit-wrapper");
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "submit-button");
-
     submitButton.innerHTML = "Submit";
-
+    submitButton.addEventListener("click", checkQuiz);
     submitWrapper.appendChild(submitButton);
+}
+
+function checkQuiz(){
+   //get answers
+
 }
 
 function generateQuestionWrapper() {

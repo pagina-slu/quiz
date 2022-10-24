@@ -57,8 +57,6 @@ function startQuiz() {
                 break;
         }
     }
-
-
 }
 
 function generateSubmitButton(){
@@ -163,4 +161,20 @@ function trueOrFalse(data, index) {
 
 function showResults () { // KIEFER
 
+}
+
+function rotateProgressBar(value){
+    const circle = document.getElementById('progress-circle');
+    const bar = document.getElementById('value-bar');
+    const text = document.getElementById('progress-text');
+    let deg = Math.round(360/questions.length) * value;
+    if(deg <= 180){
+        text.innerHTML = Math.round(value/questions.length*100)+'%';
+        circle.className = ' ';
+        bar.style.transform = 'rotate('+deg+'deg)';
+    }else{
+        text.innerHTML = Math.round(value/questions.length*100)+'%';
+        circle.className = 'over50';
+        bar.style.transform = 'rotate('+deg+'deg)';
+    }
 }

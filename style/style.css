@@ -218,10 +218,11 @@ input[type="number"] {
 
 /* progress bar style */
 
-.progress-circle {
+#progress-circle {
   font-size: 20px;
-  margin: 20px;
-  position: relative;
+  bottom: 10px;
+  right: 5px;
+  position: fixed;
   /* so that children can be absolutely positioned */
   padding: 0;
   width: 5em;
@@ -229,9 +230,10 @@ input[type="number"] {
   background-color: #F2E9E1;
   border-radius: 50%;
   line-height: 5em;
+  z-index: 1;
 }
 
-.progress-circle:after {
+#progress-circle:after {
   border: none;
   position: absolute;
   top: 0.35em;
@@ -245,7 +247,7 @@ input[type="number"] {
   content: " ";
 }
 
-.progress-circle span {
+#progress-circle span {
   position: absolute;
   line-height: 5em;
   width: 5em;
@@ -269,11 +271,11 @@ input[type="number"] {
 
 /* when p>50, don't clip left half*/
 
-.progress-circle.over50 .left-half-clipper {
+#progress-circle.over50 .left-half-clipper {
   clip: rect(auto, auto, auto, auto);
 }
 
-.value-bar {
+#value-bar {
   /*This is an overlayed square, that is made round with the border radius,
    then it is cut to display only the left half, then rotated clockwise
    to escape the outer clipping path.*/
@@ -288,12 +290,13 @@ input[type="number"] {
   /*background-color: #4D642D;*/
   /* for debug */
   box-sizing: border-box;
+  transition: transform .5s ease-in-out;
 }
 
 
 /* Progress bar filling the whole right half for values above 50% */
 
-.progress-circle.over50 .first50-bar {
+#progress-circle.over50 .first50-bar {
   /*Progress bar for the first 50%, filling the whole right half*/
   position: absolute;
   /*needed for clipping*/
@@ -304,7 +307,7 @@ input[type="number"] {
   height: 5em;
 }
 
-.progress-circle:not(.over50) .first50-bar {
+#progress-circle:not(.over50) .first50-bar {
   display: none;
 }
 

@@ -160,3 +160,7 @@ function trueOrFalse(data, index) {
     questionWrapper.appendChild(inputWrapper);
     return questionWrapper;
 }
+
+function showResults () { // KIEFER
+
+}

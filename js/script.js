@@ -1,3 +1,4 @@
+hideProgressBar();
 var path1 = '../res/questions/';
 var questions = "";
 window.onload = function () {
@@ -39,11 +40,13 @@ function removeAllChildNodes(parent) {
 // Functions
 // Start reading and appending the JSON
 function startQuiz() {
+    showProgressBar()
     window.onbeforeunload = function() {
        return "Your progress would be lost";
     }
     let quizWrapper = document.getElementById("quiz-wrapper");
     console.log(questions);
+    
     for (let i = 0; i < questions.length; i++) {
         switch (questions[i].type) {
             case "identification":
@@ -163,18 +166,28 @@ function showResults () { // KIEFER
 
 }
 
-function rotateProgressBar(value){
+function rotateProgressBar(numOfAnswers){
     const circle = document.getElementById('progress-circle');
     const bar = document.getElementById('value-bar');
     const text = document.getElementById('progress-text');
-    let deg = Math.round(360/questions.length) * value;
+    let deg = Math.round(360/questions.length) * numOfAnswers;
     if(deg <= 180){
-        text.innerHTML = Math.round(value/questions.length*100)+'%';
+        text.innerHTML = Math.round(numOfAnswers/questions.length*100)+'%';
         circle.className = ' ';
         bar.style.transform = 'rotate('+deg+'deg)';
     }else{
-        text.innerHTML = Math.round(value/questions.length*100)+'%';
+        text.innerHTML = Math.round(numOfAnswers/questions.length*100)+'%';
         circle.className = 'over50';
         bar.style.transform = 'rotate('+deg+'deg)';
     }
+}
+
+function hideProgressBar(){
+    const circle = document.getElementById('progress-circle');
+    circle.style.display = "none";
+}
+
+function showProgressBar(){
+    const circle = document.getElementById('progress-circle');
+    circle.style.display = "";
 }

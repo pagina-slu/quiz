@@ -231,6 +231,7 @@ input[type="number"] {
   border-radius: 50%;
   line-height: 5em;
   z-index: 1;
+  filter:drop-shadow(5px 2px 5px rgba(0, 0, 0, 0.514));
 }
 
 #progress-circle:after {
@@ -253,7 +254,7 @@ input[type="number"] {
   width: 5em;
   text-align: center;
   display: block;
-  color: #08a1db;
+  color: #3cbe00;
   z-index: 2;
 }
 
@@ -285,7 +286,7 @@ input[type="number"] {
   width: 5em;
   height: 5em;
   border-radius: 50%;
-  border: 0.45em solid #08a1db;
+  border: 0.45em solid #3cbe00;
   /*The border is 0.35 but making it larger removes visual artifacts */
   /*background-color: #4D642D;*/
   /* for debug */
@@ -301,7 +302,7 @@ input[type="number"] {
   position: absolute;
   /*needed for clipping*/
   clip: rect(0, 5em, 5em, 2.5em);
-  background-color: #08a1db;
+  background-color: #3cbe00;
   border-radius: 50%;
   width: 5em;
   height: 5em;

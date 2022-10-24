@@ -191,3 +191,7 @@ function showProgressBar(){
     const circle = document.getElementById('progress-circle');
     circle.style.display = "";
 }
+
+function saveLocally(){
+    
+}

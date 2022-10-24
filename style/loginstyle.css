@@ -3,7 +3,8 @@
   margin: 20px;
   border-radius: 5px;
   border-style: solid;
-  border-color: white;
+  border-color: #86c232;
+  border-radius: 50%;
   width: 7rem;
   height: 7rem;
   background: url("../res/images/instructor.png") no-repeat;
@@ -17,7 +18,7 @@
   background: url("../res/images/instructor2.png") no-repeat;
   background-size: contain;
   background-position: center;
-  border: 3px solid white;
+  border: 3px solid #86c232;
   cursor: pointer;
 }
 

@@ -216,55 +216,96 @@ input[type="number"] {
   color: aliceblue;
 }
 
-#progress-container{
-  position: fixed;
-  right: 1vw;
-  bottom: 1vh;
-  z-index: 1;
-}
+/* progress bar style */
 
-#progress{
-  display: flex;
-  height: 10rem;
-  width: 10rem;
-  background: rgb(21, 255, 0);
-  border-radius: 50%;
-  overflow: hidden;
-  justify-content: center;
-  border: solid;
-  border-width: 2px;
-  border-color: black;
+.progress-circle {
+  font-size: 20px;
+  margin: 20px;
   position: relative;
-}
-
-#bar{
-  display: flex;
-  height: 10rem;
-  width: 10rem;
-  background: #ffffff;
-  justify-content: center;
-  transition: transform 1s ease-out;
-  position: absolute;
-  clip: rect(0,50px,100px,0);
-}
-
-#inner_circle{
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  height: 8rem;
-  width: 8rem;
+  /* so that children can be absolutely positioned */
+  padding: 0;
+  width: 5em;
+  height: 5em;
+  background-color: #F2E9E1;
   border-radius: 50%;
-  top: 0;
-  margin-top: 10%;
-  background: #222629;
-  z-index: 1;
+  line-height: 5em;
 }
 
-#percent{
-  color: white;
-  font-size: 2.5rem;
-  margin-top: 30%;
+.progress-circle:after {
+  border: none;
+  position: absolute;
+  top: 0.35em;
+  left: 0.35em;
+  text-align: center;
+  display: block;
+  border-radius: 50%;
+  width: 4.3em;
+  height: 4.3em;
+  background-color: white;
+  content: " ";
+}
+
+.progress-circle span {
+  position: absolute;
+  line-height: 5em;
+  width: 5em;
+  text-align: center;
+  display: block;
+  color: #08a1db;
+  z-index: 2;
+}
+
+.left-half-clipper {
+  /* a round circle */
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+  position: absolute;
+  /* needed for clipping */
+  clip: rect(0, 5em, 5em, 2.5em);
+  /* clips the whole left half*/
+}
+
+
+/* when p>50, don't clip left half*/
+
+.progress-circle.over50 .left-half-clipper {
+  clip: rect(auto, auto, auto, auto);
+}
+
+.value-bar {
+  /*This is an overlayed square, that is made round with the border radius,
+   then it is cut to display only the left half, then rotated clockwise
+   to escape the outer clipping path.*/
+  position: absolute;
+  /*needed for clipping*/
+  clip: rect(0, 2.5em, 5em, 0);
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  border: 0.45em solid #08a1db;
+  /*The border is 0.35 but making it larger removes visual artifacts */
+  /*background-color: #4D642D;*/
+  /* for debug */
+  box-sizing: border-box;
+}
+
+
+/* Progress bar filling the whole right half for values above 50% */
+
+.progress-circle.over50 .first50-bar {
+  /*Progress bar for the first 50%, filling the whole right half*/
+  position: absolute;
+  /*needed for clipping*/
+  clip: rect(0, 5em, 5em, 2.5em);
+  background-color: #08a1db;
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+}
+
+.progress-circle:not(.over50) .first50-bar {
+  display: none;
 }
 
 /* Footer */

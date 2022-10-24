@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'OpenSans';
+  src: url('../res/fonts/OpenSans.ttf');
+}
+
 /* Reset */
 * {
   box-sizing: border-box;
@@ -6,6 +11,7 @@
 }
 
 html {
+  font-family: 'OpenSans';
   font-size: 10px;
   scroll-behavior: smooth;
   width: 100%;
@@ -109,12 +115,10 @@ h1 {
   display: flex;
   align-items: center;
   width: 50%;
-}
-
-.input-wrapper .input {
   border: 1px solid transparent;
   padding: 0.5rem 1rem;
   margin: 0.5rem 0;
+  cursor: pointer;
 }
 
 .input-wrapper .input:hover {
@@ -209,11 +213,13 @@ input[type="number"] {
   font-size: 1.5rem;
   width: 15rem;
   height: 5rem;
+  border-radius: 10px;
 }
 
 #submit-button:hover{
   background-color: #86c232;
   color: aliceblue;
+  border-color: transparent;
 }
 
 #progress-container{

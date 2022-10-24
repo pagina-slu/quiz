@@ -77,5 +77,30 @@
             "Decompiler"
         ],
         "answer": "Interpreter"
+    },
+    {
+        "type": "true-or-false",
+        "question": "In programming, there’s no single programming language that is ideally used in solving problems.",
+        "answer": "True"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Imperative programming paradigm – specify “what” something is achieved.",
+        "answer": "False"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Declarative programming paradigm – specify “how” is required.",
+        "answer": "False"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Refactoring is a disciplined technique for restructuring an existing body of code, altering its internal structure without changing its external behavior.",
+        "answer": "True"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Software decay refers to the gradual deterioration of software over time or its decreasing inability to respond to its changing environment.",
+        "answer": "True"
     }
 ]

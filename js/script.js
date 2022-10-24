@@ -146,7 +146,7 @@ function trueOrFalse(data, index) {
 
         let input = document.createElement("input");
         input.type = "radio";
-        input.name = `q${index++}`;
+        input.name = `q${index + 1}`;
         input.value = options[i];
 
         let label = document.createElement('label');
@@ -193,5 +193,5 @@ function showProgressBar(){
 }
 
 function saveLocally(){
-    
+
 }

@@ -12,7 +12,7 @@ window.onload = function () {
         let categoryButton = document.createElement("button");
         categoryButton.classList = "category-button";
         categoryButton.innerHTML = category.name;
-        
+
         categoryButton.onclick = () => {
             document.getElementById('category-wrapper').remove();
             document.getElementById('title').innerHTML = category.name;
@@ -42,14 +42,14 @@ function removeAllChildNodes(parent) {
 // Start reading and appending the JSON
 function startQuiz() {
     showProgressBar()
-    window.onbeforeunload = function() {
+    window.onbeforeunload = function () {
         return "Your progress would be lost";
     }
     let quizWrapper = document.getElementById("quiz-wrapper");
     const numberOfQuestions = 5;                    //number of questions to show
     let totalQuestions = Object.keys(questions).length; //total number of questions in JSON
     sequence = generateNumberSequence(numberOfQuestions, totalQuestions);   //sequence of questions
-    
+
     for (let i = 0; i < sequence.length; i++) {
         switch (questions[sequence[i]].type) {
             case "identification":
@@ -66,14 +66,14 @@ function startQuiz() {
 }
 
 //this function will return an array of 'length' length consisting random numbers from 0  to 'max'
-function generateNumberSequence(length, max){  
+function generateNumberSequence(length, max) {
     let numberSequence = [];
     let newNum = Math.floor(Math.random() * max);
     numberSequence.push(newNum);
-    let count = length-1;
-    while (count > 0){
+    let count = length - 1;
+    while (count > 0) {
         newNum = Math.floor(Math.random() * max);
-        if (numberSequence.indexOf(newNum) == -1){
+        if (numberSequence.indexOf(newNum) == -1) {
             numberSequence.push(newNum);
             count--;
         }
@@ -81,7 +81,7 @@ function generateNumberSequence(length, max){
     return numberSequence;
 }
 
-function generateSubmitButton(){  // generate and assign event listener to submit button
+function generateSubmitButton() {  // generate and assign event listener to submit button
     let submitWrapper = document.getElementById("submit-wrapper");
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "submit-button");
@@ -90,38 +90,38 @@ function generateSubmitButton(){  // generate and assign event listener to submi
     submitWrapper.appendChild(submitButton);
 }
 
-function submitQuiz(){
+function submitQuiz() {
     let answerWrapper = document.querySelectorAll(".input-wrapper");
-    let answers = [];           //this will hold the answer of the user
-    
-    for(let index = 0; index <answerWrapper.length; index++ ) {    //get answers
-        let a = "";
-        if(answerWrapper[index].firstChild.className == "identification"){
-            a = answerWrapper[index].firstChild.firstChild.value;
+    let answers = []; // Holds the answer of the user
+
+    for (let index = 0; index < answerWrapper.length; index++) { // Get answers
+        let answer = "";
+        if (answerWrapper[index].firstChild.className == "identification") {
+            answer = answerWrapper[index].firstChild.firstChild.value;
             // if(a == "" || a == null){
             //     alert("please answer all the items");
             //     break;
             // }
-            
-        } else if(answerWrapper[index].firstChild.className == "multiple-choice"){
-            if(answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked")){
-                a = answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked").value;
-            } 
+
+        } else if (answerWrapper[index].firstChild.className == "multiple-choice") {
+            if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
+            }
             // else{
             //     alert("Please answer all the qestions");
             //     break;
             // }
-        } else if(answerWrapper[index].firstChild.className == "true-false"){
-            if(answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked")){
-                a = answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked").value;
+        } else if (answerWrapper[index].firstChild.className == "true-false") {
+            if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             // else{
             //     alert("Please answer all the qestions");
             //     break;
             // }
         }
-        answers.push(a);
-        
+        answers.push(answer);
+
     }
     let score = checkAnswers(answers);
     console.log("you got: " + score);
@@ -129,11 +129,11 @@ function submitQuiz(){
 }
 
 //checks the answer and return the number of correct answers
-function checkAnswers(answers){     
+function checkAnswers(answers) {
     let counter = 0;
-    for(let i = 0; i < sequence.length; i++){
-        if(questions[sequence[i]].answer == answers[i]){
-            counter ++;
+    for (let i = 0; i < sequence.length; i++) {
+        if (questions[sequence[i]].answer == answers[i]) {
+            counter++;
         }
     }
 
@@ -166,9 +166,10 @@ function multipleChoice(data, index) {
     for (let i = 0; i < data.options.length; i++) {
         let inputDiv = document.createElement("div");
         inputDiv.className = "multiple-choice";
+        inputDiv.classList.add("input");
         let input = document.createElement("input");
         input.type = "radio";
-        input.name = `q${index + 1}`; 
+        input.name = `q${index + 1}`;
         input.value = data.options[i];
 
         let label = document.createElement('label');
@@ -210,7 +211,7 @@ function trueOrFalse(data, index) {
     for (let i = 0; i < options.length; i++) {
         let inputDiv = document.createElement("div");
         inputDiv.className = "true-false";
-
+        inputDiv.classList.add("input");
         let input = document.createElement("input");
         input.type = "radio";
         input.name = `q${index + 1}`;
@@ -229,36 +230,36 @@ function trueOrFalse(data, index) {
     return questionWrapper;
 }
 
-function showResults(answers) { 
+function showResults(answers) {
 
 }
 
-function rotateProgressBar(numOfAnswers){
+function rotateProgressBar(numOfAnswers) {
     const circle = document.getElementById('progress-circle');
     const bar = document.getElementById('value-bar');
     const text = document.getElementById('progress-text');
-    let deg = Math.round(360/questions.length) * numOfAnswers;
-    if(deg <= 180){
-        text.innerHTML = Math.round(numOfAnswers/questions.length*100)+'%';
+    let deg = Math.round(360 / questions.length) * numOfAnswers;
+    if (deg <= 180) {
+        text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';
         circle.className = ' ';
-        bar.style.transform = 'rotate('+deg+'deg)';
-    }else{
-        text.innerHTML = Math.round(numOfAnswers/questions.length*100)+'%';
+        bar.style.transform = 'rotate(' + deg + 'deg)';
+    } else {
+        text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';
         circle.className = 'over50';
-        bar.style.transform = 'rotate('+deg+'deg)';
+        bar.style.transform = 'rotate(' + deg + 'deg)';
     }
 }
 
-function hideProgressBar(){
+function hideProgressBar() {
     const circle = document.getElementById('progress-circle');
     circle.style.display = "none";
 }
 
-function showProgressBar(){
+function showProgressBar() {
     const circle = document.getElementById('progress-circle');
     circle.style.display = "";
 }
 
-function saveLocally(){
+function saveLocally() {
 
 }

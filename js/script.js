@@ -1,6 +1,7 @@
 hideProgressBar();
 var path1 = '../res/questions/';
 var questions = "";
+var sequence;
 window.onload = function () {
     document.getElementById('quiz-wrapper').innerHTML = '';
     document.getElementById('category-wrapper').innerHTML = '';
@@ -45,9 +46,9 @@ function startQuiz() {
        return "Your progress would be lost";
     }
     let quizWrapper = document.getElementById("quiz-wrapper");
-    const numberOfQuestions = 15; //number of questions to show
+    const numberOfQuestions = 5; //number of questions to show
     let totalQuestions = Object.keys(questions).length;
-    let sequence = generateNumberSequence(numberOfQuestions, totalQuestions);
+    sequence = generateNumberSequence(numberOfQuestions, totalQuestions);
 
     console.log(sequence);
     
@@ -86,13 +87,57 @@ function generateSubmitButton(){
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "submit-button");
     submitButton.innerHTML = "Submit";
-    submitButton.addEventListener("click", checkQuiz);
+    submitButton.addEventListener("click", submitQuiz);
     submitWrapper.appendChild(submitButton);
 }
 
-function checkQuiz(){
-   //get answers
+function submitQuiz(){
+    let answerWrapper = document.querySelectorAll(".input-wrapper");
+    let answers = [];
+    
+    for(let index = 0; index <answerWrapper.length; index++ ) {    //get answers
+        let a = "";
+        if(answerWrapper[index].firstChild.className == "identification"){
+            a = answerWrapper[index].firstChild.firstChild.value;
+            // if(a == "" || a == null){
+            //     alert("please answer all the items");
+            //     break;
+            // }
+            
+        } else if(answerWrapper[index].firstChild.className == "multiple-choice"){
+            if(answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked")){
+                a = answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked").value;
+            } 
+            // else{
+            //     alert("Please answer all the qestions");
+            //     break;
+            // }
+        } else if(answerWrapper[index].firstChild.className == "true-false"){
+            if(answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked")){
+                a = answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked").value;
+            }
+            // else{
+            //     alert("Please answer all the qestions");
+            //     break;
+            // }
+        }
+        answers.push(a);
+        
+    }
+    let score = checkAnswers(answers);
+    console.log("you got: " + score);
+    showResults(answers);
+}
 
+function checkAnswers(answers){
+    let counter = 0;
+    for(let i = 0; i < sequence.length; i++){
+        if(questions[sequence[i]].answer == answers[i]){
+            counter ++;
+        }
+    }
+
+    return counter;
 }
 
 function generateQuestionWrapper() {
@@ -120,10 +165,10 @@ function multipleChoice(data, index) {
     let inputWrapper = generateInputWrapper();
     for (let i = 0; i < data.options.length; i++) {
         let inputDiv = document.createElement("div");
-        inputDiv.className = "input";
+        inputDiv.className = "multiple-choice";
         let input = document.createElement("input");
         input.type = "radio";
-        input.name = `q${index + 1}`;
+        input.name = `q${index + 1}`; 
         input.value = data.options[i];
 
         let label = document.createElement('label');
@@ -143,10 +188,13 @@ function identification(data, index) {
     let questionWrapper = generateQuestionWrapper();
     let label = generateQuestionLabel(data.question, index);
     let inputWrapper = generateInputWrapper();
+    let inputDiv = document.createElement('div')
+    inputDiv.className = "identification";
 
     let input = document.createElement('input');
     input.type = "text";
-    inputWrapper.appendChild(input);
+    inputDiv.appendChild(input);
+    inputWrapper.appendChild(inputDiv);
 
     questionWrapper.appendChild(label);
     questionWrapper.appendChild(inputWrapper);
@@ -161,7 +209,7 @@ function trueOrFalse(data, index) {
     const options = ["True", "False"];
     for (let i = 0; i < options.length; i++) {
         let inputDiv = document.createElement("div");
-        inputDiv.className = "input";
+        inputDiv.className = "true-false";
 
         let input = document.createElement("input");
         input.type = "radio";
@@ -181,7 +229,7 @@ function trueOrFalse(data, index) {
     return questionWrapper;
 }
 
-function showResults () { // KIEFER
+function showResults(answers) { 
 
 }
 

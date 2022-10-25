@@ -111,7 +111,7 @@ h1 {
   max-width: 100%;
 }
 
-.input-wrapper .input {
+.input-wrapper .input, .multiple-choice, .true-false{
   display: flex;
   align-items: center;
   width: 50%;
@@ -182,8 +182,10 @@ input[type="number"] {
   background-color: transparent;
   color: white;
 }
-
-.input-wrapper input[type="text"] {
+.identification{
+  width: 100%;
+}
+.input-wrapper .identification input[type="text"]{
   background-color: transparent;
   border-color: white;
   border-style: solid;

@@ -1,7 +1,7 @@
 hideProgressBar();
-var path1 = '../res/questions/';
-var questions = "";
-var sequence;
+var path1 = '../res/questions/';    //path of the questions
+var questions = "";                 //List of questions
+var sequence;                       //list of question order
 window.onload = function () {
     document.getElementById('quiz-wrapper').innerHTML = '';
     document.getElementById('category-wrapper').innerHTML = '';
@@ -43,14 +43,12 @@ function removeAllChildNodes(parent) {
 function startQuiz() {
     showProgressBar()
     window.onbeforeunload = function() {
-       return "Your progress would be lost";
+        return "Your progress would be lost";
     }
     let quizWrapper = document.getElementById("quiz-wrapper");
-    const numberOfQuestions = 5; //number of questions to show
-    let totalQuestions = Object.keys(questions).length;
-    sequence = generateNumberSequence(numberOfQuestions, totalQuestions);
-
-    console.log(sequence);
+    const numberOfQuestions = 5;                    //number of questions to show
+    let totalQuestions = Object.keys(questions).length; //total number of questions in JSON
+    sequence = generateNumberSequence(numberOfQuestions, totalQuestions);   //sequence of questions
     
     for (let i = 0; i < sequence.length; i++) {
         switch (questions[sequence[i]].type) {
@@ -67,13 +65,14 @@ function startQuiz() {
     }
 }
 
-function generateNumberSequence(num, total){
+//this function will return an array of 'length' length consisting random numbers from 0  to 'max'
+function generateNumberSequence(length, max){  
     let numberSequence = [];
-    let newNum = Math.floor(Math.random() * total);
+    let newNum = Math.floor(Math.random() * max);
     numberSequence.push(newNum);
-    let count = num-1;
+    let count = length-1;
     while (count > 0){
-        newNum = Math.floor(Math.random() * total);
+        newNum = Math.floor(Math.random() * max);
         if (numberSequence.indexOf(newNum) == -1){
             numberSequence.push(newNum);
             count--;
@@ -82,7 +81,7 @@ function generateNumberSequence(num, total){
     return numberSequence;
 }
 
-function generateSubmitButton(){
+function generateSubmitButton(){  // generate and assign event listener to submit button
     let submitWrapper = document.getElementById("submit-wrapper");
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "submit-button");
@@ -93,7 +92,7 @@ function generateSubmitButton(){
 
 function submitQuiz(){
     let answerWrapper = document.querySelectorAll(".input-wrapper");
-    let answers = [];
+    let answers = [];           //this will hold the answer of the user
     
     for(let index = 0; index <answerWrapper.length; index++ ) {    //get answers
         let a = "";
@@ -129,7 +128,8 @@ function submitQuiz(){
     showResults(answers);
 }
 
-function checkAnswers(answers){
+//checks the answer and return the number of correct answers
+function checkAnswers(answers){     
     let counter = 0;
     for(let i = 0; i < sequence.length; i++){
         if(questions[sequence[i]].answer == answers[i]){

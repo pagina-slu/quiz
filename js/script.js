@@ -45,21 +45,40 @@ function startQuiz() {
        return "Your progress would be lost";
     }
     let quizWrapper = document.getElementById("quiz-wrapper");
-    console.log(questions);
+    const numberOfQuestions = 15; //number of questions to show
+    let totalQuestions = Object.keys(questions).length;
+    let sequence = generateNumberSequence(numberOfQuestions, totalQuestions);
+
+    console.log(sequence);
     
-    for (let i = 0; i < questions.length; i++) {
-        switch (questions[i].type) {
+    for (let i = 0; i < sequence.length; i++) {
+        switch (questions[sequence[i]].type) {
             case "identification":
-                quizWrapper.appendChild(identification(questions[i], i));
+                quizWrapper.appendChild(identification(questions[sequence[i]], i));
                 break;
             case "true-or-false":
-                quizWrapper.appendChild(trueOrFalse(questions[i], i));
+                quizWrapper.appendChild(trueOrFalse(questions[sequence[i]], i));
                 break;
             case "multiple-choice":
-                quizWrapper.appendChild(multipleChoice(questions[i], i));
+                quizWrapper.appendChild(multipleChoice(questions[sequence[i]], i));
                 break;
         }
     }
+}
+
+function generateNumberSequence(num, total){
+    let numberSequence = [];
+    let newNum = Math.floor(Math.random() * total);
+    numberSequence.push(newNum);
+    let count = num-1;
+    while (count > 0){
+        newNum = Math.floor(Math.random() * total);
+        if (numberSequence.indexOf(newNum) == -1){
+            numberSequence.push(newNum);
+            count--;
+        }
+    }
+    return numberSequence;
 }
 
 function generateSubmitButton(){

@@ -2,7 +2,7 @@ hideProgressBar();
 var path1 = '../res/questions/';    //path of the questions
 var questions = "";                 //List of questions
 var sequence;                       //list of question order
-const numberOfQuestions = 10;
+
 window.onload = function () {
     document.getElementById('quiz-wrapper').innerHTML = '';
     document.getElementById('category-wrapper').innerHTML = '';
@@ -40,6 +40,71 @@ function removeAllChildNodes(parent) {
 }
 
 // Functions
+let userPlace = document.getElementById("user-form");
+function generateUserLogIn(){
+    let form = document.createElement("form");
+    form.setAttribute("action", "index.html");
+
+    let user = document.createElement("input");
+    user.setAttribute("id", "username");
+    user.setAttribute("type", "text");
+    user.setAttribute("name", "Enter your name");
+    user.setAttribute("placeholder", "Enter your name");
+
+    let enter = document.createElement("button");
+    enter.setAttribute("id","btn");
+    enter.setAttribute("disabled", "")
+    enter.innerHTML = "Enter!";
+
+    
+
+    form.append(user);
+    form.append(enter);
+ 
+    document.getElementById("user-wrapper")
+    .appendChild(form);
+
+    const username = document.getElementById("username");
+    const startButton = document.getElementById("btn");
+
+    username.addEventListener('keyup', () => {
+        startButton.disabled = !username.value;
+    });
+
+}
+let down = document.getElementById("user-form");
+function generateUserLogIn(){
+    let form = document.createElement("form");
+    form.setAttribute("action", "index.html");
+
+    let user = document.createElement("input");
+    user.setAttribute("id", "username");
+    user.setAttribute("type", "text");
+    user.setAttribute("name", "Enter your name");
+    user.setAttribute("placeholder", "Enter your name");
+
+    let enter = document.createElement("button");
+    enter.setAttribute("id","btn");
+    enter.setAttribute("disabled", "")
+    enter.innerHTML = "Enter!";
+
+    
+
+    form.append(user);
+    form.append(enter);
+ 
+    document.getElementById("user-wrapper")
+    .appendChild(form);
+
+    const username = document.getElementById("username");
+    const startButton = document.getElementById("btn");
+
+    username.addEventListener('keyup', () => {
+        startButton.disabled = !username.value;
+    });
+
+}
+
 // Start reading and appending the JSON
 function startQuiz() {
     showProgressBar()
@@ -47,6 +112,7 @@ function startQuiz() {
         return "Your progress would be lost";
     }
     let quizWrapper = document.getElementById("quiz-wrapper");
+    const numberOfQuestions = 5;                    //number of questions to show
     let totalQuestions = Object.keys(questions).length; //total number of questions in JSON
     sequence = generateNumberSequence(numberOfQuestions, totalQuestions);   //sequence of questions
 
@@ -96,23 +162,22 @@ function submitQuiz() {
 
     for (let index = 0; index < answerWrapper.length; index++) { // Get answers
         let answer = "";
-        let type = answerWrapper[index].firstChild.classList
-        if (type.contains("identification")) {
+        if (answerWrapper[index].firstChild.className == "identification") {
             answer = answerWrapper[index].firstChild.firstChild.value;
             // if(a == "" || a == null){
             //     alert("please answer all the items");
             //     break;
             // }
 
-        } else if (type.contains("multiple-choice")) {
-            if (answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked")) {
-                answer = answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked").value;
+        } else if (answerWrapper[index].firstChild.className == "multiple-choice") {
+            if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             // else{
             //     alert("Please answer all the qestions");
             //     break;
             // }
-        } else if (type.contains("true-false")) {
+        } else if (answerWrapper[index].firstChild.className == "true-false") {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
@@ -122,50 +187,18 @@ function submitQuiz() {
             // }
         }
         answers.push(answer);
-        console.log(answer);
+
     }
-    //console.log(answers);
     let score = checkAnswers(answers);
     console.log("you got: " + score);
     showResults(answers);
-}
-
-function countAnsweredQuestions() {
-    let answerWrapper = document.querySelectorAll(".input-wrapper");
-    let answerCount = 0; // Holds the answer of the user
-
-    for (let index = 0; index < answerWrapper.length; index++) { // Get answers
-        let answer = "";
-        let type = answerWrapper[index].firstChild.classList;
-        if (type.contains("identification")) {
-            answer = answerWrapper[index].firstChild.firstChild.value;
-            console.log(answer);
-            if(answer.length != 0){
-                console.log("Answered iden");
-                answerCount++;
-            }
-        } else if (type.contains("multiple-choice")) {
-            if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                console.log("Answered mult");
-                answerCount++;
-            }
-        } else if (type.contains("true-false")) {
-            if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                console.log("Answered trueorfalse");
-                answerCount++;
-            }
-        }
-    }
-    console.log(answerCount);
-    return answerCount;
 }
 
 //checks the answer and return the number of correct answers
 function checkAnswers(answers) {
     let counter = 0;
     for (let i = 0; i < sequence.length; i++) {
-        console.log(`${answers[i]}`);
-        if (questions[sequence[i]].answer.toLowerCase() == answers[i].toLowerCase()) {
+        if (questions[sequence[i]].answer == answers[i]) {
             counter++;
         }
     }
@@ -204,9 +237,6 @@ function multipleChoice(data, index) {
         input.type = "radio";
         input.name = `q${index + 1}`;
         input.value = data.options[i];
-        input.addEventListener("click", () => {
-            rotateProgressBar(countAnsweredQuestions());
-        });
 
         let label = document.createElement('label');
         label.innerHTML = data.options[i];
@@ -231,9 +261,6 @@ function identification(data, index) {
     let input = document.createElement('input');
     input.type = "text";
     inputDiv.appendChild(input);
-    inputDiv.addEventListener("input", () => {
-        rotateProgressBar(countAnsweredQuestions());
-    })
     inputWrapper.appendChild(inputDiv);
 
     questionWrapper.appendChild(label);
@@ -255,9 +282,6 @@ function trueOrFalse(data, index) {
         input.type = "radio";
         input.name = `q${index + 1}`;
         input.value = options[i];
-        input.addEventListener("click", () => {
-            rotateProgressBar(countAnsweredQuestions());
-        });
 
         let label = document.createElement('label');
         label.innerHTML = options[i];
@@ -280,14 +304,13 @@ function rotateProgressBar(numOfAnswers) {
     const circle = document.getElementById('progress-circle');
     const bar = document.getElementById('value-bar');
     const text = document.getElementById('progress-text');
-    console.log(numOfAnswers);
-    let deg = Math.round(360 / sequence.length) * numOfAnswers;
+    let deg = Math.round(360 / questions.length) * numOfAnswers;
     if (deg <= 180) {
-        text.innerHTML = Math.round(numOfAnswers / sequence.length * 100) + '%';
+        text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';
         circle.className = ' ';
         bar.style.transform = 'rotate(' + deg + 'deg)';
     } else {
-        text.innerHTML = Math.round(numOfAnswers / sequence.length * 100) + '%';
+        text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';
         circle.className = 'over50';
         bar.style.transform = 'rotate(' + deg + 'deg)';
     }

@@ -63,7 +63,7 @@ header {
 button {
   padding: 9px 25px;
   background-color: white;
-  color:#86c232;;
+  color: #86c232;
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -76,7 +76,7 @@ button:hover {
 }
 
 #top-nav {
-	margin-top: 1rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,6 +90,7 @@ button:hover {
 }
 
 #top-nav ul li {
+  cursor: pointer;
   list-style: none;
   background-color: white;
   border-radius: 5px;
@@ -98,18 +99,17 @@ button:hover {
 }
 
 #top-nav ul li:hover {
-	border-bottom: 0.5rem solid #86c232;
+  border-bottom: 0.5rem solid #86c232;
 }
 
 #top-nav ul li.selected {
-	border-bottom: 0.5rem solid #86c232;
+  border-bottom: 0.5rem solid #86c232;
 }
 
 #top-nav ul li a {
   color: black;
-
 }
 
 .white {
-	filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
 }

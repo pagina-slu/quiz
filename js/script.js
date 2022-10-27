@@ -3,6 +3,7 @@ var path1 = '../res/questions/';    //path of the questions
 var questions = "";                 //List of questions
 var sequence;                       //list of question order
 const numberOfQuestions = 10;
+
 window.onload = function () {
     document.getElementById('quiz-wrapper').innerHTML = '';
     document.getElementById('category-wrapper').innerHTML = '';
@@ -305,4 +306,14 @@ function showProgressBar() {
 
 function saveLocally() {
 
+}
+
+class StudentData{
+    constructor(name, section, category, sequence, answers){
+        this.name = name; 
+        this.section = section; 
+        this.category = category; 
+        this.sequence =sequence; 
+        this.answer = answers;
+    }
 }

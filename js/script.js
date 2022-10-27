@@ -41,6 +41,71 @@ function removeAllChildNodes(parent) {
 }
 
 // Functions
+let userPlace = document.getElementById("user-form");
+function generateUserLogIn(){
+    let form = document.createElement("form");
+    form.setAttribute("action", "index.html");
+
+    let user = document.createElement("input");
+    user.setAttribute("id", "username");
+    user.setAttribute("type", "text");
+    user.setAttribute("name", "Enter your name");
+    user.setAttribute("placeholder", "Enter your name");
+
+    let enter = document.createElement("button");
+    enter.setAttribute("id","btn");
+    enter.setAttribute("disabled", "")
+    enter.innerHTML = "Enter!";
+
+    
+
+    form.append(user);
+    form.append(enter);
+ 
+    document.getElementById("user-wrapper")
+    .appendChild(form);
+
+    const username = document.getElementById("username");
+    const startButton = document.getElementById("btn");
+
+    username.addEventListener('keyup', () => {
+        startButton.disabled = !username.value;
+    });
+
+}
+let down = document.getElementById("user-form");
+function generateUserLogIn(){
+    let form = document.createElement("form");
+    form.setAttribute("action", "index.html");
+
+    let user = document.createElement("input");
+    user.setAttribute("id", "username");
+    user.setAttribute("type", "text");
+    user.setAttribute("name", "Enter your name");
+    user.setAttribute("placeholder", "Enter your name");
+
+    let enter = document.createElement("button");
+    enter.setAttribute("id","btn");
+    enter.setAttribute("disabled", "")
+    enter.innerHTML = "Enter!";
+
+    
+
+    form.append(user);
+    form.append(enter);
+ 
+    document.getElementById("user-wrapper")
+    .appendChild(form);
+
+    const username = document.getElementById("username");
+    const startButton = document.getElementById("btn");
+
+    username.addEventListener('keyup', () => {
+        startButton.disabled = !username.value;
+    });
+
+}
+
 // Start reading and appending the JSON
 function startQuiz() {
     showProgressBar()
@@ -48,6 +113,7 @@ function startQuiz() {
         return "Your progress would be lost";
     }
     let quizWrapper = document.getElementById("quiz-wrapper");
+    const numberOfQuestions = 5;                    //number of questions to show
     let totalQuestions = Object.keys(questions).length; //total number of questions in JSON
     sequence = generateNumberSequence(numberOfQuestions, totalQuestions);   //sequence of questions
 
@@ -97,23 +163,22 @@ function submitQuiz() {
 
     for (let index = 0; index < answerWrapper.length; index++) { // Get answers
         let answer = "";
-        let type = answerWrapper[index].firstChild.classList
-        if (type.contains("identification")) {
+        if (answerWrapper[index].firstChild.className == "identification") {
             answer = answerWrapper[index].firstChild.firstChild.value;
             // if(a == "" || a == null){
             //     alert("please answer all the items");
             //     break;
             // }
 
-        } else if (type.contains("multiple-choice")) {
-            if (answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked")) {
-                answer = answerWrapper[index].querySelector("input[name='q" + (index+1) + "']:checked").value;
+        } else if (answerWrapper[index].firstChild.className == "multiple-choice") {
+            if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             // else{
             //     alert("Please answer all the qestions");
             //     break;
             // }
-        } else if (type.contains("true-false")) {
+        } else if (answerWrapper[index].firstChild.className == "true-false") {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
@@ -123,9 +188,8 @@ function submitQuiz() {
             // }
         }
         answers.push(answer);
-        console.log(answer);
+
     }
-    //console.log(answers);
     let score = checkAnswers(answers);
     console.log("you got: " + score);
     showResults(answers);
@@ -165,8 +229,7 @@ function countAnsweredQuestions() {
 function checkAnswers(answers) {
     let counter = 0;
     for (let i = 0; i < sequence.length; i++) {
-        console.log(`${answers[i]}`);
-        if (questions[sequence[i]].answer.toLowerCase() == answers[i].toLowerCase()) {
+        if (questions[sequence[i]].answer == answers[i]) {
             counter++;
         }
     }
@@ -228,13 +291,13 @@ function identification(data, index) {
     let inputWrapper = generateInputWrapper();
     let inputDiv = document.createElement('div')
     inputDiv.className = "identification";
+    inputDiv.addEventListener("input", () => {
+        rotateProgressBar(countAnsweredQuestions());
+    });
 
     let input = document.createElement('input');
     input.type = "text";
     inputDiv.appendChild(input);
-    inputDiv.addEventListener("input", () => {
-        rotateProgressBar(countAnsweredQuestions());
-    })
     inputWrapper.appendChild(inputDiv);
 
     questionWrapper.appendChild(label);

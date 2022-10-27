@@ -8,6 +8,7 @@ const numberOfQuestions = 5;        // Number of questions to show
 window.onload = function () {
     let startButton = document.getElementById('start-button');
     startButton.addEventListener('click', () => {
+        document.getElementById('login-form-btn').style.display = 'none';
         generateUserLogIn();
         startButton.style.display = "none";
     });

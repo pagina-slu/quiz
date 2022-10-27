@@ -36,6 +36,57 @@ main {
   flex-direction: column;
 }
 
+#user-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+#user-wrapper form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-wrapper input {
+  margin-bottom: 1rem;
+  width: 20rem;
+  padding: 1.5rem;
+  font-size: 1.8rem;
+  border: none;
+}
+
+#enter-button {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+  width: 20rem;
+  text-align: center;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #000000;
+  background-color: white;
+}
+
+#enter-button:hover {
+  cursor: pointer;
+  background: #86c232;
+  color: #fff;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
+
+#enter-button[disabled]:hover {
+  cursor: not-allowed;
+}
+
+
 #title-wrapper {
   display: flex;
   justify-content: center;
@@ -63,7 +114,7 @@ main {
   justify-content: center;
 }
 
-.category-button {
+.category-button, #start-button {
   border: none;
   border-radius: 10px;
   font-size: 2.5rem;
@@ -75,7 +126,7 @@ main {
   /* Pagandahin pa */
 }
 
-.category-button:hover {
+.category-button:hover, #start-button:hover {
   background-color: #86c232;
   border: none;
   color: white;
@@ -279,7 +330,6 @@ input[type="number"] {
 
 
 /* when p>50, don't clip left half*/
-
 #progress-circle.over50 .left-half-clipper {
   clip: rect(auto, auto, auto, auto);
 }

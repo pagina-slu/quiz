@@ -6,22 +6,10 @@ const numberOfQuestions = 5;        // Number of questions to show
 
 // Runs after the page loads
 window.onload = function () {
-    document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
-
-    readJSONfile('../res/categories.json').forEach(category => {
-        // Create category buttons for each category in the JSON
-        let categoryButton = document.createElement("button");
-        categoryButton.classList = "category-button";
-        categoryButton.innerHTML = category.name;
-
-        categoryButton.onclick = () => {
-            document.getElementById('category-wrapper').remove();
-            document.getElementById('title').innerHTML = category.name;
-            questions = readJSONfile(category.path);
-            startQuiz();
-
-        }
-        document.getElementById('category-wrapper').appendChild(categoryButton);
+    let startButton = document.getElementById('start-button');
+    startButton.addEventListener('click', () => {
+        generateUserLogIn();
+        startButton.style.display = "none";
     });
 }
 
@@ -40,8 +28,7 @@ function removeAllChildNodes(parent) {
     }
 }
 
-let userPlace = document.getElementById("user-form");
-function generateUserLogIn(){
+function generateUserLogIn() {
     let form = document.createElement("form");
     form.setAttribute("action", "index.html");
 
@@ -52,51 +39,44 @@ function generateUserLogIn(){
     user.setAttribute("placeholder", "Enter your name");
 
     let enter = document.createElement("button");
-    enter.setAttribute("id","btn");
+    enter.setAttribute("id", "enter-button");
     enter.setAttribute("disabled", "")
     enter.innerHTML = "Enter!";
+    enter.addEventListener('click', () => {
+        document.getElementById('user-wrapper').style.display = "none";
+        let main = document.getElementById('main');
+        main.innerHTML += `<div id="title-wrapper"></div>
+        <div id="category-wrapper"></div>
+        <div id="quiz-wrapper"></div>
+        <div id="submit-wrapper"></div>`;
 
+        document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
+
+        readJSONfile('../res/categories.json').forEach(category => {
+            // Create category buttons for each category in the JSON
+            let categoryButton = document.createElement("button");
+            categoryButton.classList = "category-button";
+            categoryButton.innerHTML = category.name;
+
+            categoryButton.onclick = () => {
+                document.getElementById('category-wrapper').remove();
+                document.getElementById('title').innerHTML = category.name;
+                questions = readJSONfile(category.path);
+                startQuiz();
+            }
+            document.getElementById('category-wrapper').appendChild(categoryButton);
+        });
+    })
     form.append(user);
     form.append(enter);
- 
-    document.getElementById("user-wrapper")
-    .appendChild(form);
+
+    document.getElementById("user-wrapper").appendChild(form);
 
     const username = document.getElementById("username");
-    const startButton = document.getElementById("btn");
+    const enterButton = document.getElementById("enter-button");
 
     username.addEventListener('keyup', () => {
-        startButton.disabled = !username.value;
-    });
-}
-
-let down = document.getElementById("user-form");
-function generateUserLogIn(){
-    let form = document.createElement("form");
-    form.setAttribute("action", "index.html");
-
-    let user = document.createElement("input");
-    user.setAttribute("id", "username");
-    user.setAttribute("type", "text");
-    user.setAttribute("name", "Enter your name");
-    user.setAttribute("placeholder", "Enter your name");
-
-    let enter = document.createElement("button");
-    enter.setAttribute("id","btn");
-    enter.setAttribute("disabled", "")
-    enter.innerHTML = "Enter!";
-
-    form.append(user);
-    form.append(enter);
- 
-    document.getElementById("user-wrapper")
-    .appendChild(form);
-
-    const username = document.getElementById("username");
-    const startButton = document.getElementById("btn");
-
-    username.addEventListener('keyup', () => {
-        startButton.disabled = !username.value;
+        enterButton.disabled = !username.value;
     });
 }
 
@@ -200,7 +180,7 @@ function countAnsweredQuestions() {
         if (type.contains("identification")) {
             answer = answerWrapper[index].firstChild.firstChild.value;
             console.log(answer);
-            if(answer.length != 0){
+            if (answer.length != 0) {
                 answerCount++;
             }
         } else if (type.contains("multiple-choice")) {
@@ -278,7 +258,7 @@ function identification(data, index) {
     input.addEventListener("input", () => {
         rotateProgressBar(countAnsweredQuestions());
     });
-    
+
     inputDiv.appendChild(input);
     inputWrapper.appendChild(inputDiv);
 

@@ -194,6 +194,36 @@ function submitQuiz() {
     showResults(answers);
 }
 
+function countAnsweredQuestions() {
+    let answerWrapper = document.querySelectorAll(".input-wrapper");
+    let answerCount = 0; // Holds the answer of the user
+
+    for (let index = 0; index < answerWrapper.length; index++) { // Get answers
+        let answer = "";
+        let type = answerWrapper[index].firstChild.classList;
+        if (type.contains("identification")) {
+            answer = answerWrapper[index].firstChild.firstChild.value;
+            console.log(answer);
+            if(answer.length != 0){
+                console.log("Answered iden");
+                answerCount++;
+            }
+        } else if (type.contains("multiple-choice")) {
+            if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                console.log("Answered mult");
+                answerCount++;
+            }
+        } else if (type.contains("true-false")) {
+            if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                console.log("Answered trueorfalse");
+                answerCount++;
+            }
+        }
+    }
+    console.log(answerCount);
+    return answerCount;
+}
+
 //checks the answer and return the number of correct answers
 function checkAnswers(answers) {
     let counter = 0;
@@ -237,6 +267,9 @@ function multipleChoice(data, index) {
         input.type = "radio";
         input.name = `q${index + 1}`;
         input.value = data.options[i];
+        input.addEventListener("click", () => {
+            rotateProgressBar(countAnsweredQuestions());
+        });
 
         let label = document.createElement('label');
         label.innerHTML = data.options[i];
@@ -257,6 +290,9 @@ function identification(data, index) {
     let inputWrapper = generateInputWrapper();
     let inputDiv = document.createElement('div')
     inputDiv.className = "identification";
+    inputDiv.addEventListener("input", () => {
+        rotateProgressBar(countAnsweredQuestions());
+    });
 
     let input = document.createElement('input');
     input.type = "text";
@@ -282,6 +318,9 @@ function trueOrFalse(data, index) {
         input.type = "radio";
         input.name = `q${index + 1}`;
         input.value = options[i];
+        input.addEventListener("click", () => {
+            rotateProgressBar(countAnsweredQuestions());
+        });
 
         let label = document.createElement('label');
         label.innerHTML = options[i];
@@ -304,13 +343,14 @@ function rotateProgressBar(numOfAnswers) {
     const circle = document.getElementById('progress-circle');
     const bar = document.getElementById('value-bar');
     const text = document.getElementById('progress-text');
-    let deg = Math.round(360 / questions.length) * numOfAnswers;
+    console.log(numOfAnswers);
+    let deg = Math.round(360 / sequence.length) * numOfAnswers;
     if (deg <= 180) {
-        text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';
+        text.innerHTML = Math.round(numOfAnswers / sequence.length * 100) + '%';
         circle.className = ' ';
         bar.style.transform = 'rotate(' + deg + 'deg)';
     } else {
-        text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';
+        text.innerHTML = Math.round(numOfAnswers / sequence.length * 100) + '%';
         circle.className = 'over50';
         bar.style.transform = 'rotate(' + deg + 'deg)';
     }

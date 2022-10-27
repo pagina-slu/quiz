@@ -1,0 +1,115 @@
+@font-face {
+  font-family: "OpenSans";
+  src: url("../res/fonts/OpenSans.ttf");
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: "OpenSans";
+  font-size: 10px;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #222629;
+  position: relative;
+  color: white;
+  padding-bottom: 5rem;
+}
+
+main {
+  width: 80vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+li,
+a,
+button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #edf0f1;
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  background-color: #86c232;
+  border-bottom: 1rem solid white;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 30px 10%;
+  width: 100%;
+}
+
+.logo {
+  cursor: pointer;
+  margin-right: auto;
+}
+
+button {
+  padding: 9px 25px;
+  background-color: white;
+  color:#86c232;;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+button:hover {
+  color: white;
+  background-color: #86c232;
+}
+
+#top-nav {
+	margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#top-nav ul {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+#top-nav ul li {
+  list-style: none;
+  background-color: white;
+  border-radius: 5px;
+  border-bottom: 5px solid transparent;
+  padding: 1.5rem 3rem 1rem 3rem;
+}
+
+#top-nav ul li:hover {
+	border-bottom: 0.5rem solid #86c232;
+}
+
+#top-nav ul li.selected {
+	border-bottom: 0.5rem solid #86c232;
+}
+
+#top-nav ul li a {
+  color: black;
+
+}
+
+.white {
+	filter: brightness(0) invert(1);
+}

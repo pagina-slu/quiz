@@ -10,6 +10,18 @@ var currentCategory;
 
 // Runs after the page loads
 window.onload = function () {
+    generateUserWrapper();
+}
+
+// Functions
+function generateUserWrapper() {
+    let main = document.getElementById('main');
+    main.innerHTML = `      <div id="user-wrapper">
+    <div>
+      <button id="start-button">Start quiz</button>
+      <div id="user-form"></div>
+    </div>
+  </div>`;
     let startButton = document.getElementById('start-button');
     startButton.addEventListener('click', () => {
         document.getElementById('login-form-btn').style.display = 'none';
@@ -17,9 +29,6 @@ window.onload = function () {
         startButton.style.display = "none";
     });
 }
-
-// Functions
-
 function generateUserLogIn() {
     let form = document.createElement("form");
     form.setAttribute("action", "index.html");
@@ -29,8 +38,6 @@ function generateUserLogIn() {
     user.setAttribute("type", "text");
     user.setAttribute("name", "Enter your name");
     user.setAttribute("placeholder", "Enter your name");
-
-
 
     let enter = document.createElement("button");
     enter.setAttribute("id", "enter-button");
@@ -70,8 +77,8 @@ function generateUserLogIn() {
     })
     form.append(user);
     form.append(enter);
-
-    document.getElementById("user-wrapper").appendChild(form);
+    let userWrapper = document.getElementById("user-wrapper");
+    userWrapper.appendChild(form);
 }
 
 // Start reading and appending the JSON
@@ -164,6 +171,15 @@ function submitQuiz() {
     console.log("you got: " + score);
     showResults(answers);
     saveLocally(currentName, currentCategory, score, answers, sequence);
+    resetQuiz();
+}
+
+function resetQuiz() {
+    questions = "";
+    sequence = [];
+    currentName = "";
+    currentCategory = "";
+    generateUserWrapper();
 }
 
 function countAnsweredQuestions() {

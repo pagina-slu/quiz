@@ -130,6 +130,7 @@ main {
   background-color: #86c232;
   border: none;
   color: white;
+  cursor: pointer;
 }
 
 h1 {
@@ -182,6 +183,7 @@ h1 {
   border-radius: 50%;
   width: 1.6rem;
   height: 1.6rem;
+  cursor: pointer;
 
   border: 2px solid white;
   transition: 0.2s all linear;
@@ -190,6 +192,10 @@ h1 {
 
 .input-wrapper input[type="radio"]:checked {
   border: 6px solid #86c232;
+}
+
+.input label {
+  cursor: pointer;
 }
 
 .button {
@@ -267,6 +273,8 @@ input[type="number"] {
   width: 15rem;
   height: 5rem;
   border-radius: 10px;
+  border-color: transparent;
+  cursor: pointer;
 }
 
 #submit-button:hover{
@@ -315,6 +323,7 @@ input[type="number"] {
   display: block;
   color: #3cbe00;
   z-index: 2;
+  cursor: default;
 }
 
 .left-half-clipper {
@@ -382,5 +391,6 @@ footer {
 }
 
 footer p {
+  cursor: default;
   font-size: 1.4rem;
 }

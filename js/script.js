@@ -1,48 +1,23 @@
 hideProgressBar();
-var path1 = '../res/questions/';    //path of the questions
-var questions = "";                 //List of questions
-var sequence;                       //list of question order
-const numberOfQuestions = 10;
+var path1 = '../res/questions/';    // Path of the questions
+var questions = "";                 // List of questions
+var sequence;                       // List of question order
+const numberOfQuestions = 5;        // Number of questions to show
 
+// Runs after the page loads
 window.onload = function () {
-    document.getElementById('quiz-wrapper').innerHTML = '';
-    document.getElementById('category-wrapper').innerHTML = '';
-    document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
-
-    readJSONfile('../res/categories.json').forEach(category => {
-        console.log(category);
-        let categoryButton = document.createElement("button");
-        categoryButton.classList = "category-button";
-        categoryButton.innerHTML = category.name;
-
-        categoryButton.onclick = () => {
-            document.getElementById('category-wrapper').remove();
-            document.getElementById('title').innerHTML = category.name;
-            questions = readJSONfile(category.path);
-            startQuiz();
-            generateSubmitButton();
-        }
-        document.getElementById('category-wrapper').appendChild(categoryButton);
+    let startButton = document.getElementById('start-button');
+    startButton.addEventListener('click', () => {
+        document.getElementById('login-form-btn').style.display = 'none';
+        generateUserLogIn();
+        startButton.style.display = "none";
     });
-}
-
-function readJSONfile(path) {
-    var request = new XMLHttpRequest();
-    request.open("GET", path, false);
-    request.send(null);
-    var JSONobject = JSON.parse(request.responseText);
-    return JSONobject;
-}
-
-function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
 }
 
 // Functions
-let userPlace = document.getElementById("user-form");
-function generateUserLogIn(){
+
+
+function generateUserLogIn() {
     let form = document.createElement("form");
     form.setAttribute("action", "index.html");
 
@@ -53,57 +28,45 @@ function generateUserLogIn(){
     user.setAttribute("placeholder", "Enter your name");
 
     let enter = document.createElement("button");
-    enter.setAttribute("id","btn");
+    enter.setAttribute("id", "enter-button");
     enter.setAttribute("disabled", "")
     enter.innerHTML = "Enter!";
+    enter.addEventListener('click', () => {
+        document.getElementById('user-wrapper').style.display = "none";
+        let main = document.getElementById('main');
+        main.innerHTML += `<div id="title-wrapper"></div>
+        <div id="category-wrapper"></div>
+        <div id="quiz-wrapper"></div>
+        <div id="submit-wrapper"></div>`;
 
-    
+        document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
 
+        readJSONfile('../res/categories.json').forEach(category => {
+            // Create category buttons for each category in the JSON
+            let categoryButton = document.createElement("button");
+            categoryButton.classList = "category-button";
+            categoryButton.innerHTML = category.name;
+
+            categoryButton.onclick = () => {
+                document.getElementById('category-wrapper').remove();
+                document.getElementById('title').innerHTML = category.name;
+                questions = readJSONfile(category.path);
+                startQuiz();
+            }
+            document.getElementById('category-wrapper').appendChild(categoryButton);
+        });
+    })
     form.append(user);
     form.append(enter);
- 
-    document.getElementById("user-wrapper")
-    .appendChild(form);
+
+    document.getElementById("user-wrapper").appendChild(form);
 
     const username = document.getElementById("username");
-    const startButton = document.getElementById("btn");
+    const enterButton = document.getElementById("enter-button");
 
     username.addEventListener('keyup', () => {
-        startButton.disabled = !username.value;
+        enterButton.disabled = !username.value;
     });
-
-}
-let down = document.getElementById("user-form");
-function generateUserLogIn(){
-    let form = document.createElement("form");
-    form.setAttribute("action", "index.html");
-
-    let user = document.createElement("input");
-    user.setAttribute("id", "username");
-    user.setAttribute("type", "text");
-    user.setAttribute("name", "Enter your name");
-    user.setAttribute("placeholder", "Enter your name");
-
-    let enter = document.createElement("button");
-    enter.setAttribute("id","btn");
-    enter.setAttribute("disabled", "")
-    enter.innerHTML = "Enter!";
-
-    
-
-    form.append(user);
-    form.append(enter);
- 
-    document.getElementById("user-wrapper")
-    .appendChild(form);
-
-    const username = document.getElementById("username");
-    const startButton = document.getElementById("btn");
-
-    username.addEventListener('keyup', () => {
-        startButton.disabled = !username.value;
-    });
-
 }
 
 // Start reading and appending the JSON
@@ -112,10 +75,10 @@ function startQuiz() {
     window.onbeforeunload = function () {
         return "Your progress would be lost";
     }
+
     let quizWrapper = document.getElementById("quiz-wrapper");
-    const numberOfQuestions = 5;                    //number of questions to show
-    let totalQuestions = Object.keys(questions).length; //total number of questions in JSON
-    sequence = generateNumberSequence(numberOfQuestions, totalQuestions);   //sequence of questions
+    let totalQuestions = Object.keys(questions).length; // Total number of questions in JSON
+    sequence = generateNumberSequence(numberOfQuestions, totalQuestions); // Sequence of questions
 
     for (let i = 0; i < sequence.length; i++) {
         switch (questions[sequence[i]].type) {
@@ -130,9 +93,10 @@ function startQuiz() {
                 break;
         }
     }
+    generateSubmitButton();
 }
 
-//this function will return an array of 'length' length consisting random numbers from 0  to 'max'
+// Returns an array of random numbers from 0 to 'max'
 function generateNumberSequence(length, max) {
     let numberSequence = [];
     let newNum = Math.floor(Math.random() * max);
@@ -148,7 +112,8 @@ function generateNumberSequence(length, max) {
     return numberSequence;
 }
 
-function generateSubmitButton() {  // generate and assign event listener to submit button
+// Generate and assign event listener to submit button
+function generateSubmitButton() {
     let submitWrapper = document.getElementById("submit-wrapper");
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "submit-button");
@@ -165,30 +130,29 @@ function submitQuiz() {
         let answer = "";
         if (answerWrapper[index].firstChild.className == "identification") {
             answer = answerWrapper[index].firstChild.firstChild.value;
-            // if(a == "" || a == null){
-            //     alert("please answer all the items");
-            //     break;
-            // }
+            if (answer == "" || answer == null) {
+                alert("Please answer all the items");
+                break;
+            }
 
         } else if (answerWrapper[index].firstChild.className == "multiple-choice") {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
-            // else{
-            //     alert("Please answer all the qestions");
-            //     break;
-            // }
+            else {
+                alert("Please answer all the qestions");
+                break;
+            }
         } else if (answerWrapper[index].firstChild.className == "true-false") {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
-            // else{
-            //     alert("Please answer all the qestions");
-            //     break;
-            // }
+            else {
+                alert("Please answer all the qestions");
+                break;
+            }
         }
         answers.push(answer);
-
     }
     let score = checkAnswers(answers);
     console.log("you got: " + score);
@@ -205,13 +169,11 @@ function countAnsweredQuestions() {
         if (type.contains("identification")) {
             answer = answerWrapper[index].firstChild.firstChild.value;
             console.log(answer);
-            if(answer.length != 0){
-                console.log("Answered iden");
+            if (answer.length != 0) {
                 answerCount++;
             }
         } else if (type.contains("multiple-choice")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                console.log("Answered mult");
                 answerCount++;
             }
         } else if (type.contains("true-false")) {
@@ -260,23 +222,11 @@ function multipleChoice(data, index) {
     let questionWrapper = generateQuestionWrapper();
     let label = generateQuestionLabel(data.question, index);
     let inputWrapper = generateInputWrapper();
-    for (let i = 0; i < data.options.length; i++) {
-        let inputDiv = document.createElement("div");
-        inputDiv.className = "multiple-choice";
-        inputDiv.classList.add("input");
-        let input = document.createElement("input");
-        input.type = "radio";
-        input.name = `q${index + 1}`;
-        input.value = data.options[i];
-        input.addEventListener("click", () => {
-            rotateProgressBar(countAnsweredQuestions());
-        });
 
-        let label = document.createElement('label');
-        label.innerHTML = data.options[i];
-        label.for = data.answer;
-        inputDiv.appendChild(input);
-        inputDiv.appendChild(label);
+    for (let i = 0; i < data.options.length; i++) {
+        let inputDiv = generateInputDiv("multiple-choice");
+        inputDiv.appendChild(generateRadioButton(`q${index + 1}`, data.options[i]));
+        inputDiv.appendChild(generateLabelForRadioButton(data.options[i]));
         inputWrapper.appendChild(inputDiv);
     }
 
@@ -291,12 +241,13 @@ function identification(data, index) {
     let inputWrapper = generateInputWrapper();
     let inputDiv = document.createElement('div')
     inputDiv.className = "identification";
-    inputDiv.addEventListener("input", () => {
-        rotateProgressBar(countAnsweredQuestions());
-    });
 
     let input = document.createElement('input');
     input.type = "text";
+    input.addEventListener("input", () => {
+        rotateProgressBar(countAnsweredQuestions());
+    });
+
     inputDiv.appendChild(input);
     inputWrapper.appendChild(inputDiv);
 
@@ -312,28 +263,38 @@ function trueOrFalse(data, index) {
 
     const options = ["True", "False"];
     for (let i = 0; i < options.length; i++) {
-        let inputDiv = document.createElement("div");
-        inputDiv.className = "true-false";
-        inputDiv.classList.add("input");
-        let input = document.createElement("input");
-        input.type = "radio";
-        input.name = `q${index + 1}`;
-        input.value = options[i];
-        input.addEventListener("click", () => {
-            rotateProgressBar(countAnsweredQuestions());
-        });
-
-        let label = document.createElement('label');
-        label.innerHTML = options[i];
-        label.for = data.answer;
-        inputDiv.appendChild(input);
-        inputDiv.appendChild(label);
+        let inputDiv = generateInputDiv("true-false");
+        inputDiv.appendChild(generateRadioButton(`q${index + 1}`, options[i]));
+        inputDiv.appendChild(generateLabelForRadioButton(options[i]));
         inputWrapper.appendChild(inputDiv);
     }
 
     questionWrapper.appendChild(label);
     questionWrapper.appendChild(inputWrapper);
     return questionWrapper;
+}
+
+function generateInputDiv(questionType) {
+    let inputDiv = document.createElement("div");
+    inputDiv.className = `${questionType} input`;
+    return inputDiv;
+}
+
+function generateLabelForRadioButton(value) {
+    let label = document.createElement("label");
+    label.innerHTML = value;
+    return label;
+}
+
+function generateRadioButton(name, value) {
+    let input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.value = value;
+    input.addEventListener("click", () => {
+        rotateProgressBar(countAnsweredQuestions());
+    });
+    return input;
 }
 
 function showResults(answers) {
@@ -344,7 +305,7 @@ function rotateProgressBar(numOfAnswers) {
     const circle = document.getElementById('progress-circle');
     const bar = document.getElementById('value-bar');
     const text = document.getElementById('progress-text');
-    console.log(numOfAnswers);
+
     let deg = Math.round(360 / sequence.length) * numOfAnswers;
     if (deg <= 180) {
         text.innerHTML = Math.round(numOfAnswers / sequence.length * 100) + '%';

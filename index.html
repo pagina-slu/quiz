@@ -9,7 +9,7 @@
     <title>p&#0224;gina quiz</title>
   </head>
   <body>
-    <!-- Instuctor log in -->
+    <!-- Instructor log in -->
     <div>
       <button id="login-form-btn"></button>
       <div id="overlay"></div>
@@ -35,20 +35,21 @@
               name="upass"
             />
           </div>
-
           <input type="button" value="Log in" id="login-btn" />
         </form>
       </div>
     </div>
     <!-- Category selector -->
     <main id="main">
-      <div id="title-wrapper"></div>
-      <div id="category-wrapper"></div>
-      <div id="quiz-wrapper"></div>
-      <div id="submit-wrapper"></div>
+      <div id="user-wrapper">
+        <div id="user-center user-column">
+          <button id="start-button">Start quiz</button>
+          <div id="user-form"></div>
+        </div>
+      </div>
     </main>
 
-    <!-- progress bar -->
+    <!-- Progress bar -->
     <div id="progress-circle">
         <span id="progress-text">0%</span>
         <div class="left-half-clipper">
@@ -61,6 +62,7 @@
     <footer>
       <p>p&#0224;gina &#0169; 2022</p>
     </footer>
+    <script src="js/functions.js"></script>
     <script src="js/script.js"></script>
     <script src="js/login.js"></script>
   </body>

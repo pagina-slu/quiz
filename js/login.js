@@ -6,11 +6,11 @@ btn.addEventListener('click', openForm);
 ovrly.addEventListener('click', closeForm);
 cross.addEventListener('click', closeForm);
 
-function openForm(){
+function openForm() {
 	ovrly.style.display = "block";
 	login.style.display = "block";
 }
-function closeForm(){
+function closeForm() {
 	ovrly.style.display = "none";
 	login.style.display = "none";
 }
@@ -18,20 +18,20 @@ function closeForm(){
 var loginButton = document.getElementById('login-btn');
 loginButton.addEventListener('click', loginUser);
 
-function loginUser(){
+function loginUser() {
 	let uname = document.getElementById('uname').value;
 	let upassword = document.getElementById('upass').value;
-	if(uname =="instructor" && upassword=="admin"){
-		window.open("admin.html");
+	if (uname == "instructor" && upassword == "admin") {
+		window.open("teacher.html");
 		closeForm();
-	} else{
+	} else {
 		alert("Sorry! You entered a wrong username or pasword");
 	}
 }
 
 // Make label float when input element has focus
 const INPUTS = document.querySelectorAll("#login .input input");
-console.log(INPUTS);
+
 INPUTS.forEach(input => {
 	input.addEventListener("focus", () => {
 		input.parentElement.classList.add("focus");
@@ -39,7 +39,7 @@ INPUTS.forEach(input => {
 	input.addEventListener("blur", () => {
 		console.log(input.value);
 		if (input.value === "") {
-		  input.parentElement.classList.remove("focus");
+			input.parentElement.classList.remove("focus");
 		}
-	  });
+	});
 })

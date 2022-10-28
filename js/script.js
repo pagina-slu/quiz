@@ -15,19 +15,7 @@ window.onload = function () {
 }
 
 // Functions
-function readJSONfile(path) {
-    var request = new XMLHttpRequest();
-    request.open("GET", path, false);
-    request.send(null);
-    var JSONobject = JSON.parse(request.responseText);
-    return JSONobject;
-}
 
-function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-}
 
 function generateUserLogIn() {
     let form = document.createElement("form");

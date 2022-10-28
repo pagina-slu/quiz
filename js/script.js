@@ -4,6 +4,7 @@ var questions = "";                 // List of questions
 var sequence;                       // List of question order
 const numberOfQuestions = 5;        // Number of questions to show
 
+
 // Runs after the page loads
 window.onload = function () {
     let startButton = document.getElementById('start-button');
@@ -16,6 +17,8 @@ window.onload = function () {
 
 // Functions
 
+var nameSave;
+var scoreSave;
 
 function generateUserLogIn() {
     let form = document.createElement("form");
@@ -63,9 +66,18 @@ function generateUserLogIn() {
 
     const username = document.getElementById("username");
     const enterButton = document.getElementById("enter-button");
+    const namesArr = JSON.parse(localStorage.getItem('username')) || [];
 
     username.addEventListener('keyup', () => {
         enterButton.disabled = !username.value;
+    });
+
+    enterButton.addEventListener('click', () => {
+        const namesSave = {
+            name: username.value
+        };
+        namesArr.push(namesSave);
+        localStorage.setItem('name', JSON.stringify(namesArr));
     });
 }
 
@@ -331,3 +343,9 @@ function showProgressBar() {
 function saveLocally() {
 
 }
+
+let userAcc = new Object();
+userAcc.name = "";
+userAcc.score = "";
+
+

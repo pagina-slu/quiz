@@ -352,7 +352,7 @@ function showProgressBar() {
 }
 
 function saveLocally(name, category, score, answers, sequence) {
-    let responses = JSON.parse(localStorage.getItem('responses')) || [];
+    let responses = getResponses;
     let response = {
         name: name,
         category: category,

@@ -3,7 +3,10 @@ var path1 = '../res/questions/';    // Path of the questions
 var questions = "";                 // List of questions
 var sequence;                       // List of question order
 const numberOfQuestions = 5;        // Number of questions to show
-
+var nameList;
+var scoreList;
+var currentName;
+var currentCategory;
 
 // Runs after the page loads
 window.onload = function () {
@@ -17,9 +20,6 @@ window.onload = function () {
 
 // Functions
 
-var nameSave;
-var scoreSave;
-
 function generateUserLogIn() {
     let form = document.createElement("form");
     form.setAttribute("action", "index.html");
@@ -30,11 +30,19 @@ function generateUserLogIn() {
     user.setAttribute("name", "Enter your name");
     user.setAttribute("placeholder", "Enter your name");
 
+
+
     let enter = document.createElement("button");
     enter.setAttribute("id", "enter-button");
     enter.setAttribute("disabled", "")
     enter.innerHTML = "Enter!";
+
+    user.addEventListener('keyup', () => {
+        enter.disabled = !username.value;
+    });
     enter.addEventListener('click', () => {
+        currentName = username.value;
+        // Display category picker
         document.getElementById('user-wrapper').style.display = "none";
         let main = document.getElementById('main');
         main.innerHTML += `<div id="title-wrapper"></div>
@@ -53,6 +61,7 @@ function generateUserLogIn() {
             categoryButton.onclick = () => {
                 document.getElementById('category-wrapper').remove();
                 document.getElementById('title').innerHTML = category.name;
+                currentCategory = category.name;
                 questions = readJSONfile(category.path);
                 startQuiz();
             }
@@ -63,22 +72,6 @@ function generateUserLogIn() {
     form.append(enter);
 
     document.getElementById("user-wrapper").appendChild(form);
-
-    const username = document.getElementById("username");
-    const enterButton = document.getElementById("enter-button");
-    const namesArr = JSON.parse(localStorage.getItem('username')) || [];
-
-    username.addEventListener('keyup', () => {
-        enterButton.disabled = !username.value;
-    });
-
-    enterButton.addEventListener('click', () => {
-        const namesSave = {
-            name: username.value
-        };
-        namesArr.push(namesSave);
-        localStorage.setItem('name', JSON.stringify(namesArr));
-    });
 }
 
 // Start reading and appending the JSON
@@ -147,15 +140,16 @@ function submitQuiz() {
                 break;
             }
 
-        } else if (answerWrapper[index].firstChild.className == "multiple-choice") {
+        } else if (answerWrapper[index].firstChild.classList.contains("multiple-choice")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                console.log("answered mult")
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             else {
                 alert("Please answer all the qestions");
                 break;
             }
-        } else if (answerWrapper[index].firstChild.className == "true-false") {
+        } else if (answerWrapper[index].firstChild.classList.contains("true-false")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
@@ -169,6 +163,7 @@ function submitQuiz() {
     let score = checkAnswers(answers);
     console.log("you got: " + score);
     showResults(answers);
+    saveLocally(currentName, currentCategory, answers, sequence);
 }
 
 function countAnsweredQuestions() {
@@ -340,12 +335,14 @@ function showProgressBar() {
     circle.style.display = "";
 }
 
-function saveLocally() {
-
+function saveLocally(name, category, answers, sequence) {
+    let responses = JSON.parse(localStorage.getItem('responses')) || [];
+    let response = {
+        name: name,
+        category: category,
+        answers: answers,
+        sequence: sequence
+    }
+    responses.push(response);
+    localStorage.setItem('responses', JSON.stringify(responses));
 }
-
-let userAcc = new Object();
-userAcc.name = "";
-userAcc.score = "";
-
-

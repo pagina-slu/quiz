@@ -14,7 +14,7 @@ html {
   font-family: 'OpenSans';
   font-size: 10px;
   scroll-behavior: smooth;
-  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -26,12 +26,11 @@ body {
   background-color: #222629;
   position: relative;
   color: white;
-  padding-bottom: 5rem;
 }
 
 main {
   width: 80vw;
-  height: 100%;
+  padding-bottom: 5rem;
   display: flex;
   flex-direction: column;
 }
@@ -381,11 +380,14 @@ input[type="number"] {
 
 /* Footer */
 footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #86c232;
   color: #222629;
   width: 100%;
   text-align: center;
-  padding: 2rem 0;
+  height: 5rem;
   position: absolute;
   bottom: 0;
 }

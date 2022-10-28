@@ -108,7 +108,7 @@ function startQuiz() {
     generateSubmitButton();
 }
 
-//this function will return an array of 'length' length consisting random numbers from 0  to 'max'
+// Returns an array of random numbers from 0 to 'max'
 function generateNumberSequence(length, max) {
     let numberSequence = [];
     let newNum = Math.floor(Math.random() * max);
@@ -124,7 +124,8 @@ function generateNumberSequence(length, max) {
     return numberSequence;
 }
 
-function generateSubmitButton() {  // Generate and assign event listener to submit button
+// Generate and assign event listener to submit button
+function generateSubmitButton() {
     let submitWrapper = document.getElementById("submit-wrapper");
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "submit-button");
@@ -141,30 +142,29 @@ function submitQuiz() {
         let answer = "";
         if (answerWrapper[index].firstChild.className == "identification") {
             answer = answerWrapper[index].firstChild.firstChild.value;
-            // if(a == "" || a == null){
-            //     alert("please answer all the items");
-            //     break;
-            // }
+            if (answer == "" || answer == null) {
+                alert("Please answer all the items");
+                break;
+            }
 
         } else if (answerWrapper[index].firstChild.className == "multiple-choice") {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
-            // else{
-            //     alert("Please answer all the qestions");
-            //     break;
-            // }
+            else {
+                alert("Please answer all the qestions");
+                break;
+            }
         } else if (answerWrapper[index].firstChild.className == "true-false") {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
-            // else{
-            //     alert("Please answer all the qestions");
-            //     break;
-            // }
+            else {
+                alert("Please answer all the qestions");
+                break;
+            }
         }
         answers.push(answer);
-
     }
     let score = checkAnswers(answers);
     console.log("you got: " + score);

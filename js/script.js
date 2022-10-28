@@ -163,7 +163,7 @@ function submitQuiz() {
     let score = checkAnswers(answers);
     console.log("you got: " + score);
     showResults(answers);
-    saveLocally(currentName, currentCategory, answers, sequence);
+    saveLocally(currentName, currentCategory, score, answers, sequence);
 }
 
 function countAnsweredQuestions() {
@@ -335,11 +335,12 @@ function showProgressBar() {
     circle.style.display = "";
 }
 
-function saveLocally(name, category, answers, sequence) {
+function saveLocally(name, category, score, answers, sequence) {
     let responses = JSON.parse(localStorage.getItem('responses')) || [];
     let response = {
         name: name,
         category: category,
+        score: score,
         answers: answers,
         sequence: sequence
     }

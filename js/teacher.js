@@ -11,3 +11,33 @@ function clearSelected() {
         button.classList.remove('selected');
     });
 }
+const CATEGORIES = readJSONfile('../res/categories.json');
+
+
+let mainDiv = document.getElementById('main');
+let questionsButton = document.getElementById('questions-button');
+questionsButton.addEventListener('click', () => {
+    let container = document.createElement('div');
+    container.classList.add('container');
+    CATEGORIES.forEach(category => {
+        let quizWrapper = document.createElement('div');
+        quizWrapper.classList.add('quiz-wrapper');
+        let categorySpan = document.createElement('span');
+        categorySpan.textContent = category.name;
+        let buttonWrapper = document.createElement('div');
+        buttonWrapper.classList.add('button-wrapper');
+        let viewButton = document.createElement('button');
+        viewButton.classList.add('green-button');
+        viewButton.textContent = "View/Edit";
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('red-button');
+        deleteButton.textContent = "Delete";
+        buttonWrapper.appendChild(viewButton);
+        buttonWrapper.appendChild(deleteButton);
+        quizWrapper.appendChild(categorySpan);
+        quizWrapper.appendChild(buttonWrapper);
+    
+        container.appendChild(quizWrapper);
+        document.getElementById('main').appendChild(container);
+    });
+});

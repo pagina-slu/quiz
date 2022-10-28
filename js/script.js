@@ -1,4 +1,3 @@
-hideProgressBar();
 var path1 = '../res/questions/';    // Path of the questions
 var questions = "";                 // List of questions
 var sequence;                       // List of question order
@@ -15,6 +14,7 @@ window.onload = function () {
 
 // Functions
 function generateUserWrapper() {
+    hideProgressBar();
     let main = document.getElementById('main');
     main.innerHTML = `      <div id="user-wrapper">
     <div>

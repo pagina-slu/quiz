@@ -15,6 +15,7 @@ window.onload = function () {
 // Functions
 
 function generateCategorySelector(){
+    document.getElementById("login-wrapper").style.display = "block";
     hideProgressBar();
     let main = document.getElementById('main');
     main.innerHTML = "";
@@ -42,6 +43,7 @@ function generateCategorySelector(){
 }
 
 function generateUserLogIn() {
+    document.getElementById("login-wrapper").style.display = "none";
     let nameWrapper = document.createElement("div");
     nameWrapper.setAttribute("id", "user-wrapper");
     let referenceNode = document.getElementById("title-wrapper");
@@ -179,7 +181,6 @@ function submitQuiz() {
     }
     let score = checkAnswers(answers);
     console.log("you got: " + score);
-    showResults(answers);
     saveLocally(currentName, currentCategory, score, answers, sequence);
     resetQuiz();
 }
@@ -330,9 +331,6 @@ function generateRadioButton(name, value) {
     return input;
 }
 
-function showResults(answers) {
-
-}
 
 function rotateProgressBar(numOfAnswers) {
     const circle = document.getElementById('progress-circle');

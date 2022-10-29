@@ -16,7 +16,11 @@ const CATEGORIES = readJSONfile('../res/categories.json');
 
 let mainDiv = document.getElementById('main');
 let questionsButton = document.getElementById('questions-button');
+let responsesButton = document.getElementById('responses-button');
+let summaryButton = document.getElementById('summary-button');
+
 questionsButton.addEventListener('click', () => {
+    removeAllChildNodes(mainDiv);
     let container = document.createElement('div');
     container.classList.add('container');
     CATEGORIES.forEach(category => {
@@ -38,6 +42,14 @@ questionsButton.addEventListener('click', () => {
         quizWrapper.appendChild(buttonWrapper);
     
         container.appendChild(quizWrapper);
-        document.getElementById('main').appendChild(container);
+        mainDiv.appendChild(container);
     });
+});
+
+responsesButton.addEventListener('click', () => {
+    removeAllChildNodes(mainDiv);
+});
+
+summaryButton.addEventListener('click', () => {
+    removeAllChildNodes(mainDiv);
 });

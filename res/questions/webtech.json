@@ -19,7 +19,7 @@
     {
         "type": "identification",
         "question": "Conceptualized JavaScript in 1995",
-        "answer": "Brendan Eich"
+        "answer": "Brendan Eich" 
     },
     {
         "type": "identification",
@@ -73,8 +73,21 @@
                 "Client-side Errors",
                 "Server-side Errors"
             ],
+            "answer": "Client-side Errors"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "5xx status codes are:",
+            "options": [
+                "Successful",
+                "Redirection",
+                "Informational",
+                "Client-side Errors",
+                "Server-side Errors"
+            ],
             "answer": "Server-side Errors"
         },
+        
         
         {
             "type": "multiple-choice",
@@ -113,58 +126,54 @@
         },
 
         {
-            "type": "multiple-choice",
-            "question": "What programming paradigm specifies “what” is required?",
-            "options": [
-                "Imperative",
-                "Declarative"
-            ],
-            "answer": "Declarative"
-        },
-
-        {
-            "type": "multiple-choice",
-            "question": "What programming paradigm specifies “how” something is achieved?",
-            "options": [
-                "Imperative",
-                "Declarative"
-            ],
-            "answer": "Imperative"
-        },
-
-        {
-            "type": "true-or-false",
-            "question": "Imperative programming defines what needs to be accomplished by the program without defining how it needs to be implemented",
-            "answer": "False"
-        },
-
-        {
             "type": "true-or-false",
             "question": "Tim Berners Lee founded the World Wide Web Consortium",
             "answer": "True"
-        },       
-
-        {
-            "type": "true-or-false",
-            "question": "DELETE is part of Safe Methods",
-            "answer": "False"
         },
 
         {
             "type": "true-or-false",
-            "question": "Web Clients are applications used to access web resources",
+            "question": "id, class, and title are global attributes.",
+            "answer": "True"
+        },
+        {
+            "type": "true-or-false",
+            "question": "HTML was developed by Tim Berners-Lee at CERN.",
             "answer": "True"
         },
 
         {
             "type": "true-or-false",
-            "question": "World Wide Web is founded in 1995",
-            "answer": "False"
+            "question": "CSS is the language used to specify the presentation aspects of structurally marked-up documents.",
+            "answer": "True"
         },
 
         {
             "type": "true-or-false",
-            "question": "API stands for Application Programming Interface",
+            "question": "The CONNECT method establishes a tunnel to the server.",
+            "answer": "True"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "The OPTIONS method describes the communication options for the target resource.",
+            "answer": "True"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "A payload is a resource included in the HTTP response of the server.",
+            "answer": "True"
+        },
+        {
+            "type": "true-or-false",
+            "question": "An empty line separates the message headers and the payload.",
+            "answer": "True"
+        },
+        {
+            "type": "true-or-false",
+            "question": "HTTP is the communication protocol between client and server.",
             "answer": "True"
         }
+
 ]

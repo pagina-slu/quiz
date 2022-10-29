@@ -350,21 +350,6 @@ function showProgressBar() {
     const circle = document.getElementById('progress-circle');
     circle.style.display = "";
 }
-
-<<<<<<< HEAD
-function saveLocally() {
-
-}
-
-class StudentData{
-    constructor(name, section, category, sequence, answers){
-        this.name = name; 
-        this.section = section; 
-        this.category = category; 
-        this.sequence =sequence; 
-        this.answer = answers;
-    }
-=======
 function saveLocally(name, category, score, answers, sequence) {
     let responses = getResponses;
     let response = {
@@ -376,5 +361,4 @@ function saveLocally(name, category, score, answers, sequence) {
     }
     responses.push(response);
     localStorage.setItem('responses', JSON.stringify(responses));
->>>>>>> a22b65820dfe4319aae799a54eb2dcf67f05e775
 }

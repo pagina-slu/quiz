@@ -36,26 +36,19 @@ main {
 }
 
 #user-wrapper {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-#user-wrapper form {
-  width: 100%;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  padding: 2rem;
+  gap: 1rem;
 }
+
 
 #user-wrapper input {
   margin-bottom: 1rem;
-  width: 20rem;
+  width: 40rem;
   padding: 1.5rem;
   font-size: 1.8rem;
   border: none;

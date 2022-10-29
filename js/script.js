@@ -6,57 +6,22 @@ var nameList;
 var scoreList;
 var currentName;
 var currentCategory;
-
+var idNum;
 // Runs after the page loads
 window.onload = function () {
-    generateUserWrapper();
+    generateCategorySelector();
 }
 
 // Functions
-function generateUserWrapper() {
+
+function generateCategorySelector(){
     hideProgressBar();
     let main = document.getElementById('main');
-    main.innerHTML = `      <div id="user-wrapper">
-    <div>
-      <button id="start-button">Start quiz</button>
-      <div id="user-form"></div>
-    </div>
-  </div>`;
-    let startButton = document.getElementById('start-button');
-    startButton.addEventListener('click', () => {
-        document.getElementById('login-form-btn').style.display = 'none';
-        generateUserLogIn();
-        startButton.style.display = "none";
-    });
-}
-function generateUserLogIn() {
-    let form = document.createElement("form");
-    form.setAttribute("action", "index.html");
-
-    let user = document.createElement("input");
-    user.setAttribute("id", "username");
-    user.setAttribute("type", "text");
-    user.setAttribute("name", "Enter your name");
-    user.setAttribute("placeholder", "Enter your name");
-
-    let enter = document.createElement("button");
-    enter.setAttribute("id", "enter-button");
-    enter.setAttribute("disabled", "")
-    enter.innerHTML = "Enter!";
-
-    user.addEventListener('keyup', () => {
-        enter.disabled = !username.value;
-    });
-    enter.addEventListener('click', () => {
-        currentName = username.value;
-        // Display category picker
-        document.getElementById('user-wrapper').style.display = "none";
-        let main = document.getElementById('main');
+    main.innerHTML = "";
         main.innerHTML += `<div id="title-wrapper"></div>
         <div id="category-wrapper"></div>
         <div id="quiz-wrapper"></div>
         <div id="submit-wrapper"></div>`;
-
         document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
 
         readJSONfile('../res/categories.json').forEach(category => {
@@ -70,20 +35,64 @@ function generateUserLogIn() {
                 document.getElementById('title').innerHTML = category.name;
                 currentCategory = category.name;
                 questions = readJSONfile(category.path);
-                startQuiz();
+                generateUserLogIn();
             }
             document.getElementById('category-wrapper').appendChild(categoryButton);
         });
-    })
-    form.append(user);
-    form.append(enter);
-    let userWrapper = document.getElementById("user-wrapper");
-    userWrapper.appendChild(form);
 }
 
+function generateUserLogIn() {
+    let nameWrapper = document.createElement("div");
+    nameWrapper.setAttribute("id", "user-wrapper");
+    let referenceNode = document.getElementById("title-wrapper");
+    referenceNode.parentNode.insertBefore(nameWrapper, referenceNode.nextSibling);
+
+    let user = document.createElement("input");
+    user.setAttribute("id", "username");
+    user.setAttribute("type", "text");
+    user.setAttribute("name", "Enter your name");
+    user.setAttribute("placeholder", "Enter your name");
+
+    let idnum = document.createElement("input");
+    idnum.setAttribute("id", "idnum");
+    idnum.setAttribute("type", "text");
+    idnum.setAttribute("name", "Enter your ID number");
+    idnum.setAttribute("placeholder", "Enter your ID number");
+
+    let enter = document.createElement("button");
+    enter.setAttribute("id", "enter-button");
+    enter.setAttribute("disabled", "")
+    enter.innerHTML = "Start Quiz";
+
+    enter.disabled = true;
+    user.addEventListener('keyup', () => {
+        if(username.value && idnum.value){
+            enter.disabled = false;
+        }
+    });
+
+    idnum.addEventListener('keyup', () => {
+        if(username.value && idnum.value){
+            enter.disabled = false;
+        }
+    });
+
+    enter.addEventListener('click', () => {
+        currentName = username.value;
+        idNum = idnum.value;
+        // Display category picker
+        document.getElementById('user-wrapper').remove();
+        startQuiz();
+
+    })
+    nameWrapper.append(idnum);
+    nameWrapper.append(user);
+    nameWrapper.append(enter);
+  
+}
 // Start reading and appending the JSON
 function startQuiz() {
-    showProgressBar()
+    showProgressBar();
     window.onbeforeunload = function () {
         return "Your progress would be lost";
     }
@@ -135,6 +144,7 @@ function generateSubmitButton() {
 }
 
 function submitQuiz() {
+    console.log(currentName);
     let answerWrapper = document.querySelectorAll(".input-wrapper");
     let answers = []; // Holds the answer of the user
 
@@ -179,7 +189,7 @@ function resetQuiz() {
     sequence = [];
     currentName = "";
     currentCategory = "";
-    generateUserWrapper();
+    generateCategorySelector();
 }
 
 function countAnsweredQuestions() {

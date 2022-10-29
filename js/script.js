@@ -184,6 +184,7 @@ function submitQuiz() {
     let score = checkAnswers(answers);
     console.log("you got: " + score);
     saveLocally(currentName, currentCategory, score, answers, sequence);
+    alert("Your response has been submitted. Thank you for answering!")
     resetQuiz();
 }
 

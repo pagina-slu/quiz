@@ -116,6 +116,8 @@ function startQuiz() {
                 break;
         }
     }
+    rotateProgressBar(0);
+    showProgressBar();
     generateSubmitButton();
 }
 

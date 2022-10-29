@@ -210,17 +210,17 @@ function countAnsweredQuestions() {
     return answerCount;
 }
 
-//checks the answer and return the number of correct answers
+//checks the answer, converts the answer of the user and the correct answer to lowercase and returns the number of correct answers
 function checkAnswers(answers) {
     let counter = 0;
     for (let i = 0; i < sequence.length; i++) {
-        if (questions[sequence[i]].answer == answers[i]) {
+        if (questions[sequence[i]].answer.toLowerCase() == answers[i].toLowerCase()) {
             counter++;
         }
     }
-
     return counter;
 }
+
 
 function generateQuestionWrapper() {
     let questionWrapper = document.createElement("div");
@@ -363,3 +363,4 @@ function saveLocally(name, category, score, answers, sequence) {
     responses.push(response);
     localStorage.setItem('responses', JSON.stringify(responses));
 }
+

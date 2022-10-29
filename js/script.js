@@ -83,7 +83,6 @@ function generateUserLogIn() {
 
 // Start reading and appending the JSON
 function startQuiz() {
-    showProgressBar()
     window.onbeforeunload = function () {
         return "Your progress would be lost";
     }
@@ -105,6 +104,8 @@ function startQuiz() {
                 break;
         }
     }
+    rotateProgressBar(0);
+    showProgressBar();
     generateSubmitButton();
 }
 

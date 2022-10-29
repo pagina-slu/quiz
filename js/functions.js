@@ -15,3 +15,7 @@ function removeAllChildNodes(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
+
+function getResponses() {
+    return JSON.parse(localStorage.getItem('responses')) || [];
+}

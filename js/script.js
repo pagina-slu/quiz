@@ -1,11 +1,27 @@
-hideProgressBar();
 var path1 = '../res/questions/';    // Path of the questions
 var questions = "";                 // List of questions
 var sequence;                       // List of question order
 const numberOfQuestions = 5;        // Number of questions to show
+var nameList;
+var scoreList;
+var currentName;
+var currentCategory;
 
 // Runs after the page loads
 window.onload = function () {
+    generateUserWrapper();
+}
+
+// Functions
+function generateUserWrapper() {
+    hideProgressBar();
+    let main = document.getElementById('main');
+    main.innerHTML = `      <div id="user-wrapper">
+    <div>
+      <button id="start-button">Start quiz</button>
+      <div id="user-form"></div>
+    </div>
+  </div>`;
     let startButton = document.getElementById('start-button');
     startButton.addEventListener('click', () => {
         document.getElementById('login-form-btn').style.display = 'none';
@@ -13,10 +29,6 @@ window.onload = function () {
         startButton.style.display = "none";
     });
 }
-
-// Functions
-
-
 function generateUserLogIn() {
     let form = document.createElement("form");
     form.setAttribute("action", "index.html");
@@ -31,7 +43,13 @@ function generateUserLogIn() {
     enter.setAttribute("id", "enter-button");
     enter.setAttribute("disabled", "")
     enter.innerHTML = "Enter!";
+
+    user.addEventListener('keyup', () => {
+        enter.disabled = !username.value;
+    });
     enter.addEventListener('click', () => {
+        currentName = username.value;
+        // Display category picker
         document.getElementById('user-wrapper').style.display = "none";
         let main = document.getElementById('main');
         main.innerHTML += `<div id="title-wrapper"></div>
@@ -50,6 +68,7 @@ function generateUserLogIn() {
             categoryButton.onclick = () => {
                 document.getElementById('category-wrapper').remove();
                 document.getElementById('title').innerHTML = category.name;
+                currentCategory = category.name;
                 questions = readJSONfile(category.path);
                 startQuiz();
             }
@@ -58,15 +77,8 @@ function generateUserLogIn() {
     })
     form.append(user);
     form.append(enter);
-
-    document.getElementById("user-wrapper").appendChild(form);
-
-    const username = document.getElementById("username");
-    const enterButton = document.getElementById("enter-button");
-
-    username.addEventListener('keyup', () => {
-        enterButton.disabled = !username.value;
-    });
+    let userWrapper = document.getElementById("user-wrapper");
+    userWrapper.appendChild(form);
 }
 
 // Start reading and appending the JSON
@@ -135,15 +147,16 @@ function submitQuiz() {
                 break;
             }
 
-        } else if (answerWrapper[index].firstChild.className == "multiple-choice") {
+        } else if (answerWrapper[index].firstChild.classList.contains("multiple-choice")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                console.log("answered mult")
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             else {
                 alert("Please answer all the qestions");
                 break;
             }
-        } else if (answerWrapper[index].firstChild.className == "true-false") {
+        } else if (answerWrapper[index].firstChild.classList.contains("true-false")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
@@ -157,6 +170,16 @@ function submitQuiz() {
     let score = checkAnswers(answers);
     console.log("you got: " + score);
     showResults(answers);
+    saveLocally(currentName, currentCategory, score, answers, sequence);
+    resetQuiz();
+}
+
+function resetQuiz() {
+    questions = "";
+    sequence = [];
+    currentName = "";
+    currentCategory = "";
+    generateUserWrapper();
 }
 
 function countAnsweredQuestions() {
@@ -328,6 +351,7 @@ function showProgressBar() {
     circle.style.display = "";
 }
 
+<<<<<<< HEAD
 function saveLocally() {
 
 }
@@ -340,4 +364,17 @@ class StudentData{
         this.sequence =sequence; 
         this.answer = answers;
     }
+=======
+function saveLocally(name, category, score, answers, sequence) {
+    let responses = getResponses;
+    let response = {
+        name: name,
+        category: category,
+        score: score,
+        answers: answers,
+        sequence: sequence
+    }
+    responses.push(response);
+    localStorage.setItem('responses', JSON.stringify(responses));
+>>>>>>> a22b65820dfe4319aae799a54eb2dcf67f05e775
 }

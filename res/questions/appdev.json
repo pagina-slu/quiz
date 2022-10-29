@@ -4,13 +4,11 @@
         "question": "Style of programming",
         "answer": "Language Paradigm"
     },
-
     {
         "type": "identification",
         "question": "Based on the concept of objects (state and behavior)",
         "answer": "Object-oriented"
     },
-
     {
         "type": "identification",
         "question": "Utilizes control flow constructs.",
@@ -31,8 +29,6 @@
         "question": "The implementation of the design phase in the SDLC",
         "answer": "Application development stage"
     },
-
-
     {
         "type": "multiple-choice",
         "question": "Translate source code (written in a programming language) into the computer language (object code)",
@@ -63,7 +59,6 @@
             "Interpreter",
             "Assembler",
             "Decompiler"
-            
         ],
         "answer": "Decompiler"
     },

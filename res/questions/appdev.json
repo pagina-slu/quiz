@@ -75,17 +75,27 @@
     },
     {
         "type": "true-or-false",
-        "question": "In programming, there’s no single programming language that is ideally used in solving problems.",
-        "answer": "True"
-    },
-    {
-        "type": "true-or-false",
-        "question": "Imperative programming paradigm – specify “what” something is achieved.",
+        "question": "Obfuscators are used to reduce the size of a program’s source code without modifying the program's functionality.",
         "answer": "False"
     },
     {
         "type": "true-or-false",
-        "question": "Declarative programming paradigm – specify “how” is required.",
+        "question": "Obfuscators perform deliberate modifications to program code to make it more difficult to understand, without changing the code’s functionality.",
+        "answer": "True"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Code Beautifier is used to improve the presentation of source code for purposes of readability and conformance to some coding standards.",
+        "answer": "True"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Code Minifier is used to reduce the size of a program’s source code without modifying the program’s functionality.",
+        "answer": "True"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Transpiler translate source code into the target machine code “on-the-fly” (reads source code, converts it and executes it directly).",
         "answer": "False"
     },
     {
@@ -96,6 +106,21 @@
     {
         "type": "true-or-false",
         "question": "Software decay refers to the gradual deterioration of software over time or its decreasing inability to respond to its changing environment.",
+        "answer": "False"
+    },
+    {
+        "type": "true-or-false",
+        "question": "There is only one type of testing.",
+        "answer": "False"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Debugging involves finding and removing bugs.",
         "answer": "True"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Most IDEs don’t provide a programmer with a debugger tool in performing debugging.",
+        "answer": "False"
     }
 ]

@@ -148,7 +148,6 @@ function generateSubmitButton() {
 }
 
 function submitQuiz() {
-    console.log(currentName);
     let answerWrapper = document.querySelectorAll(".input-wrapper");
     let answers = []; // Holds the answer of the user
 
@@ -163,7 +162,6 @@ function submitQuiz() {
 
         } else if (answerWrapper[index].firstChild.classList.contains("multiple-choice")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                console.log("answered mult")
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             else {
@@ -182,7 +180,6 @@ function submitQuiz() {
         answers.push(answer);
     }
     let score = checkAnswers(answers);
-    console.log("you got: " + score);
     saveLocally(currentName, currentCategory, score, answers, sequence);
     alert("Your response has been submitted. Thank you for answering!")
     resetQuiz();
@@ -206,17 +203,17 @@ function countAnsweredQuestions() {
         let type = answerWrapper[index].firstChild.classList;
         if (type.contains("identification")) {
             answer = answerWrapper[index].firstChild.firstChild.value;
-            console.log(answer);
             if (answer.length != 0) {
                 answerCount++;
             }
         } else if (type.contains("multiple-choice")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                console.log("mult checked");
                 answerCount++;
             }
         } else if (type.contains("true-false")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                console.log("Answered trueorfalse");
+                console.log("trueorfalse checked");
                 answerCount++;
             }
         }
@@ -268,6 +265,7 @@ function multipleChoice(data, index) {
         inputDiv.appendChild(generateLabelForRadioButton(data.options[i]));
         inputDiv.addEventListener('click', () => {
             radioButton.checked = true;
+            rotateProgressBar(countAnsweredQuestions());
         })
         inputWrapper.appendChild(inputDiv);
     }
@@ -311,6 +309,7 @@ function trueOrFalse(data, index) {
         inputDiv.appendChild(generateLabelForRadioButton(options[i]));
         inputDiv.addEventListener('click', () => {
             radioButton.checked = true;
+            rotateProgressBar(countAnsweredQuestions());
         })
         inputWrapper.appendChild(inputDiv);
     }
@@ -345,6 +344,7 @@ function generateRadioButton(name, value) {
 
 
 function rotateProgressBar(numOfAnswers) {
+    console.log("hi");
     const circle = document.getElementById('progress-circle');
     const bar = document.getElementById('value-bar');
     const text = document.getElementById('progress-text');

@@ -182,6 +182,7 @@ function resetQuiz() {
     generateUserWrapper();
 }
 
+// Iterates through all questions and returns the number of answered questions
 function countAnsweredQuestions() {
     let answerWrapper = document.querySelectorAll(".input-wrapper");
     let answerCount = 0; // Holds the answer of the user
@@ -210,7 +211,7 @@ function countAnsweredQuestions() {
     return answerCount;
 }
 
-//checks the answer and return the number of correct answers
+// Checks the answer and return the number of correct answers
 function checkAnswers(answers) {
     let counter = 0;
     for (let i = 0; i < sequence.length; i++) {
@@ -248,8 +249,12 @@ function multipleChoice(data, index) {
 
     for (let i = 0; i < data.options.length; i++) {
         let inputDiv = generateInputDiv("multiple-choice");
-        inputDiv.appendChild(generateRadioButton(`q${index + 1}`, data.options[i]));
+        let radioButton = generateRadioButton(`q${index + 1}`, data.options[i]);
+        inputDiv.appendChild(radioButton);
         inputDiv.appendChild(generateLabelForRadioButton(data.options[i]));
+        inputDiv.addEventListener('click', () => {
+            radioButton.checked = true;
+        })
         inputWrapper.appendChild(inputDiv);
     }
 
@@ -287,8 +292,12 @@ function trueOrFalse(data, index) {
     const options = ["True", "False"];
     for (let i = 0; i < options.length; i++) {
         let inputDiv = generateInputDiv("true-false");
-        inputDiv.appendChild(generateRadioButton(`q${index + 1}`, options[i]));
+        let radioButton = generateRadioButton(`q${index + 1}`, options[i]);
+        inputDiv.appendChild(radioButton);
         inputDiv.appendChild(generateLabelForRadioButton(options[i]));
+        inputDiv.addEventListener('click', () => {
+            radioButton.checked = true;
+        })
         inputWrapper.appendChild(inputDiv);
     }
 

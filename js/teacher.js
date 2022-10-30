@@ -42,7 +42,7 @@ questionsButton.addEventListener('click', () => {
         buttonWrapper.classList.add('button-wrapper');
         let viewButton = document.createElement('button');
         viewButton.classList.add('green-button');
-        viewButton.textContent = "View/Edit";
+        viewButton.textContent = "View";
         viewButton.addEventListener('click', () => {
             let content = "";
             let counter = 1;
@@ -54,12 +54,7 @@ questionsButton.addEventListener('click', () => {
             setModalContent(category.name, content);
             openModal();
         });
-
-        let deleteButton = document.createElement('button');
-        deleteButton.classList.add('red-button');
-        deleteButton.textContent = "Delete";
         buttonWrapper.appendChild(viewButton);
-        buttonWrapper.appendChild(deleteButton);
         quizWrapper.appendChild(categorySpan);
         quizWrapper.appendChild(buttonWrapper);
     

@@ -184,12 +184,18 @@ main > div {
 }
 
 .category-button{
-  margin: .5rem;
+  margin: 5px;
   background: white;
   color: black;
   border-radius: 5px;
 }
 
 .category-button:hover{
-  background: #86c232;
+  background: white;
+  color: black;
+  border-bottom: 0.5rem solid #86c232;
+}
+
+.category-button:active{
+  border-bottom: 0.5rem solid #86c232;
 }

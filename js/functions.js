@@ -19,3 +19,7 @@ function removeAllChildNodes(parent) {
 function getResponses() {
     return JSON.parse(localStorage.getItem('responses')) || [];
 }
+
+function clearLocalStorage() {
+    localStorage.clear();
+}

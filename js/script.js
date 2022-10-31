@@ -82,15 +82,27 @@ function generateUserLogIn() {
     enter.addEventListener('click', () => {
         currentName = username.value;
         idNum = idnum.value;
+        let hasResponded = false;
+        // Check if student has response already
+        getResponses().forEach(response => {
+            console.log(response);
+            if(response.idNumber == idNum && response.category == currentCategory) {
+                hasResponded = true;
+            }
+        });
         // Display category picker
-        document.getElementById('user-wrapper').remove();
-        startQuiz();
+        if (!hasResponded) {
+            document.getElementById('user-wrapper').remove();
+            startQuiz();
+        } else {
+            alert("You have already answered the quiz!");
+            resetQuiz();
+        }
 
     })
     nameWrapper.append(idnum);
     nameWrapper.append(user);
     nameWrapper.append(enter);
-  
 }
 // Start reading and appending the JSON
 function startQuiz() {
@@ -375,7 +387,7 @@ function saveLocally(name, idNum, category, score, answers, sequence) {
     let responses = getResponses();
     let response = {
         name: name,
-        idNum: idNum,
+        idNumber: idNum,
         category: category,
         score: score,
         answers: answers,

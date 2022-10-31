@@ -374,6 +374,7 @@ function saveLocally(name, category, score, answers, sequence) {
     let responses = getResponses();
     let response = {
         name: name,
+        idNumber: idNum,
         category: category,
         score: score,
         answers: answers,

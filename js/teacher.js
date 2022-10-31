@@ -22,6 +22,7 @@ let mainDiv = document.getElementById('main');
 let questionsButton = document.getElementById('questions-button');
 let responsesButton = document.getElementById('responses-button');
 let summaryButton = document.getElementById('summary-button');
+let categoryButton = document.getElementsByClassName('category-button');
 
 let modal = document.getElementById('modal');
 let closeModalButton = document.getElementById('close-modal-button');
@@ -86,32 +87,39 @@ responsesButton.addEventListener('click', () => {
         let categoryButton = document.createElement('button');
         categoryButton.classList.add('category-button');
         categoryButton.textContent = category.name;
+
+        categoryButton.addEventListener('click', ()=>{
+            removeAllChildNodes(container);
+            //for responses
+            responses.forEach(response => {
+                if(response.category == category.name){
+                    let quizWrapper = document.createElement('div');
+                    quizWrapper.classList.add('quiz-wrapper');
+                    let responseSpan = document.createElement('span');
+                    responseSpan.textContent = response.name;
+                    let buttonWrapper = document.createElement('div');
+                    buttonWrapper.classList.add('button-wrapper');
+                    let viewButton = document.createElement('button');
+                    viewButton.classList.add('purple-button');
+                    viewButton.textContent = "View";
+                    let greenButton = document.createElement('button');
+                    greenButton.classList.add('green-button');
+                    greenButton.textContent = "Mark As Checked";
+                    buttonWrapper.appendChild(viewButton);
+                    buttonWrapper.appendChild(greenButton);
+                    quizWrapper.appendChild(responseSpan);
+                    quizWrapper.appendChild(buttonWrapper);
+                    container.appendChild(quizWrapper);
+                    mainDiv.appendChild(container);
+                }
+            });
+        })
     
         sideContainer.appendChild(categoryButton);
         mainDiv.appendChild(sideContainer);
     })
 
-    //for responses
-    responses.forEach(response => {
-        let quizWrapper = document.createElement('div');
-        quizWrapper.classList.add('quiz-wrapper');
-        let responseSpan = document.createElement('span');
-        responseSpan.textContent = response.name;
-        let buttonWrapper = document.createElement('div');
-        buttonWrapper.classList.add('button-wrapper');
-        let viewButton = document.createElement('button');
-        viewButton.classList.add('purple-button');
-        viewButton.textContent = "View";
-        let greenButton = document.createElement('button');
-        greenButton.classList.add('green-button');
-        greenButton.textContent = "Mark As Checked";
-        buttonWrapper.appendChild(viewButton);
-        buttonWrapper.appendChild(greenButton);
-        quizWrapper.appendChild(responseSpan);
-        quizWrapper.appendChild(buttonWrapper);
-        container.appendChild(quizWrapper);
-        mainDiv.appendChild(container);
-    });
+    
 });
 
 summaryButton.addEventListener('click', () => {

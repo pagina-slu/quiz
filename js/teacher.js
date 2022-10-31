@@ -52,6 +52,20 @@ responsesButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
     let container = document.createElement('div');
     container.classList.add('container');
+
+    //side buttons for categories
+    let sideContainer = document.createElement('div');
+    sideContainer.classList.add('side-container');
+    CATEGORIES.forEach(category =>{
+        let categoryButton = document.createElement('button');
+        categoryButton.classList.add('category-button');
+        categoryButton.textContent = category.name;
+    
+        sideContainer.appendChild(categoryButton);
+        mainDiv.appendChild(sideContainer);
+    })
+
+    //for responses
     responses.forEach(response => {
         let quizWrapper = document.createElement('div');
         quizWrapper.classList.add('quiz-wrapper');

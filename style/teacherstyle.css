@@ -32,7 +32,7 @@ body {
 main {
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 li,
@@ -175,4 +175,14 @@ main > div {
 
 .white {
   filter: brightness(0) invert(1);
+}
+
+.side-container{
+  background: none  ;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-button{
+  margin: .5rem;
 }

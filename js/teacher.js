@@ -89,10 +89,13 @@ responsesButton.addEventListener('click', () => {
         categoryButton.textContent = category.name;
 
         categoryButton.addEventListener('click', ()=>{
+            let hasResponse = false; 
             removeAllChildNodes(container);
+
             //for responses
             responses.forEach(response => {
                 if(response.category == category.name){
+                    hasResponse = true;
                     let quizWrapper = document.createElement('div');
                     quizWrapper.classList.add('quiz-wrapper');
                     let responseSpan = document.createElement('span');
@@ -113,6 +116,17 @@ responsesButton.addEventListener('click', () => {
                     mainDiv.appendChild(container);
                 }
             });
+            console.log(hasResponse);
+            //checks if category has a response
+            if(hasResponse == false){
+                let quizWrapper = document.createElement('div');
+                quizWrapper.classList.add('quiz-wrapper');
+                let responseSpan = document.createElement('span');
+                responseSpan.textContent = "No response available.";
+                quizWrapper.appendChild(responseSpan);
+                container.appendChild(quizWrapper);
+                mainDiv.appendChild(container);
+            }
         })
     
         sideContainer.appendChild(categoryButton);

@@ -223,6 +223,12 @@ main > div {
   border-radius: 10px;
 }
 
+.green-button.clicked {
+  background-color: rgb(190, 190, 190);
+  color: black;
+  border-radius: 10px;
+}
+
 .red-button {
   background-color: rgb(200, 40, 40);
   color: white;

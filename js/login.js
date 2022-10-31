@@ -22,11 +22,21 @@ function loginUser() {
 	let uname = document.getElementById('uname').value;
 	let upassword = document.getElementById('upass').value;
 	if (uname == "instructor" && upassword == "admin") {
+		clearInputs();
 		window.open("teacher.html");
 		closeForm();
 	} else {
 		alert("Sorry! You entered a wrong username or pasword");
 	}
+}
+
+function clearInputs() {
+	let uname = document.getElementById('uname');
+	let upass = document.getElementById('upass');
+	uname.value = "";
+	upass.value = "";
+	uname.parentElement.classList.remove("focus");
+	upass.parentElement.classList.remove("focus");
 }
 
 // Make label float when input element has focus

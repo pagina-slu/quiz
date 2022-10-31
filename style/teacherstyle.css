@@ -196,6 +196,7 @@ main > div {
   border-bottom: 0.5rem solid #86c232;
 }
 
-.category-button:active{
-  border-bottom: 0.5rem solid #86c232;
+.category-button:focus{
+  background-color: #86c232;
+  color: white;
 }

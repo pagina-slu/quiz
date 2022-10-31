@@ -145,6 +145,11 @@ main > div {
   background-color: rgb(190, 190, 190);
 }
 
+.quiz-wrapper span.clicked {
+  color: white;
+  background-color: #86c232;
+}
+
 #modal {
   position: fixed;
   top: 0;

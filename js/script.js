@@ -192,7 +192,7 @@ function submitQuiz() {
         answers.push(answer);
     }
     let score = checkAnswers(answers);
-    saveLocally(currentName, currentCategory, score, answers, sequence);
+    saveLocally(currentName, idNum, currentCategory, score, answers, sequence);
     alert("Your response has been submitted. Thank you for answering!")
     resetQuiz();
 }
@@ -202,6 +202,7 @@ function resetQuiz() {
     sequence = [];
     currentName = "";
     currentCategory = "";
+    idNum="";
     generateCategorySelector();
 }
 
@@ -382,7 +383,7 @@ function showProgressBar() {
     const circle = document.getElementById('progress-circle');
     circle.style.display = "";
 }
-function saveLocally(name, category, score, answers, sequence) {
+function saveLocally(name, idNum, category, score, answers, sequence) {
     let responses = getResponses();
     let response = {
         name: name,
@@ -390,7 +391,8 @@ function saveLocally(name, category, score, answers, sequence) {
         category: category,
         score: score,
         answers: answers,
-        sequence: sequence
+        sequence: sequence,
+        isChecked: false
     }
     responses.push(response);
     localStorage.setItem('responses', JSON.stringify(responses));

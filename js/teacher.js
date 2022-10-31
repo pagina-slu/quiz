@@ -99,7 +99,15 @@ responsesButton.addEventListener('click', () => {
                     let quizWrapper = document.createElement('div');
                     quizWrapper.classList.add('quiz-wrapper');
                     let responseSpan = document.createElement('span');
-                    responseSpan.textContent = response.name;
+                    let greenButton = document.createElement('button');
+                    greenButton.classList.add('green-button');
+                    greenButton.textContent = "Mark As Checked";
+                    if(response.isChecked == true){ //adds classname 'clicked' to span and button if already checked
+                        responseSpan.classList.add('clicked');
+                        greenButton.classList.add('clicked');
+                        greenButton.textContent = "Mark As Unchecked";
+                    }
+                    responseSpan.innerHTML = response.idNumber+"<br>"+response.name;
                     let buttonWrapper = document.createElement('div');
                     buttonWrapper.classList.add('button-wrapper');
                     let viewButton = document.createElement('button');
@@ -134,21 +142,19 @@ responsesButton.addEventListener('click', () => {
                         openModal();
                     });
 
-                    //mark checked
-                    let greenButton = document.createElement('button');
-                    greenButton.classList.add('green-button');
-                    greenButton.textContent = "Mark As Checked";
                     greenButton.addEventListener('click',()=>{
                         if(greenButton.className == 'green-button'){
-                            responseSpan.style.background = "green";
-                            responseSpan.style.color = "white";
                             greenButton.textContent = "Mark As Unchecked";
+                            responseSpan.classList.add('clicked');
                             greenButton.classList.add('clicked');
+                            response.isChecked = true;
+                            localStorage.setItem('responses', JSON.stringify(responses));
                         }else{
-                            responseSpan.style.background = "rgb(190, 190, 190)";
-                            responseSpan.style.color = "black";
                             greenButton.textContent = "Mark As Checked";
+                            responseSpan.classList.remove('clicked');
                             greenButton.classList.remove('clicked');
+                            response.isChecked = false;
+                            localStorage.setItem('responses', JSON.stringify(responses));
                         }
                     });
 

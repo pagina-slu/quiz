@@ -103,10 +103,41 @@ responsesButton.addEventListener('click', () => {
                     let buttonWrapper = document.createElement('div');
                     buttonWrapper.classList.add('button-wrapper');
                     let viewButton = document.createElement('button');
+                    //view button
                     viewButton.classList.add('purple-button');
                     viewButton.textContent = "View";
+                    viewButton.addEventListener('click', ()=>{
+                        console.log(response);
+                        let content = "";
+                        let counter = 1;
+                        response.sequence.forEach(seq =>{
+                            content+=`${counter}. `+
+                                "Question: "+questions[category.name][seq].question+
+                                "<br> Type: "+questions[category.name][seq].type+
+                                "<br> Answer: "+response.answers[counter-1]+
+                                "<br><br>";
+                                counter++;
+                        })
+
+                        //ALL QUESTIONS (DONT DELETE SALAMAT)
+                        // questions[category.name].forEach(question=>{
+                        //     var ans = " "
+                        //     console.log(response);
+                        //     content+=`${counter}. `+
+                        //         "Question: "+question.question+
+                        //         "<br> Type: "+question.type+
+                        //         "<br> Answer: "+
+                        //         "<br><br>";
+                        //     counter++;
+                        // })
+                        setModalContent(category.name, content);
+                        openModal();
+                        
+                        
+                    })
+                    //
                     let greenButton = document.createElement('button');
-                    greenButton.classList.add('green-button');
+                    greenButton.classList.add('green-button');``
                     greenButton.textContent = "Mark As Checked";
                     buttonWrapper.appendChild(viewButton);
                     buttonWrapper.appendChild(greenButton);

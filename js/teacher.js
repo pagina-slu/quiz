@@ -216,3 +216,18 @@ function getCorrectAnswersCount(category, questionNumber) {
 }
 
 // Example: getCorrectAnswersCount("Applications Development", 18);
+
+function getNumberOfResponses(category) {
+    let responses = getResponses();
+    let count = 0;
+    responses.forEach(response => {
+        if (response.category == category) count++;
+    });
+    return count;
+}
+
+function getTotalNumberOfResponses() {
+    return getResponses().length;
+}
+console.log(getNumberOfResponses("Applications Development"))
+console.log(getTotalNumberOfResponses());

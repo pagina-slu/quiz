@@ -164,16 +164,6 @@
             "type": "true-or-false",
             "question": "A payload is a resource included in the HTTP response of the server.",
             "answer": "True"
-        },
-        {
-            "type": "true-or-false",
-            "question": "An empty line separates the message headers and the payload.",
-            "answer": "True"
-        },
-        {
-            "type": "true-or-false",
-            "question": "HTTP is the communication protocol between client and server.",
-            "answer": "True"
         }
 
 ]

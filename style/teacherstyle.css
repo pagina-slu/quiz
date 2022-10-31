@@ -147,7 +147,7 @@ main > div {
 
 .quiz-wrapper span.clicked {
   color: white;
-  background-color: green;
+  background-color: #86c232;
 }
 
 #modal {

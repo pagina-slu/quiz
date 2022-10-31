@@ -272,4 +272,5 @@ main > div {
 .category-button:focus{
   background-color: #86c232;
   color: white;
+  outline: none;
 }

@@ -178,12 +178,13 @@ responsesButton.addEventListener('click', () => {
                 mainDiv.appendChild(container);
             }
         })
-    
+
         sideContainer.appendChild(categoryButton);
         mainDiv.appendChild(sideContainer);
+        var catButts = document.querySelectorAll(".category-button");
+        catButts[0].click();
+        catButts[0].focus();
     })
-
-    
 });
 
 summaryButton.addEventListener('click', () => {

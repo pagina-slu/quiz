@@ -391,7 +391,8 @@ function saveLocally(name, idNum, category, score, answers, sequence) {
         category: category,
         score: score,
         answers: answers,
-        sequence: sequence
+        sequence: sequence,
+        isChecked: false
     }
     responses.push(response);
     localStorage.setItem('responses', JSON.stringify(responses));

@@ -261,6 +261,8 @@ main > div {
   background: white;
   color: black;
   border-radius: 5px;
+  border-bottom: 0.5rem solid transparent;
+  padding: 2rem 2rem 1.5rem 2rem;
 }
 
 .category-button:hover{

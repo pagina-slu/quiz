@@ -190,3 +190,45 @@ responsesButton.addEventListener('click', () => {
 summaryButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
 });
+
+// Return the number of correct answers for a question
+function getCorrectAnswersCount(category, questionNumber) {
+    let question = questions[category][questionNumber];
+    let count = 0;
+    let responses = getResponses();
+    responses.forEach(response => {
+        if (response.category == category) {
+            let sequence = response.sequence;
+            let index = 0;
+            // Get index of answer based on sequence
+            let hasAnswer = false; // To avoid errors when question is not yet answered
+            sequence.every(s => {
+                if (s == questionNumber) {
+                    hasAnswer = true;
+                    return false;
+                }
+                index++;
+                return true;
+            });
+            if (hasAnswer && response.answers[index].toLowerCase() == question.answer.toLowerCase()) count++;
+        };
+    });
+    return count;
+}
+
+// Example: getCorrectAnswersCount("Applications Development", 18);
+
+function getNumberOfResponses(category) {
+    let responses = getResponses();
+    let count = 0;
+    responses.forEach(response => {
+        if (response.category == category) count++;
+    });
+    return count;
+}
+
+function getTotalNumberOfResponses() {
+    return getResponses().length;
+}
+console.log(getNumberOfResponses("Applications Development"))
+console.log(getTotalNumberOfResponses());

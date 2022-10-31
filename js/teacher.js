@@ -132,13 +132,26 @@ responsesButton.addEventListener('click', () => {
                         // })
                         setModalContent(category.name, content);
                         openModal();
-                        
-                        
-                    })
-                    //
+                    });
+
+                    //mark checked
                     let greenButton = document.createElement('button');
-                    greenButton.classList.add('green-button');``
+                    greenButton.classList.add('green-button');
                     greenButton.textContent = "Mark As Checked";
+                    greenButton.addEventListener('click',()=>{
+                        if(greenButton.className == 'green-button'){
+                            responseSpan.style.background = "green";
+                            responseSpan.style.color = "white";
+                            greenButton.textContent = "Mark As Unchecked";
+                            greenButton.classList.add('clicked');
+                        }else{
+                            responseSpan.style.background = "rgb(190, 190, 190)";
+                            responseSpan.style.color = "black";
+                            greenButton.textContent = "Mark As Checked";
+                            greenButton.classList.remove('clicked');
+                        }
+                    });
+
                     buttonWrapper.appendChild(viewButton);
                     buttonWrapper.appendChild(greenButton);
                     quizWrapper.appendChild(responseSpan);

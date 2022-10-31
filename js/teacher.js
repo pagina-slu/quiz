@@ -47,7 +47,32 @@ questionsButton.addEventListener('click', () => {
 });
 
 responsesButton.addEventListener('click', () => {
+    var responses = getResponses();
+    console.log(responses);
     removeAllChildNodes(mainDiv);
+    let container = document.createElement('div');
+    container.classList.add('container');
+    responses.forEach(response => {
+        let quizWrapper = document.createElement('div');
+        quizWrapper.classList.add('quiz-wrapper');
+        let responseSpan = document.createElement('span');
+        responseSpan.textContent = response.name;
+        let buttonWrapper = document.createElement('div');
+        buttonWrapper.classList.add('button-wrapper');
+        let viewButton = document.createElement('button');
+        viewButton.classList.add('green-button');
+        viewButton.textContent = "View/Edit";
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('red-button');
+        deleteButton.textContent = "Delete";
+        buttonWrapper.appendChild(viewButton);
+        buttonWrapper.appendChild(deleteButton);
+        quizWrapper.appendChild(responseSpan);
+        quizWrapper.appendChild(buttonWrapper);
+    
+        container.appendChild(quizWrapper);
+        mainDiv.appendChild(container);
+    });
 });
 
 summaryButton.addEventListener('click', () => {

@@ -185,4 +185,11 @@ main > div {
 
 .category-button{
   margin: .5rem;
+  background: white;
+  color: black;
+  border-radius: 5px;
+}
+
+.category-button:hover{
+  background: #86c232;
 }

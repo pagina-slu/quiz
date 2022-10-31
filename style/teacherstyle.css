@@ -167,6 +167,12 @@ main > div {
   border-radius: 10px;
 }
 
+.purple-button{
+  background-color: rgb(168, 40, 200);
+  color: white;
+  border-radius: 10px;
+}
+
 .white {
   filter: brightness(0) invert(1);
 }

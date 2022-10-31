@@ -116,6 +116,7 @@ main > div {
   background-color: white;
   border-radius: 10px;
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -142,6 +143,67 @@ main > div {
   padding: 2rem 0;
   width: 50rem;
   background-color: rgb(190, 190, 190);
+}
+
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.35s ease-in;
+}
+
+#modal button {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: inherit;
+}
+
+#modal.is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-dialog {
+  color: black;
+  position: relative;
+  max-width: 80rem;
+  max-height: 80vh;
+  border-radius: 5px;
+  background: white;
+  font-size: 1.6rem;
+  overflow: auto;
+  cursor: default;
+}
+
+.modal-dialog > * {
+  padding: 1rem;
+}
+ 
+.modal-header {
+  display: flex;
+  background: #efefef;
+  align-items: center;
+  justify-content: space-between;
+}
+ 
+.modal-header .close-modal-button {
+  font-size: 1.5rem;
+}
+ 
+#modal p + p {
+  margin-top: 1rem;
 }
 
 .button-wrapper {

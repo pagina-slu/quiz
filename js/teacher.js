@@ -12,12 +12,22 @@ function clearSelected() {
     });
 }
 const CATEGORIES = readJSONfile('../res/categories.json');
-
+let questions = {};
+CATEGORIES.forEach(category => {
+    questions[category.name] = readJSONfile(category.path);
+});
+console.log(questions);
 
 let mainDiv = document.getElementById('main');
 let questionsButton = document.getElementById('questions-button');
 let responsesButton = document.getElementById('responses-button');
 let summaryButton = document.getElementById('summary-button');
+
+let modal = document.getElementById('modal');
+let closeModalButton = document.getElementById('close-modal-button');
+closeModalButton.addEventListener('click', () => {
+    modal.classList.remove('is-visible');
+});
 
 questionsButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
@@ -32,12 +42,19 @@ questionsButton.addEventListener('click', () => {
         buttonWrapper.classList.add('button-wrapper');
         let viewButton = document.createElement('button');
         viewButton.classList.add('green-button');
-        viewButton.textContent = "View/Edit";
-        let deleteButton = document.createElement('button');
-        deleteButton.classList.add('red-button');
-        deleteButton.textContent = "Delete";
+        viewButton.textContent = "View";
+        viewButton.addEventListener('click', () => {
+            let content = "";
+            let counter = 1;
+            questions[category.name].forEach(question => {
+                console.log(question);
+                content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${JSON.stringify(question.options)}` : ""}<br>Answer: ${question.answer}<br><br>`;
+                counter++;
+            })
+            setModalContent(category.name, content);
+            openModal();
+        });
         buttonWrapper.appendChild(viewButton);
-        buttonWrapper.appendChild(deleteButton);
         quizWrapper.appendChild(categorySpan);
         quizWrapper.appendChild(buttonWrapper);
     
@@ -45,6 +62,15 @@ questionsButton.addEventListener('click', () => {
         mainDiv.appendChild(container);
     });
 });
+
+function setModalContent(header, content) {
+    document.querySelector('.modal-header span').innerHTML = header;
+    document.querySelector('.modal-content').innerHTML = content;
+}
+
+function openModal() {
+    modal.classList.add('is-visible');
+}
 
 responsesButton.addEventListener('click', () => {
     var responses = getResponses();

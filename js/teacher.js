@@ -60,16 +60,15 @@ responsesButton.addEventListener('click', () => {
         let buttonWrapper = document.createElement('div');
         buttonWrapper.classList.add('button-wrapper');
         let viewButton = document.createElement('button');
-        viewButton.classList.add('green-button');
-        viewButton.textContent = "View/Edit";
-        let deleteButton = document.createElement('button');
-        deleteButton.classList.add('red-button');
-        deleteButton.textContent = "Delete";
+        viewButton.classList.add('purple-button');
+        viewButton.textContent = "View";
+        let greenButton = document.createElement('button');
+        greenButton.classList.add('green-button');
+        greenButton.textContent = "Mark As Checked";
         buttonWrapper.appendChild(viewButton);
-        buttonWrapper.appendChild(deleteButton);
+        buttonWrapper.appendChild(greenButton);
         quizWrapper.appendChild(responseSpan);
         quizWrapper.appendChild(buttonWrapper);
-    
         container.appendChild(quizWrapper);
         mainDiv.appendChild(container);
     });

@@ -84,7 +84,7 @@ responsesButton.addEventListener('click', () => {
     //button: clear all response
     let rmAllResponse = document.createElement('button');
     rmAllResponse.classList.add('clr-btn-all');
-    rmAllResponse.textContent = "clear all response";
+    rmAllResponse.textContent = "Clear All Response";
     sideContainer.appendChild(rmAllResponse);
 
     //button: for each categories
@@ -193,8 +193,8 @@ responsesButton.addEventListener('click', () => {
             }
             //button: clear response for this category 
             let rmCategoryResponse = document.createElement('button');
-            rmCategoryResponse.classList.add('clr-btn-category');
-            rmCategoryResponse.textContent = "clear response for this category";
+            rmCategoryResponse.classList.add('clr-btn-all');
+            rmCategoryResponse.textContent = "Clear Response For This Category";
             container.appendChild(rmCategoryResponse);
         })
 

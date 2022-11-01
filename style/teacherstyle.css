@@ -307,6 +307,10 @@ main > div {
   border-radius: 5px;
 }
 
+.clr-btn-category:hover{
+  background: rgb(190, 15, 15);
+}
+
 .clr-btn-all{
   background: rgb(223, 56, 56);
   color: white;

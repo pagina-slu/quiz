@@ -156,7 +156,7 @@ function submitQuiz() {
         if (answerWrapper[index].firstChild.className == "identification") {
             answer = answerWrapper[index].firstChild.firstChild.value;
             if (answer == "" || answer == null) {
-                alert("Please answer all the items");
+                alert("Please answer all the questions");
                 break;
             }
 
@@ -165,7 +165,7 @@ function submitQuiz() {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             else {
-                alert("Please answer all the qestions");
+                alert("Please answer all the questions");
                 break;
             }
         } else if (answerWrapper[index].firstChild.classList.contains("true-false")) {
@@ -173,7 +173,7 @@ function submitQuiz() {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             else {
-                alert("Please answer all the qestions");
+                alert("Please answer all the questions");
                 break;
             }
         }

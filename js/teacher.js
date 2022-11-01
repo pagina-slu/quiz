@@ -13,8 +13,6 @@ function clearSelected() {
     });
 }
 
-console.log(questions);
-
 let mainDiv = document.getElementById('main');
 let questionsButton = document.getElementById('questions-button');
 let responsesButton = document.getElementById('responses-button');
@@ -73,6 +71,7 @@ function openModal() {
 
 responsesButton.addEventListener('click', () => {
     var responses = getResponses();
+    console.log(responses);
     removeAllChildNodes(mainDiv);
     let container = document.createElement('div');
     container.classList.add('container');
@@ -85,6 +84,9 @@ responsesButton.addEventListener('click', () => {
     let rmAllResponse = document.createElement('button');
     rmAllResponse.classList.add('clr-btn-all');
     rmAllResponse.textContent = "Clear All Response";
+    rmAllResponse.addEventListener('click', () => {
+        clearLocalStorage();
+    })
     sideContainer.appendChild(rmAllResponse);
 
     //button: for each categories
@@ -137,7 +139,7 @@ responsesButton.addEventListener('click', () => {
                             content += `${counter}. ` +
                                 "Question: " + questions[category.name][seq].question +
                                 "<br> Type: " + questions[category.name][seq].type +
-                                `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[category.name][seq].answer}</span>` }<br><br>`;
+                                `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[category.name][seq].answer}</span>`}<br><br>`;
                             counter++;
                         });
 
@@ -194,8 +196,11 @@ responsesButton.addEventListener('click', () => {
             }
             //button: clear response for this category 
             let rmCategoryResponse = document.createElement('button');
-            rmCategoryResponse.classList.add('clr-btn-all');
-            rmCategoryResponse.textContent = "Clear Response For This Category";
+            rmCategoryResponse.classList.add('clr-btn-category');
+            rmCategoryResponse.textContent = "Clear Responses For This Category";
+            rmCategoryResponse.addEventListener('click', () => {
+                clearCategoryResponses(category.name);
+            });
             container.appendChild(rmCategoryResponse);
         })
 
@@ -205,8 +210,27 @@ responsesButton.addEventListener('click', () => {
         catButts[0].click();
         catButts[0].focus();
     })
-    
 });
+
+function clearCategoryResponses(category) {
+    let responses = getResponses();
+    let toRemove = [];
+    for (let i = 0; i < responses.length; i++) {
+        let response = responses[i];
+        if (response.category == category) {
+            toRemove.push(i);
+        }
+    }
+    toRemove.forEach(num => {
+        delete responses[num];
+    })
+    responses = removeNullValues(responses);
+    localStorage.setItem('responses', JSON.stringify(responses));
+}
+
+function removeNullValues(array) {
+    return array.filter(el => el != null);
+}
 
 // Return the number of correct answers for a question
 function getCorrectAnswersCount(category, questionNumber) {
@@ -257,7 +281,7 @@ function checkAnswer(studentAnswer, questionNumber, category) {
         let stop = false;
         correctAnswer.forEach(answer => {
             answer = answer.toLowerCase();
-            if (answer == studentAnswer.toLowerCase() && !stop){
+            if (answer == studentAnswer.toLowerCase() && !stop) {
                 stop = true;
                 correct = true;
             }

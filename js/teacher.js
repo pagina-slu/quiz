@@ -1,6 +1,4 @@
-let questions = {};
 let scores = {};
-
 const BUTTONS = document.querySelectorAll('#top-nav li');
 const CATEGORIES = readJSONfile('../res/categories.json');
 let questions = {};
@@ -112,7 +110,7 @@ responsesButton.addEventListener('click', () => {
                     let scoreDiv = document.createElement('div'); // div to store scores
                     scoreDiv.setAttribute('class','score-div'); 
 
-                    scoreDiv.innerHTML = `<sup>${response.score}</sup>/<sub>${response.sequence.length}</sub>`; //for know its getting the scores from responses
+                    scoreDiv.innerHTML = `<sup>${scores[response.idNumber]}</sup>/<sub>${response.sequence.length}</sub>`; 
 
                     let greenButton = document.createElement('button');
                     greenButton.classList.add('green-button');

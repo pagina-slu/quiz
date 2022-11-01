@@ -18,7 +18,6 @@ console.log(questions);
 let mainDiv = document.getElementById('main');
 let questionsButton = document.getElementById('questions-button');
 let responsesButton = document.getElementById('responses-button');
-let summaryButton = document.getElementById('summary-button');
 let categoryButton = document.getElementsByClassName('category-button');
 
 let modal = document.getElementById('modal');
@@ -35,7 +34,7 @@ questionsButton.addEventListener('click', () => {
         let quizWrapper = document.createElement('div');
         quizWrapper.classList.add('quiz-wrapper');
         let categorySpan = document.createElement('div');
-        categorySpan.setAttribute('class','name-div');
+        categorySpan.setAttribute('class', 'name-div');
         categorySpan.textContent = category.name;
         let buttonWrapper = document.createElement('div');
         buttonWrapper.classList.add('button-wrapper');
@@ -56,7 +55,7 @@ questionsButton.addEventListener('click', () => {
         buttonWrapper.appendChild(viewButton);
         quizWrapper.appendChild(categorySpan);
         quizWrapper.appendChild(buttonWrapper);
-    
+
         container.appendChild(quizWrapper);
         mainDiv.appendChild(container);
     });
@@ -74,7 +73,6 @@ function openModal() {
 
 responsesButton.addEventListener('click', () => {
     var responses = getResponses();
-    console.log(responses);
     removeAllChildNodes(mainDiv);
     let container = document.createElement('div');
     container.classList.add('container');
@@ -82,58 +80,57 @@ responsesButton.addEventListener('click', () => {
     //side buttons for categories
     let sideContainer = document.createElement('div');
     sideContainer.classList.add('side-container');
-    categories.forEach(category =>{
+    categories.forEach(category => {
         let categoryButton = document.createElement('button');
         categoryButton.classList.add('category-button');
         categoryButton.textContent = category.name;
 
-        categoryButton.addEventListener('click', ()=>{
-            let hasResponse = false; 
+        categoryButton.addEventListener('click', () => {
+            let hasResponse = false;
             removeAllChildNodes(container);
             scores = [];
             //for responses
             responses.forEach(response => {
-                if(response.category == category.name){
+                if (response.category == category.name) {
                     // Calculate scores
-                    console.log(response);
                     scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category.name);
 
                     hasResponse = true;
                     let quizWrapper = document.createElement('div');
                     quizWrapper.classList.add('quiz-wrapper');
                     let nameDiv = document.createElement('div');
-                    nameDiv.setAttribute('class','name-div');
+                    nameDiv.setAttribute('class', 'name-div');
                     let scoreDiv = document.createElement('div'); // div to store scores
-                    scoreDiv.setAttribute('class','score-div'); 
+                    scoreDiv.setAttribute('class', 'score-div');
 
-                    scoreDiv.innerHTML = `<sup>${scores[response.idNumber]}</sup>/<sub>${response.sequence.length}</sub>`; 
+                    scoreDiv.innerHTML = `<sup>${scores[response.idNumber]}</sup>/<sub>${response.sequence.length}</sub>`;
 
                     let greenButton = document.createElement('button');
                     greenButton.classList.add('green-button');
                     greenButton.textContent = "Mark As Checked";
-                    if(response.isChecked == true){ //adds classname 'clicked' to span and button if already checked
+                    if (response.isChecked == true) { //adds classname 'clicked' to span and button if already checked
                         nameDiv.classList.add('clicked');
                         greenButton.classList.add('clicked');
                         greenButton.textContent = "Mark As Unchecked";
                     }
-                    nameDiv.innerHTML = response.idNumber+"<br>"+response.name;
+                    nameDiv.innerHTML = response.idNumber + "<br>" + response.name;
                     let buttonWrapper = document.createElement('div');
                     buttonWrapper.classList.add('button-wrapper');
                     let viewButton = document.createElement('button');
                     //view button
                     viewButton.classList.add('purple-button');
                     viewButton.textContent = "View";
-                    viewButton.addEventListener('click', ()=>{
+                    viewButton.addEventListener('click', () => {
                         console.log(response);
                         let content = "";
                         let counter = 1;
-                        response.sequence.forEach(seq =>{
-                            content+=`${counter}. `+
-                                "Question: "+questions[category.name][seq].question+
-                                "<br> Type: "+questions[category.name][seq].type+
-                                "<br> Answer: "+response.answers[counter-1]+
+                        response.sequence.forEach(seq => {
+                            content += `${counter}. ` +
+                                "Question: " + questions[category.name][seq].question +
+                                "<br> Type: " + questions[category.name][seq].type +
+                                "<br> Answer: " + response.answers[counter - 1] +
                                 "<br><br>";
-                                counter++;
+                            counter++;
                         })
 
                         //ALL QUESTIONS (DONT DELETE SALAMAT)
@@ -151,14 +148,14 @@ responsesButton.addEventListener('click', () => {
                         openModal();
                     });
 
-                    greenButton.addEventListener('click',()=>{
-                        if(greenButton.className == 'green-button'){
+                    greenButton.addEventListener('click', () => {
+                        if (greenButton.className == 'green-button') {
                             greenButton.textContent = "Mark As Unchecked";
                             nameDiv.classList.add('clicked');
                             greenButton.classList.add('clicked');
                             response.isChecked = true;
                             localStorage.setItem('responses', JSON.stringify(responses));
-                        }else{
+                        } else {
                             greenButton.textContent = "Mark As Checked";
                             nameDiv.classList.remove('clicked');
                             greenButton.classList.remove('clicked');
@@ -177,10 +174,11 @@ responsesButton.addEventListener('click', () => {
                 }
             });
             //checks if category has a response
-            if(hasResponse == false){
+            if (hasResponse == false) {
                 let quizWrapper = document.createElement('div');
                 quizWrapper.classList.add('quiz-wrapper');
                 let nameDiv = document.createElement('span');
+                nameDiv.classList.add('name-div');
                 nameDiv.textContent = "No response available.";
                 quizWrapper.appendChild(nameDiv);
                 container.appendChild(quizWrapper);
@@ -194,10 +192,6 @@ responsesButton.addEventListener('click', () => {
         catButts[0].click();
         catButts[0].focus();
     })
-});
-
-summaryButton.addEventListener('click', () => {
-    removeAllChildNodes(mainDiv);
 });
 
 // Return the number of correct answers for a question

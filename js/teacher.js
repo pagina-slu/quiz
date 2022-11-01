@@ -125,10 +125,11 @@ responsesButton.addEventListener('click', () => {
                         let content = "";
                         let counter = 1;
                         response.sequence.forEach(seq => {
+                            let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], category.name);
                             content += `${counter}. ` +
                                 "Question: " + questions[category.name][seq].question +
                                 "<br> Type: " + questions[category.name][seq].type +
-                                `<br> <span class=${checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], category.name) ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] +"</span><br><br>";
+                                `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[category.name][seq].answer}</span>` }<br><br>`;
                             counter++;
                         });
 

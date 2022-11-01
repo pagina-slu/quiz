@@ -128,10 +128,9 @@ responsesButton.addEventListener('click', () => {
                             content += `${counter}. ` +
                                 "Question: " + questions[category.name][seq].question +
                                 "<br> Type: " + questions[category.name][seq].type +
-                                "<br> Answer: " + response.answers[counter - 1] +
-                                "<br><br>";
+                                `<br> <span class=${checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], category.name) ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] +"</span><br><br>";
                             counter++;
-                        })
+                        });
 
                         //ALL QUESTIONS (DONT DELETE SALAMAT)
                         // questions[category.name].forEach(question=>{

@@ -1,4 +1,6 @@
 const BUTTONS = document.querySelectorAll('#top-nav li');
+const CATEGORIES = readJSONfile('../res/categories.json');
+let questions = {};
 BUTTONS.forEach(button => {
     button.addEventListener('click', () => {
         clearSelected();
@@ -11,8 +13,7 @@ function clearSelected() {
         button.classList.remove('selected');
     });
 }
-const CATEGORIES = readJSONfile('../res/categories.json');
-let questions = {};
+
 CATEGORIES.forEach(category => {
     questions[category.name] = readJSONfile(category.path);
 });
@@ -69,6 +70,7 @@ function setModalContent(header, content) {
     document.querySelector('.modal-content').innerHTML = content;
 }
 
+
 function openModal() {
     modal.classList.add('is-visible');
 }
@@ -98,16 +100,22 @@ responsesButton.addEventListener('click', () => {
                     hasResponse = true;
                     let quizWrapper = document.createElement('div');
                     quizWrapper.classList.add('quiz-wrapper');
-                    let responseSpan = document.createElement('span');
+                    let nameDiv = document.createElement('div');
+                    nameDiv.setAttribute('class','name-div');
+                    let scoreDiv = document.createElement('div'); // div to store scores
+                    scoreDiv.setAttribute('class','score-div'); 
+
+                    scoreDiv.innerHTML = `<sup>${response.score}</sup>/<sub>${response.sequence.length}</sub>`; //for know its getting the scores from responses
+
                     let greenButton = document.createElement('button');
                     greenButton.classList.add('green-button');
                     greenButton.textContent = "Mark As Checked";
                     if(response.isChecked == true){ //adds classname 'clicked' to span and button if already checked
-                        responseSpan.classList.add('clicked');
+                        nameDiv.classList.add('clicked');
                         greenButton.classList.add('clicked');
                         greenButton.textContent = "Mark As Unchecked";
                     }
-                    responseSpan.innerHTML = response.idNumber+"<br>"+response.name;
+                    nameDiv.innerHTML = response.idNumber+"<br>"+response.name;
                     let buttonWrapper = document.createElement('div');
                     buttonWrapper.classList.add('button-wrapper');
                     let viewButton = document.createElement('button');
@@ -145,13 +153,13 @@ responsesButton.addEventListener('click', () => {
                     greenButton.addEventListener('click',()=>{
                         if(greenButton.className == 'green-button'){
                             greenButton.textContent = "Mark As Unchecked";
-                            responseSpan.classList.add('clicked');
+                            nameDiv.classList.add('clicked');
                             greenButton.classList.add('clicked');
                             response.isChecked = true;
                             localStorage.setItem('responses', JSON.stringify(responses));
                         }else{
                             greenButton.textContent = "Mark As Checked";
-                            responseSpan.classList.remove('clicked');
+                            nameDiv.classList.remove('clicked');
                             greenButton.classList.remove('clicked');
                             response.isChecked = false;
                             localStorage.setItem('responses', JSON.stringify(responses));
@@ -160,7 +168,8 @@ responsesButton.addEventListener('click', () => {
 
                     buttonWrapper.appendChild(viewButton);
                     buttonWrapper.appendChild(greenButton);
-                    quizWrapper.appendChild(responseSpan);
+                    quizWrapper.appendChild(nameDiv);
+                    quizWrapper.appendChild(scoreDiv);
                     quizWrapper.appendChild(buttonWrapper);
                     container.appendChild(quizWrapper);
                     mainDiv.appendChild(container);
@@ -171,9 +180,9 @@ responsesButton.addEventListener('click', () => {
             if(hasResponse == false){
                 let quizWrapper = document.createElement('div');
                 quizWrapper.classList.add('quiz-wrapper');
-                let responseSpan = document.createElement('span');
-                responseSpan.textContent = "No response available.";
-                quizWrapper.appendChild(responseSpan);
+                let nameDiv = document.createElement('span');
+                nameDiv.textContent = "No response available.";
+                quizWrapper.appendChild(nameDiv);
                 container.appendChild(quizWrapper);
                 mainDiv.appendChild(container);
             }
@@ -230,5 +239,7 @@ function getNumberOfResponses(category) {
 function getTotalNumberOfResponses() {
     return getResponses().length;
 }
+
+
 console.log(getNumberOfResponses("Applications Development"))
 console.log(getTotalNumberOfResponses());

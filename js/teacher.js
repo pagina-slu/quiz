@@ -39,7 +39,8 @@ questionsButton.addEventListener('click', () => {
     CATEGORIES.forEach(category => {
         let quizWrapper = document.createElement('div');
         quizWrapper.classList.add('quiz-wrapper');
-        let categorySpan = document.createElement('span');
+        let categorySpan = document.createElement('div');
+        categorySpan.setAttribute('class','name-div');
         categorySpan.textContent = category.name;
         let buttonWrapper = document.createElement('div');
         buttonWrapper.classList.add('button-wrapper');

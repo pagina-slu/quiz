@@ -271,6 +271,19 @@ main > div {
   width: 20%;
 }
 
+.right-pane {
+  background: none  ;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  gap: 5rem;
+  padding: 2rem;
+  color:rgba(0, 0, 0, 0.75);
+  font-size: 1.5rem;
+  background-color: #fff;
+  white-space: pre;
+}
+
 .category-button{
   margin: 5px;
   background: white;

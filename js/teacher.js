@@ -80,6 +80,14 @@ responsesButton.addEventListener('click', () => {
     let sideContainer = document.createElement('div');
     sideContainer.classList.add('side-container');
 
+    //right pane for statistics
+    let rightPane = document.createElement('div');
+    rightPane.classList.add('right-pane');
+    rightPane.classList.add('respondents');
+    rightPane.textContent = "Total Number of Respondents: \r\n";
+    rightPane.textContent += "Total Number of Respondents:" + responses.length;
+    // will continue tomorrow -- KIEFER
+
     //button: clear all response
     let rmAllResponse = document.createElement('button');
     rmAllResponse.classList.add('clr-btn-all');
@@ -141,6 +149,7 @@ responsesButton.addEventListener('click', () => {
                                 "<br> Type: " + questions[category.name][seq].type +
                                 `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[category.name][seq].answer}</span>`}<br><br>`;
                             counter++;
+                            
                         });
 
                         //ALL QUESTIONS (DONT DELETE SALAMAT)
@@ -156,6 +165,7 @@ responsesButton.addEventListener('click', () => {
                         // })
                         setModalContent(category.name, content);
                         openModal();
+
                     });
 
                     greenButton.addEventListener('click', () => {
@@ -181,6 +191,7 @@ responsesButton.addEventListener('click', () => {
                     quizWrapper.appendChild(buttonWrapper);
                     container.appendChild(quizWrapper);
                     mainDiv.appendChild(container);
+                    mainDiv.appendChild(rightPane);
                 }
             });
             //checks if category has a response
@@ -193,7 +204,14 @@ responsesButton.addEventListener('click', () => {
                 quizWrapper.appendChild(nameDiv);
                 container.appendChild(quizWrapper);
                 mainDiv.appendChild(container);
+                mainDiv.appendChild(rightPane);
+                rightPane.textContent = "No response for this category";
+            } else {
+                rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(category) + "\r\n";
+                rightPane.textContent += "Highest Score: " + getHighestScore(category) + "\r\n";
+                rightPane.textContent += "Average Score: " + getAverageScore(category);
             }
+
             //button: clear response for this category 
             let rmCategoryResponse = document.createElement('button');
             rmCategoryResponse.classList.add('clr-btn-category');
@@ -259,11 +277,38 @@ function getCorrectAnswersCount(category, questionNumber) {
 
 // Example: getCorrectAnswersCount("Applications Development", 18);
 
+function getHighestScore(category) {
+    let responses = getResponses();
+    scores = [];
+    counter = [];
+    responses.forEach(response => {
+        if (response.category == category.name) {
+            counter.push(scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category.name)); 
+        }
+    })
+    return Math.max.apply(null, counter);
+}
+
+function getAverageScore(category) {
+    let responses = getResponses();
+    scores = [];
+    counter = [];
+    let sum = 0;
+    responses.forEach(response => {
+        if (response.category == category.name) {
+            counter.push(scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category.name)); 
+        }
+    })
+    counter.forEach((num) => {sum += num});
+    average = sum / counter.length;
+    return average.toFixed(2);
+}
+
 function getNumberOfResponses(category) {
     let responses = getResponses();
     let count = 0;
     responses.forEach(response => {
-        if (response.category == category) count++;
+        if (response.category == category.name) count++;
     });
     return count;
 }

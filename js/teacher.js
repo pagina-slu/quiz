@@ -184,7 +184,8 @@ responsesButton.addEventListener('click', () => {
                 mainDiv.appendChild(container);
             }
             //clear buttons
-            let rmCategoryResponse = document.createElement('clear-category-btn');
+            let rmCategoryResponse = document.createElement('button');
+            rmCategoryResponse.classList.add('clr-btn-category');
             rmCategoryResponse.textContent = "clear response for this category";
             container.appendChild(rmCategoryResponse);
         })

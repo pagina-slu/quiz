@@ -183,6 +183,10 @@ responsesButton.addEventListener('click', () => {
                 container.appendChild(quizWrapper);
                 mainDiv.appendChild(container);
             }
+            //clear buttons
+            let rmCategoryResponse = document.createElement('clear-category-btn');
+            rmCategoryResponse.textContent = "clear response for this category";
+            container.appendChild(rmCategoryResponse);
         })
 
         sideContainer.appendChild(categoryButton);
@@ -191,6 +195,7 @@ responsesButton.addEventListener('click', () => {
         catButts[0].click();
         catButts[0].focus();
     })
+    
 });
 
 // Return the number of correct answers for a question

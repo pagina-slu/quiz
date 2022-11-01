@@ -2,32 +2,32 @@ let questions = {
     "Applications Development": [
         {
             "type": "identification",
-            "question": "Style of programming",
+            "question": "This is a style of programming.",
             "answer": "Language Paradigm"
         },
         {
             "type": "identification",
-            "question": "Based on the concept of objects (state and behavior)",
+            "question": "This paradigm is based on the concept of objects (state and behavior).",
             "answer": "Object-oriented"
         },
         {
             "type": "identification",
-            "question": "Utilizes control flow constructs.",
+            "question": "This paradigm utilizes control flow constructs.",
             "answer": "Structured"
         },
         {
             "type": "identification",
-            "question": "Mimics a function in mathematics. ",
+            "question": "This paradigm mimics a function in mathematics. ",
             "answer": "Functional"
         },
         {
             "type": "identification",
-            "question": "Uses facts and rules.",
+            "question": "This paradigm uses facts and rules.",
             "answer": "Logic"
         },
         {
             "type": "identification",
-            "question": "The implementation of the design phase in the SDLC",
+            "question": "This stage is the implementation of the design phase in the SDLC.",
             "answer": "Application development stage"
         },
         {
@@ -54,7 +54,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "“reverse-engineer” the translation performed by compilers and assemblers",
+            "question": "“Reverse-engineer” the translation performed by compilers and assemblers",
             "options": [
                 "Compiler",
                 "Interpreter",
@@ -65,7 +65,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Translate source code into the target machine code “on-the-fly” (reads source code, converts it and executes it directly)",
+            "question": "Translates source code into the target machine code “on-the-fly” (reads source code, converts it and executes it directly)",
             "options": [
                 "Compiler",
                 "Interpreter",
@@ -134,26 +134,26 @@ let questions = {
     
         {
             "type": "identification",
-            "question": "Type of programming language used to combine existing components together.",
+            "question": "It is a type of programming language used to combine existing components together.",
             "answer": "Scripting Language"
         },
     
         {
             "type": "identification",
-            "question": "Most widely used client-side scripting language and is also used in server-side scripting.",
+            "question": "It is the most widely used client-side scripting language and is also used in server-side scripting.",
             "answer": "JavaScript"
         },
         {
             "type": "identification",
-            "question": "Conceptualized JavaScript in 1995",
+            "question": "Who conceptualized JavaScript in 1995?",
             "answer": "Brendan Eich" 
         },
         {
             "type": "identification",
-            "question": "Downloads script asynchronously with HTML and other web resources.",
+            "question": "This is a script that downloads asynchronously with HTML and other web resources.",
             "answer": "async"
         },
-    
+
         {
             "type": "multiple-choice",
             "question": "1xx status codes are:",
@@ -297,22 +297,22 @@ let questions = {
     "Software Engineering": [
         {
             "type": "identification",
-            "question": "Instructions (computer programs) that when executed provide desired function and performance",
+            "question": "These are instructions (computer programs) that when executed provide desired function and performance",
             "answer": "Software"
         },
         {
             "type": "identification",
-            "question": "Software system delivered to a customer",
+            "question": "This is a software system delivered to a customer",
             "answer": "Software product"
         },
         {
             "type": "identification",
-            "question": "Produced by a development organization and sold on the open market to any customer who is able to buy such product",
+            "question": "This is a type of software produced by a development organization and sold on the open market to any customer who is able to buy such product",
             "answer": "Generic"
         },
         {
             "type": "identification",
-            "question": "commissioned by a particular customer and developed by some contractor to suit the specific needs of the customer",
+            "question": "This is a type of software commissioned by a particular customer and developed by some contractor to suit the specific needs of the customer",
             "answer": "Customized"
         },
         {

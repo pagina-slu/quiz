@@ -1,7 +1,6 @@
-var path1 = '../res/questions/';    // Path of the questions
-var questions = "";                 // List of questions
+var currentQuestions = "";                 // List of questions
 var sequence;                       // List of question order
-const numberOfQuestions = 5;        // Number of questions to show
+var numberOfQuestions = 5;        // Number of questions to show
 var currentName;
 var currentCategory;
 var idNum;
@@ -23,7 +22,7 @@ function generateCategorySelector(){
         <div id="submit-wrapper"></div>`;
         document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
 
-        readJSONfile('../res/categories.json').forEach(category => {
+        categories.forEach(category => {
             // Create category buttons for each category in the JSON
             let categoryButton = document.createElement("button");
             categoryButton.classList = "category-button";
@@ -33,7 +32,7 @@ function generateCategorySelector(){
                 document.getElementById('category-wrapper').remove();
                 document.getElementById('title').innerHTML = category.name;
                 currentCategory = category.name;
-                questions = readJSONfile(category.path);
+                currentQuestions = questions[currentCategory];
                 generateUserLogIn();
             }
             document.getElementById('category-wrapper').appendChild(categoryButton);
@@ -110,19 +109,19 @@ function startQuiz() {
     }
 
     let quizWrapper = document.getElementById("quiz-wrapper");
-    let totalQuestions = Object.keys(questions).length; // Total number of questions in JSON
+    let totalQuestions = Object.keys(currentQuestions).length; // Total number of questions in JSON
     sequence = generateNumberSequence(numberOfQuestions, totalQuestions); // Sequence of questions
 
     for (let i = 0; i < sequence.length; i++) {
-        switch (questions[sequence[i]].type) {
+        switch (currentQuestions[sequence[i]].type) {
             case "identification":
-                quizWrapper.appendChild(identification(questions[sequence[i]], i));
+                quizWrapper.appendChild(identification(currentQuestions[sequence[i]], i));
                 break;
             case "true-or-false":
-                quizWrapper.appendChild(trueOrFalse(questions[sequence[i]], i));
+                quizWrapper.appendChild(trueOrFalse(currentQuestions[sequence[i]], i));
                 break;
             case "multiple-choice":
-                quizWrapper.appendChild(multipleChoice(questions[sequence[i]], i));
+                quizWrapper.appendChild(multipleChoice(currentQuestions[sequence[i]], i));
                 break;
         }
     }
@@ -189,14 +188,13 @@ function submitQuiz() {
         }
         answers.push(answer);
     }
-    let score = checkAnswers(answers);
     saveLocally(currentName, idNum, currentCategory, answers, sequence);
     alert("Your response has been submitted. Thank you for answering!")
     resetQuiz();
 }
 
 function resetQuiz() {
-    questions = "";
+    currentQuestions = "";
     sequence = [];
     currentName = "";
     currentCategory = "";

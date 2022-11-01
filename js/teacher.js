@@ -1,7 +1,5 @@
 let scores = {};
 const BUTTONS = document.querySelectorAll('#top-nav li');
-const CATEGORIES = readJSONfile('../res/categories.json');
-let questions = {};
 BUTTONS.forEach(button => {
     button.addEventListener('click', () => {
         clearSelected();
@@ -15,9 +13,6 @@ function clearSelected() {
     });
 }
 
-CATEGORIES.forEach(category => {
-    questions[category.name] = readJSONfile(category.path);
-});
 console.log(questions);
 
 let mainDiv = document.getElementById('main');
@@ -36,7 +31,7 @@ questionsButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
     let container = document.createElement('div');
     container.classList.add('container');
-    CATEGORIES.forEach(category => {
+    categories.forEach(category => {
         let quizWrapper = document.createElement('div');
         quizWrapper.classList.add('quiz-wrapper');
         let categorySpan = document.createElement('div');
@@ -87,7 +82,7 @@ responsesButton.addEventListener('click', () => {
     //side buttons for categories
     let sideContainer = document.createElement('div');
     sideContainer.classList.add('side-container');
-    CATEGORIES.forEach(category =>{
+    categories.forEach(category =>{
         let categoryButton = document.createElement('button');
         categoryButton.classList.add('category-button');
         categoryButton.textContent = category.name;

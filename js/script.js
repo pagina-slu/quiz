@@ -2,8 +2,6 @@ var path1 = '../res/questions/';    // Path of the questions
 var questions = "";                 // List of questions
 var sequence;                       // List of question order
 const numberOfQuestions = 5;        // Number of questions to show
-var nameList;
-var scoreList;
 var currentName;
 var currentCategory;
 var idNum;
@@ -192,7 +190,7 @@ function submitQuiz() {
         answers.push(answer);
     }
     let score = checkAnswers(answers);
-    saveLocally(currentName, idNum, currentCategory, score, answers, sequence);
+    saveLocally(currentName, idNum, currentCategory, answers, sequence);
     alert("Your response has been submitted. Thank you for answering!")
     resetQuiz();
 }
@@ -234,18 +232,6 @@ function countAnsweredQuestions() {
     console.log(answerCount);
     return answerCount;
 }
-
-// Checks the answer, converts the answer of the user and the correct answer to lowercase and returns the number of correct answers
-function checkAnswers(answers) {
-    let counter = 0;
-    for (let i = 0; i < sequence.length; i++) {
-        if (questions[sequence[i]].answer.toLowerCase() == answers[i].toLowerCase()) {
-            counter++;
-        }
-    }
-    return counter;
-}
-
 
 function generateQuestionWrapper() {
     let questionWrapper = document.createElement("div");
@@ -383,13 +369,12 @@ function showProgressBar() {
     const circle = document.getElementById('progress-circle');
     circle.style.display = "";
 }
-function saveLocally(name, idNum, category, score, answers, sequence) {
+function saveLocally(name, idNum, category, answers, sequence) {
     let responses = getResponses();
     let response = {
         name: name,
         idNumber: idNum,
         category: category,
-        score: score,
         answers: answers,
         sequence: sequence,
         isChecked: false

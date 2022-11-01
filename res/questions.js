@@ -3,27 +3,27 @@ let questions = {
         {
             "type": "identification",
             "question": "This is a style of programming.",
-            "answer": "Language Paradigm"
+            "answer": ["Language Paradigm", "Paradigm"]
         },
         {
             "type": "identification",
             "question": "This paradigm is based on the concept of objects (state and behavior).",
-            "answer": "Object-oriented"
+            "answer": ["Object-oriented", "Object-oriented Paradigm", "Object-oriented Programming Paradigm"]
         },
         {
             "type": "identification",
             "question": "This paradigm utilizes control flow constructs.",
-            "answer": "Structured"
+            "answer": ["Structured", "Structured Paradigm", "Structured Programming Paradigm"]
         },
         {
             "type": "identification",
             "question": "This paradigm mimics a function in mathematics. ",
-            "answer": "Functional"
+            "answer": ["Functional", "Functional Paradigm", "Functional Programming Paradigm"]
         },
         {
             "type": "identification",
             "question": "This paradigm uses facts and rules.",
-            "answer": "Logic"
+            "answer": ["Logic", "Logic Paradigm", "Logic Programming Paradigm"]
         },
         {
             "type": "identification",
@@ -131,13 +131,13 @@ let questions = {
             "question": "Who founded the World Wide Web Consortium?",
             "answer": "Tim Berners-Lee"
         },
-    
+
         {
             "type": "identification",
             "question": "It is a type of programming language used to combine existing components together.",
             "answer": "Scripting Language"
         },
-    
+
         {
             "type": "identification",
             "question": "It is the most widely used client-side scripting language and is also used in server-side scripting.",
@@ -146,7 +146,7 @@ let questions = {
         {
             "type": "identification",
             "question": "Who conceptualized JavaScript in 1995?",
-            "answer": "Brendan Eich" 
+            "answer": "Brendan Eich"
         },
         {
             "type": "identification",
@@ -190,109 +190,109 @@ let questions = {
             ],
             "answer": "Redirection"
         },
-            {
-                "type": "multiple-choice",
-                "question": "4xx status codes are:",
-                "options": [
-                    "Informational",
-                    "Successful",
-                    "Redirection",
-                    "Client-side Errors",
-                    "Server-side Errors"
-                ],
-                "answer": "Client-side Errors"
-            },
-            {
-                "type": "multiple-choice",
-                "question": "5xx status codes are:",
-                "options": [
-                    "Successful",
-                    "Redirection",
-                    "Informational",
-                    "Client-side Errors",
-                    "Server-side Errors"
-                ],
-                "answer": "Server-side Errors"
-            },
-            
-            
-            {
-                "type": "multiple-choice",
-                "question": "What port does HTTP use?",
-                "options": [
-                    "80",
-                    "443",
-                    "8080",
-                    "1010"
-                ],
-                "answer": "80"
-            },
-            
-            {
-                "type": "multiple-choice",
-                "question": "What port does HTTPS use?",
-                "options": [
-                    "80",
-                    "443",
-                    "8080",
-                    "1010"
-                ],
-                "answer": "443"
-            },
-    
-            {
-                "type": "multiple-choice",
-                "question": "What is the URL of the first website?",
-                "options": [
-                    "Myvirtuallearning.org",
-                    "Google.com",
-                    "Facebook.com",
-                    "Info.cern.ch"
-                ],
-                "answer": "Info.cern.ch"
-            },
-    
-            {
-                "type": "true-or-false",
-                "question": "Tim Berners Lee founded the World Wide Web Consortium",
-                "answer": "True"
-            },
-    
-            {
-                "type": "true-or-false",
-                "question": "id, class, and title are global attributes.",
-                "answer": "True"
-            },
-            {
-                "type": "true-or-false",
-                "question": "HTML was developed by Tim Berners-Lee at CERN.",
-                "answer": "True"
-            },
-    
-            {
-                "type": "true-or-false",
-                "question": "CSS is the language used to specify the presentation aspects of structurally marked-up documents.",
-                "answer": "True"
-            },
-    
-            {
-                "type": "true-or-false",
-                "question": "The CONNECT method establishes a tunnel to the server.",
-                "answer": "True"
-            },
-    
-            {
-                "type": "true-or-false",
-                "question": "The OPTIONS method describes the communication options for the target resource.",
-                "answer": "True"
-            },
-    
-            {
-                "type": "true-or-false",
-                "question": "A payload is a resource included in the HTTP response of the server.",
-                "answer": "True"
-            }
-    
+        {
+            "type": "multiple-choice",
+            "question": "4xx status codes are:",
+            "options": [
+                "Informational",
+                "Successful",
+                "Redirection",
+                "Client-side Errors",
+                "Server-side Errors"
+            ],
+            "answer": "Client-side Errors"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "5xx status codes are:",
+            "options": [
+                "Successful",
+                "Redirection",
+                "Informational",
+                "Client-side Errors",
+                "Server-side Errors"
+            ],
+            "answer": "Server-side Errors"
+        },
+
+
+        {
+            "type": "multiple-choice",
+            "question": "What port does HTTP use?",
+            "options": [
+                "80",
+                "443",
+                "8080",
+                "1010"
+            ],
+            "answer": "80"
+        },
+
+        {
+            "type": "multiple-choice",
+            "question": "What port does HTTPS use?",
+            "options": [
+                "80",
+                "443",
+                "8080",
+                "1010"
+            ],
+            "answer": "443"
+        },
+
+        {
+            "type": "multiple-choice",
+            "question": "What is the URL of the first website?",
+            "options": [
+                "Myvirtuallearning.org",
+                "Google.com",
+                "Facebook.com",
+                "Info.cern.ch"
+            ],
+            "answer": "Info.cern.ch"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "Tim Berners Lee founded the World Wide Web Consortium",
+            "answer": "True"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "id, class, and title are global attributes.",
+            "answer": "True"
+        },
+        {
+            "type": "true-or-false",
+            "question": "HTML was developed by Tim Berners-Lee at CERN.",
+            "answer": "True"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "CSS is the language used to specify the presentation aspects of structurally marked-up documents.",
+            "answer": "True"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "The CONNECT method establishes a tunnel to the server.",
+            "answer": "True"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "The OPTIONS method describes the communication options for the target resource.",
+            "answer": "True"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "A payload is a resource included in the HTTP response of the server.",
+            "answer": "True"
+        }
+
     ],
     "Software Engineering": [
         {
@@ -308,20 +308,20 @@ let questions = {
         {
             "type": "identification",
             "question": "This is a type of software produced by a development organization and sold on the open market to any customer who is able to buy such product",
-            "answer": "Generic"
+            "answer": ["Generic", "Generic Software"]
         },
         {
             "type": "identification",
             "question": "This is a type of software commissioned by a particular customer and developed by some contractor to suit the specific needs of the customer",
-            "answer": "Customized"
+            "answer": ["Customized", "Customized Software"]
         },
         {
             "type": "identification",
             "question": "An engineering discipline that is concerned with all aspects of software production such that high-quality software is produced in a cost-effective manner",
             "answer": "Software Engineering"
         },
-    
-    
+
+
         {
             "type": "true-or-false",
             "question": "Software failures receive a lot more publicity than software engineering success stories",
@@ -372,8 +372,8 @@ let questions = {
             "question": "Package-Based Development Model is Based on the use of commercial-off-the-shelf packages (COTS)",
             "answer": "True"
         },
-    
-    
+
+
         {
             "type": "multiple-choice",
             "question": "Process phases are interleaved",

@@ -46,7 +46,7 @@ questionsButton.addEventListener('click', () => {
             let counter = 1;
             questions[category.name].forEach(question => {
                 console.log(question);
-                content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${JSON.stringify(question.options)}` : ""}<br>Answer: ${question.answer}<br><br>`;
+                content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
                 counter++;
             })
             setModalContent(category.name, content);
@@ -234,14 +234,32 @@ function getTotalNumberOfResponses() {
     return getResponses().length;
 }
 
+function checkAnswer(studentAnswer, questionNumber, category) {
+    let currentQuestions = questions[category];
+    let currentQuestion = currentQuestions[questionNumber];
+    let correctAnswer = currentQuestion.answer;
+    let correct = false;
+    if (Array.isArray(correctAnswer) && correctAnswer.length > 1) {
+        let stop = false;
+        correctAnswer.forEach(answer => {
+            answer = answer.toLowerCase();
+            if (answer == studentAnswer.toLowerCase() && !stop){
+                stop = true;
+                correct = true;
+            }
+        });
+    }
+    else if (correctAnswer.toLowerCase() == studentAnswer.toLowerCase()) {
+        correct = true;
+    }
+    return correct;
+}
+
 // Checks the answer, converts the answer of the user and the correct answer to lowercase and returns the number of correct answers
 function checkAnswers(answers, sequence, category) {
     let counter = 0;
-    let questionSet = questions[category];
     for (let i = 0; i < sequence.length; i++) {
-        if (questionSet[sequence[i]].answer.toLowerCase() == answers[i].toLowerCase()) {
-            counter++;
-        }
+        if (checkAnswer(answers[i], sequence[i], category)) counter++;
     }
     return counter;
 }

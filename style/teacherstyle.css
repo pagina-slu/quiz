@@ -300,3 +300,22 @@ main > div {
 .wrong {
   color: #c23232;
 }
+
+.clr-btn-category{
+  background: rgb(190, 190, 190);
+  color: black;
+  border-radius: 5px;
+}
+
+.clr-btn-all{
+  background: rgb(223, 56, 56);
+  color: white;
+  border-radius: 5px;
+  margin: 0 5px;
+  margin-bottom: 5px;
+}
+
+.clr-btn-all:hover{
+  /* background: rgb(168, 40, 200); */
+  background: rgb(190, 15, 15);
+}

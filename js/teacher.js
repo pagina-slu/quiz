@@ -80,6 +80,14 @@ responsesButton.addEventListener('click', () => {
     //side buttons for categories
     let sideContainer = document.createElement('div');
     sideContainer.classList.add('side-container');
+
+    //button: clear all response
+    let rmAllResponse = document.createElement('button');
+    rmAllResponse.classList.add('clr-btn-all');
+    rmAllResponse.textContent = "clear all response";
+    sideContainer.appendChild(rmAllResponse);
+
+    //button: for each categories
     categories.forEach(category => {
         let categoryButton = document.createElement('button');
         categoryButton.classList.add('category-button');
@@ -183,7 +191,7 @@ responsesButton.addEventListener('click', () => {
                 container.appendChild(quizWrapper);
                 mainDiv.appendChild(container);
             }
-            //clear buttons
+            //button: clear response for this category 
             let rmCategoryResponse = document.createElement('button');
             rmCategoryResponse.classList.add('clr-btn-category');
             rmCategoryResponse.textContent = "clear response for this category";

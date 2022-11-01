@@ -145,6 +145,11 @@ main > div {
   background-color: rgb(190, 190, 190);
 }
 
+.quiz-wrapper span.clicked {
+  color: white;
+  background-color: #86c232;
+}
+
 #modal {
   position: fixed;
   top: 0;
@@ -223,6 +228,12 @@ main > div {
   border-radius: 10px;
 }
 
+.green-button.clicked {
+  background-color: rgb(190, 190, 190);
+  color: black;
+  border-radius: 10px;
+}
+
 .red-button {
   background-color: rgb(200, 40, 40);
   color: white;
@@ -250,6 +261,8 @@ main > div {
   background: white;
   color: black;
   border-radius: 5px;
+  border-bottom: 0.5rem solid transparent;
+  padding: 2rem 2rem 1.5rem 2rem;
 }
 
 .category-button:hover{
@@ -261,4 +274,5 @@ main > div {
 .category-button:focus{
   background-color: #86c232;
   color: white;
+  outline: none;
 }

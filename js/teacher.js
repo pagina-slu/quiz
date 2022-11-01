@@ -99,15 +99,65 @@ responsesButton.addEventListener('click', () => {
                     let quizWrapper = document.createElement('div');
                     quizWrapper.classList.add('quiz-wrapper');
                     let responseSpan = document.createElement('span');
-                    responseSpan.textContent = response.name;
-                    let buttonWrapper = document.createElement('div');
-                    buttonWrapper.classList.add('button-wrapper');
-                    let viewButton = document.createElement('button');
-                    viewButton.classList.add('purple-button');
-                    viewButton.textContent = "View";
                     let greenButton = document.createElement('button');
                     greenButton.classList.add('green-button');
                     greenButton.textContent = "Mark As Checked";
+                    if(response.isChecked == true){ //adds classname 'clicked' to span and button if already checked
+                        responseSpan.classList.add('clicked');
+                        greenButton.classList.add('clicked');
+                        greenButton.textContent = "Mark As Unchecked";
+                    }
+                    responseSpan.innerHTML = response.idNumber+"<br>"+response.name;
+                    let buttonWrapper = document.createElement('div');
+                    buttonWrapper.classList.add('button-wrapper');
+                    let viewButton = document.createElement('button');
+                    //view button
+                    viewButton.classList.add('purple-button');
+                    viewButton.textContent = "View";
+                    viewButton.addEventListener('click', ()=>{
+                        console.log(response);
+                        let content = "";
+                        let counter = 1;
+                        response.sequence.forEach(seq =>{
+                            content+=`${counter}. `+
+                                "Question: "+questions[category.name][seq].question+
+                                "<br> Type: "+questions[category.name][seq].type+
+                                "<br> Answer: "+response.answers[counter-1]+
+                                "<br><br>";
+                                counter++;
+                        })
+
+                        //ALL QUESTIONS (DONT DELETE SALAMAT)
+                        // questions[category.name].forEach(question=>{
+                        //     var ans = " "
+                        //     console.log(response);
+                        //     content+=`${counter}. `+
+                        //         "Question: "+question.question+
+                        //         "<br> Type: "+question.type+
+                        //         "<br> Answer: "+
+                        //         "<br><br>";
+                        //     counter++;
+                        // })
+                        setModalContent(category.name, content);
+                        openModal();
+                    });
+
+                    greenButton.addEventListener('click',()=>{
+                        if(greenButton.className == 'green-button'){
+                            greenButton.textContent = "Mark As Unchecked";
+                            responseSpan.classList.add('clicked');
+                            greenButton.classList.add('clicked');
+                            response.isChecked = true;
+                            localStorage.setItem('responses', JSON.stringify(responses));
+                        }else{
+                            greenButton.textContent = "Mark As Checked";
+                            responseSpan.classList.remove('clicked');
+                            greenButton.classList.remove('clicked');
+                            response.isChecked = false;
+                            localStorage.setItem('responses', JSON.stringify(responses));
+                        }
+                    });
+
                     buttonWrapper.appendChild(viewButton);
                     buttonWrapper.appendChild(greenButton);
                     quizWrapper.appendChild(responseSpan);
@@ -128,14 +178,57 @@ responsesButton.addEventListener('click', () => {
                 mainDiv.appendChild(container);
             }
         })
-    
+
         sideContainer.appendChild(categoryButton);
         mainDiv.appendChild(sideContainer);
+        var catButts = document.querySelectorAll(".category-button");
+        catButts[0].click();
+        catButts[0].focus();
     })
-
-    
 });
 
 summaryButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
 });
+
+// Return the number of correct answers for a question
+function getCorrectAnswersCount(category, questionNumber) {
+    let question = questions[category][questionNumber];
+    let count = 0;
+    let responses = getResponses();
+    responses.forEach(response => {
+        if (response.category == category) {
+            let sequence = response.sequence;
+            let index = 0;
+            // Get index of answer based on sequence
+            let hasAnswer = false; // To avoid errors when question is not yet answered
+            sequence.every(s => {
+                if (s == questionNumber) {
+                    hasAnswer = true;
+                    return false;
+                }
+                index++;
+                return true;
+            });
+            if (hasAnswer && response.answers[index].toLowerCase() == question.answer.toLowerCase()) count++;
+        };
+    });
+    return count;
+}
+
+// Example: getCorrectAnswersCount("Applications Development", 18);
+
+function getNumberOfResponses(category) {
+    let responses = getResponses();
+    let count = 0;
+    responses.forEach(response => {
+        if (response.category == category) count++;
+    });
+    return count;
+}
+
+function getTotalNumberOfResponses() {
+    return getResponses().length;
+}
+console.log(getNumberOfResponses("Applications Development"))
+console.log(getTotalNumberOfResponses());

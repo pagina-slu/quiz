@@ -1,3 +1,6 @@
+let questions = {};
+let scores = {};
+
 const BUTTONS = document.querySelectorAll('#top-nav li');
 BUTTONS.forEach(button => {
     button.addEventListener('click', () => {
@@ -12,7 +15,6 @@ function clearSelected() {
     });
 }
 const CATEGORIES = readJSONfile('../res/categories.json');
-let questions = {};
 CATEGORIES.forEach(category => {
     questions[category.name] = readJSONfile(category.path);
 });
@@ -91,10 +93,14 @@ responsesButton.addEventListener('click', () => {
         categoryButton.addEventListener('click', ()=>{
             let hasResponse = false; 
             removeAllChildNodes(container);
-
+            scores = [];
             //for responses
             responses.forEach(response => {
                 if(response.category == category.name){
+                    // Calculate scores
+                    console.log(response);
+                    scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category.name);
+
                     hasResponse = true;
                     let quizWrapper = document.createElement('div');
                     quizWrapper.classList.add('quiz-wrapper');
@@ -166,7 +172,6 @@ responsesButton.addEventListener('click', () => {
                     mainDiv.appendChild(container);
                 }
             });
-            console.log(hasResponse);
             //checks if category has a response
             if(hasResponse == false){
                 let quizWrapper = document.createElement('div');
@@ -230,5 +235,17 @@ function getNumberOfResponses(category) {
 function getTotalNumberOfResponses() {
     return getResponses().length;
 }
-console.log(getNumberOfResponses("Applications Development"))
-console.log(getTotalNumberOfResponses());
+
+// Checks the answer, converts the answer of the user and the correct answer to lowercase and returns the number of correct answers
+function checkAnswers(answers, sequence, category) {
+    let counter = 0;
+    let questionSet = questions[category];
+    for (let i = 0; i < sequence.length; i++) {
+        if (questionSet[sequence[i]].answer.toLowerCase() == answers[i].toLowerCase()) {
+            counter++;
+        }
+    }
+    return counter;
+}
+// console.log(getNumberOfResponses("Applications Development"))
+// console.log(getTotalNumberOfResponses());

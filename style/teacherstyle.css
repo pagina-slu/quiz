@@ -290,6 +290,11 @@ main > div {
   white-space: normal;
 }
 
+#see-more {
+  height: 300px;
+  overflow: auto;
+}
+
 .category-button{
   margin: 5px;
   background: white;

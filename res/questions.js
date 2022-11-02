@@ -369,7 +369,7 @@ let questions = {
         },
         {
             "type": "true-or-false",
-            "question": "Package-Based Development Model is Based on the use of commercial-off-the-shelf packages (COTS)",
+            "question": "Package-Based Development Model is based on the use of commercial-off-the-shelf packages (COTS)",
             "answer": "True"
         },
 
@@ -527,12 +527,12 @@ let questions = {
         },
         {
             "type": "true-or-false",
-            "question": "Flow pertains to the ordoring of how information is processed",
+            "question": "The audience should be able to understand the intended order in which to process the information, without ever feeling lost or overwhelmed. This pertains to the element Flow",
             "answer": "True"
         },
         {
             "type": "true-or-false",
-            "question": "Grid is sensing the Structure of Information presented in a slide",
+            "question": "Grid is the element that provides a determined way of organizing content",
             "answer": "False"
         },
         {

@@ -7,5 +7,8 @@ let categories = [
     },
     {
         "name": "Software Engineering"
+    },
+    {
+        "name": "Technology-Assisted Presentation and Communcation"
     }
 ]

@@ -4,13 +4,13 @@ var numberOfQuestions = 5;        // Number of questions to show
 var currentName;
 var currentCategory;
 var idNum;
+
 // Runs after the page loads
 window.onload = function () {
     generateCategorySelector();
 }
 
 // Functions
-
 function generateCategorySelector(){
     document.getElementById("login-wrapper").style.display = "block";
     hideProgressBar();
@@ -33,12 +33,15 @@ function generateCategorySelector(){
                 document.getElementById('title').innerHTML = category.name;
                 currentCategory = category.name;
                 currentQuestions = questions[currentCategory];
+                numberOfQuestions = currentQuestions.length;
+                console.log(numberOfQuestions);
                 generateUserLogIn();
             }
             document.getElementById('category-wrapper').appendChild(categoryButton);
         });
 }
 
+// Creates UI to get ID number and name of student
 function generateUserLogIn() {
     document.getElementById("login-wrapper").style.display = "none";
     let nameWrapper = document.createElement("div");
@@ -101,7 +104,8 @@ function generateUserLogIn() {
     nameWrapper.append(user);
     nameWrapper.append(enter);
 }
-// Start reading and appending the JSON
+
+// Show the student all questions and start the quiz
 function startQuiz() {
     showProgressBar();
     window.onbeforeunload = function () {
@@ -146,7 +150,7 @@ function generateNumberSequence(length, max) {
     return numberSequence;
 }
 
-// Generate and assign event listener to submit button
+// Generate submit button and assign event listener
 function generateSubmitButton() {
     let submitWrapper = document.getElementById("submit-wrapper");
     let submitButton = document.createElement("button");
@@ -156,15 +160,17 @@ function generateSubmitButton() {
     submitWrapper.appendChild(submitButton);
 }
 
+// 
 function submitQuiz() {
     let answerWrapper = document.querySelectorAll(".input-wrapper");
     let answers = []; // Holds the answer of the user
-
+    let answeredAll = true;
     for (let index = 0; index < answerWrapper.length; index++) { // Get answers
         let answer = "";
         if (answerWrapper[index].firstChild.className == "identification") {
             answer = answerWrapper[index].firstChild.firstChild.value;
             if (answer == "" || answer == null) {
+                answeredAll = false;
                 alert("Please answer all the questions");
                 break;
             }
@@ -174,6 +180,7 @@ function submitQuiz() {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             else {
+                answeredAll = false;
                 alert("Please answer all the questions");
                 break;
             }
@@ -182,15 +189,18 @@ function submitQuiz() {
                 answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
             }
             else {
+                answeredAll = false;
                 alert("Please answer all the questions");
                 break;
             }
         }
         answers.push(answer);
     }
-    saveLocally(currentName, idNum, currentCategory, answers, sequence);
-    alert("Your response has been submitted. Thank you for answering!")
-    resetQuiz();
+    if (answeredAll) {
+        saveLocally(currentName, idNum, currentCategory, answers, sequence);
+        alert("Your response has been submitted. Thank you for answering!")
+        resetQuiz();
+    }
 }
 
 function resetQuiz() {
@@ -217,12 +227,10 @@ function countAnsweredQuestions() {
             }
         } else if (type.contains("multiple-choice")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                console.log("mult checked");
                 answerCount++;
             }
         } else if (type.contains("true-false")) {
             if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                console.log("trueorfalse checked");
                 answerCount++;
             }
         }

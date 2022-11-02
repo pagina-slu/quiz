@@ -10,5 +10,8 @@ let categories = [
     },
     {
         "name": "Technology-Assisted Presentation and Communcation"
+    },
+    {
+        "name": "Personality Development"
     }
 ]

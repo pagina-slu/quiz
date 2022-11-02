@@ -17,7 +17,6 @@ INPUTS.forEach(input => {
 		input.parentElement.classList.add("focus");
 	});
 	input.addEventListener("blur", () => {
-		console.log(input.value);
 		if (input.value === "") {
 			input.parentElement.classList.remove("focus");
 		}

@@ -11,6 +11,8 @@ window.onload = function () {
 }
 
 // Functions
+
+// Generates the category selector in the landing page
 function generateCategorySelector(){
     document.getElementById("login-wrapper").style.display = "block";
     hideProgressBar();
@@ -34,7 +36,6 @@ function generateCategorySelector(){
                 currentCategory = category.name;
                 currentQuestions = questions[currentCategory];
                 numberOfQuestions = currentQuestions.length;
-                console.log(numberOfQuestions);
                 generateUserLogIn();
             }
             document.getElementById('category-wrapper').appendChild(categoryButton);
@@ -85,7 +86,6 @@ function generateUserLogIn() {
         let hasResponded = false;
         // Check if student has response already
         getResponses().forEach(response => {
-            console.log(response);
             if(response.idNumber == idNum && response.category == currentCategory) {
                 hasResponded = true;
             }
@@ -235,7 +235,6 @@ function countAnsweredQuestions() {
             }
         }
     }
-    console.log(answerCount);
     return answerCount;
 }
 
@@ -246,6 +245,7 @@ function generateQuestionLabel(question, index) {
     return label;
 }
 
+// Returns a div containing a multiple choice question
 function multipleChoice(data, index) {
     let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);
@@ -269,6 +269,7 @@ function multipleChoice(data, index) {
     return questionWrapper;
 }
 
+// Returns a div containing an identification question
 function identification(data, index) {
     let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);
@@ -289,6 +290,7 @@ function identification(data, index) {
     return questionWrapper;
 }
 
+// Returns a div containing a true or false question
 function trueOrFalse(data, index) {
     let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);

@@ -329,22 +329,22 @@ let questions = {
         },
         {
             "type": "true-or-false",
-            "question": "In the Waterfall Model, customers need interim releases",
+            "question": "In the waterfall model, customers need interim releases",
             "answer": "False"
         },
         {
             "type": "true-or-false",
-            "question": "There are two types of Evolutionary Development: Exploratory and Throw-away prototyping",
+            "question": "There are two types of evolutionary development: Exploratory and Throw-away prototyping",
             "answer": "True"
         },
         {
             "type": "true-or-false",
-            "question": "In Throw-away prototyping, development starts with parts of the system that are understood.",
+            "question": "In throw-away prototyping, development starts with parts of the system that are understood.",
             "answer": "False"
         },
         {
             "type": "true-or-false",
-            "question": "In Formal Development, transformations are correctness-preserving so it is straightforward to show that the program conforms to its specification",
+            "question": "In formal development, transformations are correctness-preserving so it is straightforward to show that the program conforms to its specification",
             "answer": "True"
         },
         {
@@ -369,7 +369,7 @@ let questions = {
         },
         {
             "type": "true-or-false",
-            "question": "Package-Based Development Model is Based on the use of commercial-off-the-shelf packages (COTS)",
+            "question": "Package-based development model is based on the use of commercial-off-the-shelf packages (COTS)",
             "answer": "True"
         },
 
@@ -527,12 +527,12 @@ let questions = {
         },
         {
             "type": "true-or-false",
-            "question": "Flow pertains to the ordoring of how information is processed",
+            "question": "The audience should be able to understand the intended order in which to process the information, without ever feeling lost or overwhelmed. This pertains to the element Flow",
             "answer": "True"
         },
         {
             "type": "true-or-false",
-            "question": "Grid is sensing the Structure of Information presented in a slide",
+            "question": "Grid is the element that provides a determined way of organizing content",
             "answer": "False"
         },
         {

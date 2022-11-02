@@ -34,7 +34,6 @@ function generateCategorySelector(){
                 currentCategory = category.name;
                 currentQuestions = questions[currentCategory];
                 numberOfQuestions = currentQuestions.length;
-                console.log(numberOfQuestions);
                 generateUserLogIn();
             }
             document.getElementById('category-wrapper').appendChild(categoryButton);
@@ -85,7 +84,6 @@ function generateUserLogIn() {
         let hasResponded = false;
         // Check if student has response already
         getResponses().forEach(response => {
-            console.log(response);
             if(response.idNumber == idNum && response.category == currentCategory) {
                 hasResponded = true;
             }
@@ -235,7 +233,6 @@ function countAnsweredQuestions() {
             }
         }
     }
-    console.log(answerCount);
     return answerCount;
 }
 

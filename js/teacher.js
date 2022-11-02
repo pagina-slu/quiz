@@ -282,7 +282,6 @@ function calculateScores(category) {
     responses.forEach(response => {
         scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category);
     });
-    console.log(scores);
     return scores;
 }
 

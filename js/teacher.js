@@ -26,10 +26,11 @@ logoutButton.addEventListener('click', () => {
 responsesButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
     let container = createDiv('container');
-
+   
     // Side buttons for categories
     let sideContainer = createDiv('side-container');
 
+    
     // Right pane for statistics
     let rightPane = createDiv('right-pane');
 
@@ -51,8 +52,9 @@ responsesButton.addEventListener('click', () => {
             categoryButton.classList.add('selected');
             let hasResponse = false;
             removeAllChildNodes(container);
-
             let responses = getResponses();
+
+        
             responses.forEach(response => {
                 if (response.category != category.name) {
                     return;
@@ -118,7 +120,30 @@ responsesButton.addEventListener('click', () => {
                 rightPane.textContent = "No response for this category";
                 quizWrapper.appendChild(nameDiv);
                 container.appendChild(quizWrapper);
+
+
             } else {
+                let searchBar = createDiv('search-bar-div');
+                let search = document.createElement('input');
+                search.setAttribute('type', 'text');
+                search.setAttribute('id', 'search-bar');
+                search.setAttribute('placeholder', 'Search');
+                searchBar.appendChild(search);
+                search.addEventListener('keyup', () =>{
+                    let quizWrappers = document.querySelectorAll('.quiz-wrapper');
+                    let searchkey = document.getElementById('search-bar').value.toLowerCase();
+                    for(i = 0; i < responses.length; i++){
+                        if(responses[i].idNumber.indexOf(searchkey) > -1 ||  responses[i].name.toLowerCase().indexOf(searchkey) > -1 ){
+                            quizWrappers[i].style.display = 'flex';
+                            console.log("found " + searchkey);
+                        } else{
+                            quizWrappers[i].style.display = 'none';
+                            console.log("not found on search");
+                        }
+                    }
+                    }
+                )
+                
                 rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(category.name) + "\r\n";
                 rightPane.textContent += "Highest Score: " + getHighestScore(scores) + "\r\n";
                 rightPane.textContent += "Average Score: " + getAverageScore(scores);
@@ -150,6 +175,7 @@ responsesButton.addEventListener('click', () => {
                         seeMoreButton.textContent = "See More";
                     }
                 });
+                container.insertBefore(searchBar, container.firstChild);
                 rightPane.appendChild(seeMoreButton);
             }
             // Button to clear responses for the specified category
@@ -157,6 +183,7 @@ responsesButton.addEventListener('click', () => {
             clearCategoryResponsesButton.addEventListener('click', () => {
                 clearCategoryResponses(category.name);
             });
+            
             container.appendChild(clearCategoryResponsesButton);
         });
 

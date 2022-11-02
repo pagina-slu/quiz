@@ -14,6 +14,7 @@ function clearSelected() {
 }
 
 let mainDiv = document.getElementById('main');
+let logoutButton = document.getElementById('logout-button');
 let questionsButton = document.getElementById('questions-button');
 let responsesButton = document.getElementById('responses-button');
 let categoryButton = document.getElementsByClassName('category-button');
@@ -23,6 +24,10 @@ let closeModalButton = document.getElementById('close-modal-button');
 closeModalButton.addEventListener('click', () => {
     modal.classList.remove('is-visible');
 });
+
+logoutButton.addEventListener('click', () => {
+    window.close();
+})
 
 questionsButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
@@ -83,9 +88,6 @@ responsesButton.addEventListener('click', () => {
     let rightPane = document.createElement('div');
     rightPane.classList.add('right-pane');
     rightPane.classList.add('respondents');
-    rightPane.textContent = "Total Number of Respondents: \r\n";
-    rightPane.textContent += "Total Number of Respondents:" + responses.length;
-    // will continue tomorrow -- KIEFER
 
     // Button: clear all response
     let rmAllResponse = document.createElement('button');

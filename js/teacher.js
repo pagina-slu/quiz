@@ -132,7 +132,7 @@ responsesButton.addEventListener('click', () => {
                 search.setAttribute('id', 'search-bar');
                 search.setAttribute('placeholder', 'Search');
                 let searchicon = document.createElement('img');
-                searchicon.src = "../res/images/searchicon.png";
+                searchicon.src = "res/images/searchicon.png";
                 searchBar.appendChild(searchicon);
                 searchBar.appendChild(search);
                 search.addEventListener('keyup', () =>{

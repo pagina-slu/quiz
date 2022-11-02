@@ -11,6 +11,8 @@ window.onload = function () {
 }
 
 // Functions
+
+// Generates the category selector in the landing page
 function generateCategorySelector(){
     document.getElementById("login-wrapper").style.display = "block";
     hideProgressBar();
@@ -243,6 +245,7 @@ function generateQuestionLabel(question, index) {
     return label;
 }
 
+// Returns a div containing a multiple choice question
 function multipleChoice(data, index) {
     let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);
@@ -266,6 +269,7 @@ function multipleChoice(data, index) {
     return questionWrapper;
 }
 
+// Returns a div containing an identification question
 function identification(data, index) {
     let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);
@@ -286,6 +290,7 @@ function identification(data, index) {
     return questionWrapper;
 }
 
+// Returns a div containing a true or false question
 function trueOrFalse(data, index) {
     let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);

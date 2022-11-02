@@ -276,6 +276,7 @@ function getCorrectAnswersCount(category, questionNumber) {
     return count;
 }
 
+// Returns an array of scores, accessible through a given id number
 function calculateScores(category) {
     let scores = [];
     let responses = getResponsesForCategory(category);

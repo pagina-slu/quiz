@@ -33,6 +33,7 @@ main {
   height: 100%;
   display: flex;
   flex-direction: row;
+  gap: 0.5rem;
   width: 80%;
   justify-content: center;
 }
@@ -131,7 +132,7 @@ main > div {
 .quiz-wrapper {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
   justify-content: center;
   height: 100%;
@@ -232,7 +233,7 @@ main > div {
 }
 
 .button-wrapper button{
-  font-size: 1rem;
+  font-size: 1.4rem;
   flex-grow: 1;
 }
 
@@ -275,13 +276,18 @@ main > div {
   background: none  ;
   display: flex;
   flex-direction: column;
-  margin: 5px;
-  gap: 5rem;
+  width: 20%;
+  gap: 2rem;
   padding: 2rem;
   color:rgba(0, 0, 0, 0.75);
   font-size: 1.5rem;
   background-color: #fff;
   white-space: pre;
+}
+
+.right-pane button {
+  font-size: 1.4rem;
+  white-space: normal;
 }
 
 .category-button{
@@ -299,7 +305,7 @@ main > div {
   border-bottom: 0.5rem solid #86c232;
 }
 
-.category-button:focus{
+.category-button.selected{
   background-color: #86c232;
   color: white;
   outline: none;

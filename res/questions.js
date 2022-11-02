@@ -313,7 +313,7 @@ let questions = {
         {
             "type": "identification",
             "question": "This is a type of software commissioned by a particular customer and developed by some contractor to suit the specific needs of the customer",
-            "answer": ["Customized", "Customized Software"]
+            "answer": ["Customized", "Customized Software", "Bespoke"]
         },
         {
             "type": "identification",
@@ -354,7 +354,7 @@ let questions = {
         },
         {
             "type": "true-or-false",
-            "question": "Reuse-oriented development are Used by developers who know of designs or codes which are similar to that required",
+            "question": "Reuse-oriented development are used by developers who know of designs or codes which are similar to that required",
             "answer": "True"
         },
         {
@@ -364,7 +364,7 @@ let questions = {
         },
         {
             "type": "true-or-false",
-            "question": "Incremental model is Most appropriate for systems with strict requirements in terms of reliability and risk management",
+            "question": "Incremental model is most appropriate for systems with strict requirements in terms of reliability and risk management",
             "answer": "False"
         },
         {
@@ -376,7 +376,7 @@ let questions = {
 
         {
             "type": "multiple-choice",
-            "question": "Process phases are interleaved",
+            "question": "A process model where phases are interleaved. In this model, the developer explores with the customer\'s requirements to deliver the system",
             "options": [
                 "Waterfall",
                 "Evolutionary",
@@ -387,7 +387,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Process phases are distinct and separate",
+            "question": "A process model where phases are distinct and separate. It is also a linear sequential model",
             "options": [
                 "Waterfall",
                 "Evolutionary",
@@ -398,7 +398,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "System is assembled from existing components",
+            "question": "A process model where the system is assembled from existing components",
             "options": [
                 "Waterfall",
                 "Evolutionary",
@@ -409,7 +409,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "A mathematical system model is formally transformed to an implementation",
+            "question": "A development model based on the transformation of mathematical specification through different representations to an executable program",
             "options": [
                 "Waterfall",
                 "Evolutionary",
@@ -431,7 +431,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "A variation of the repository model; A shared repository of problems, partial solutions, suggestions and contributed information.",
+            "question": "An architectural style that is a variation of the repository model; A shared repository of problems, partial solutions, suggestions and contributed information.",
             "options": [
                 "Pipeline",
                 "Layered",
@@ -442,7 +442,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Consists of a central data store and a set of independent components that access the data store",
+            "question": "An architectural style that consists of a central data store and a set of independent components that access the data store",
             "options": [
                 "Pipeline",
                 "Layered",
@@ -453,7 +453,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Accomplished by applying a local transformation to the input streams and computing incrementally so output begins before input is consumed",
+            "question": "An architectural style that is accomplished by applying a local transformation to the input streams and computing incrementally so output begins before input is consumed",
             "options": [
                 "Pipeline",
                 "Layered",
@@ -464,7 +464,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Organizes a system into layers, each of which provide a set of services",
+            "question": "An architectural pattern that organizes a system into layers, each of which provide a set of services",
             "options": [
                 "Pipeline",
                 "Layered",
@@ -475,7 +475,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Widely used for machine control applications and are typically modeled via finite state machines",
+            "question": "An architectural pattern that is widely used for machine control applications and are typically modeled via finite state machines",
             "options": [
                 "Implicit Invocation",
                 "Process-control",
@@ -498,12 +498,12 @@ let questions = {
         },
         {
             "type": "identification",
-            "question": "A Dense content in a presentation intended as a discussion document or whitepaper",
+            "question": "A dense content in a presentation intended as a discussion document or whitepaper",
             "answer": "Presentation"
         },
         {
             "type": "identification",
-            "question": "Text on the slide functions as a crutch for the presenter. The audience either reads the slides or listens to the presenter",
+            "question": "A tool in presentation where texts on the slide functions as a crutch for the presenter. The audience either reads the slides or listens to the presenter",
             "answer": "Teleprompter"
         },
 
@@ -566,7 +566,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Communicate your message accurately",
+            "question": "A principle of effective communication that involves communicating your message accurately",
             "options": [
                 "Completeness",
                 "Conciseness",
@@ -577,7 +577,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Focus on 'You' instead of 'I' or 'We'",
+            "question": "A principle of effective communication that Consider the audience\’s viewpoints, background, mindset, and educational level",
             "options": [
                 "Completeness",
                 "Conciseness",
@@ -588,7 +588,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Provide all necessary facts to the audience",
+            "question": "A principle of effective communication that involves providing all the necessary facts to the audience",
             "options": [
                 "Completeness",
                 "Conciseness",
@@ -599,7 +599,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Communicating what you want to convey in limited words",
+            "question": "A principle of effective communication that involves communicating what you want to convey in limited words",
             "options": [
                 "Completeness",
                 "Conciseness",
@@ -610,7 +610,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Being tactful, thoughtful, and appreciative",
+            "question": "A principle of effective communication that pertains to being tactful, thoughtful, and appreciative",
             "options": [
                 "Concreteness",
                 "Courtesy",
@@ -621,7 +621,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "Use direct (dictionary) words rather than ideas suggested by a word",
+            "question": "A principle of effective communication that pertains to using direct (dictionary) words rather than ideas suggested by a word",
             "options": [
                 "Concreteness",
                 "Courtesy",
@@ -632,18 +632,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "",
-            "options": [
-                "Concreteness",
-                "Courtesy",
-                "Correctness",
-                "Completeness"
-            ],
-            "answer": ""
-        },
-        {
-            "type": "multiple-choice",
-            "question": "No grammatical errors and misspelled words",
+            "question": "A principle of effective communication that pertains to avoiding grammatical errors and misspelled words",
             "options": [
                 "Concreteness",
                 "Courtesy",
@@ -654,7 +643,7 @@ let questions = {
         },
         {
             "type": "multiple-choice",
-            "question": "non-conversational, impersonal, usually composed of long sentences and is used in dissertations and legal documents",
+            "question": "A level of language that is non-conversational, impersonal, usually composed of long sentences and is used in dissertations and legal documents",
             "options": [
                 "Informal",
                 "Substandard",

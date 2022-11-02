@@ -484,5 +484,184 @@ let questions = {
             ],
             "answer": "Process-control"
         }
+    ],
+    "Technology-Assisted Presentation and Communcation": [
+        {
+            "type": "identification",
+            "question": "The process of generating meaning by sending and receiving verbal and non-verbal symbols and signs that are influenced by multiple contexts.",
+            "answer": "Communication"
+        },
+        {
+            "type": "identification",
+            "question": "A structured communication based on the actual audience\’s needs in order to achieve a certain purpose.",
+            "answer": "Presentation"
+        },
+        {
+            "type": "identification",
+            "question": "A Dense content in a presentation intended as a discussion document or whitepaper",
+            "answer": "Presentation"
+        },
+        {
+            "type": "identification",
+            "question": "Text on the slide functions as a crutch for the presenter. The audience either reads the slides or listens to the presenter",
+            "answer": "Teleprompter"
+        },
+
+        {
+            "type": "identification",
+            "question": "This visual element defines the structure formed when relationships are applied to a set of elements. ",
+            "answer": "Hierarchy"
+        },
+
+
+        {
+            "type": "true-or-false",
+            "question": "There are three types of presentation",
+            "answer": "false"
+        },
+
+        {
+            "type": "true-or-false",
+            "question": "Presentation is a tool for high-stakes internal and external communications.",
+            "answer": "True"
+        },
+        {
+            "type": "true-or-false",
+            "question": "Flow pertains to the ordoring of how information is processed",
+            "answer": "True"
+        },
+        {
+            "type": "true-or-false",
+            "question": "Grid is sensing the Structure of Information presented in a slide",
+            "answer": "False"
+        },
+        {
+            "type": "true-or-false",
+            "question": "All stylistic choices have the potential to suggest importance, urgency, and value",
+            "answer": "True"
+        },
+
+
+        {
+            "type": "multiple-choice",
+            "question": "A type of presentation that conveys the understanding of an idea",
+            "options": [
+                "Declarative",
+                "Persuasive",
+                "Informative",
+                "Communicative"
+            ],
+            "answer": "Informative"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "A type of presentation that influence a change in the belief, attitude, or behavior",
+            "options": [
+                "Declarative",
+                "Persuasive",
+                "Informative",
+                "Communicative"
+            ],
+            "answer": "Persuasive"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "Communicate your message accurately",
+            "options": [
+                "Completeness",
+                "Conciseness",
+                "Consideration",
+                "Clarity"
+            ],
+            "answer": "Clarity"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "Focus on 'You' instead of 'I' or 'We'",
+            "options": [
+                "Completeness",
+                "Conciseness",
+                "Consideration",
+                "Clarity"
+            ],
+            "answer": "Consideration"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "Provide all necessary facts to the audience",
+            "options": [
+                "Completeness",
+                "Conciseness",
+                "Consideration",
+                "Clarity"
+            ],
+            "answer": "Completeness"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "Communicating what you want to convey in limited words",
+            "options": [
+                "Completeness",
+                "Conciseness",
+                "Consideration",
+                "Clarity"
+            ],
+            "answer": "Conciseness"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "Being tactful, thoughtful, and appreciative",
+            "options": [
+                "Concreteness",
+                "Courtesy",
+                "Correctness",
+                "Completeness"
+            ],
+            "answer": "Courtesy"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "Use direct (dictionary) words rather than ideas suggested by a word",
+            "options": [
+                "Concreteness",
+                "Courtesy",
+                "Correctness",
+                "Completeness"
+            ],
+            "answer": "Concreteness"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "",
+            "options": [
+                "Concreteness",
+                "Courtesy",
+                "Correctness",
+                "Completeness"
+            ],
+            "answer": ""
+        },
+        {
+            "type": "multiple-choice",
+            "question": "No grammatical errors and misspelled words",
+            "options": [
+                "Concreteness",
+                "Courtesy",
+                "Correctness",
+                "Completeness"
+            ],
+            "answer": "Correctness"
+        },
+        {
+            "type": "multiple-choice",
+            "question": "non-conversational, impersonal, usually composed of long sentences and is used in dissertations and legal documents",
+            "options": [
+                "Informal",
+                "Substandard",
+                "Formal",
+                "Vernacular"
+            ],
+            "answer": "Formal"
+        },
     ]
 };

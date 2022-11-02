@@ -141,10 +141,8 @@ responsesButton.addEventListener('click', () => {
                     for(i = 0; i < responses.length; i++){
                         if(responses[i].idNumber.indexOf(searchkey) > -1 ||  responses[i].name.toLowerCase().indexOf(searchkey) > -1 ){
                             quizWrappers[i].style.display = 'flex';
-                            console.log("found " + searchkey);
                         } else{
                             quizWrappers[i].style.display = 'none';
-                            console.log("not found on search");
                         }
                     }
                     }

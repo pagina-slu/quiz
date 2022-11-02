@@ -36,7 +36,10 @@ responsesButton.addEventListener('click', () => {
     // Button to clear all responses
     let clearAllResponsesButton = createButton('clear-all', 'Clear All Responses')
     clearAllResponsesButton.addEventListener('click', () => {
-        clearLocalStorage();
+        if (confirm("Are you sure you want to clear all responses?")) {
+            clearLocalStorage();
+            responsesButton.click();
+        }
     });
     sideContainer.appendChild(clearAllResponsesButton);
 
@@ -155,7 +158,10 @@ responsesButton.addEventListener('click', () => {
             // Button to clear responses for the specified category
             let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
             clearCategoryResponsesButton.addEventListener('click', () => {
-                clearCategoryResponses(category.name);
+                if (confirm("Are you sure you want to clear responses for this category?")) {
+                    clearCategoryResponses(category.name);
+                    responsesButton.click();
+                }
             });
             container.appendChild(clearCategoryResponsesButton);
         });
@@ -286,8 +292,11 @@ function getHighestScore(scores) {
 }
 
 function getAverageScore(scores) {
+    let counter = Object.values(scores);
     let sum = 0;
-    scores.forEach((num) => { sum += num });
+    counter.forEach((num) => {
+        sum += num
+    });
     let average = sum / Object.keys(scores).length;
     return average.toFixed(2);
 }

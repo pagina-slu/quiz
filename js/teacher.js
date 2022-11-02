@@ -128,6 +128,9 @@ responsesButton.addEventListener('click', () => {
                 search.setAttribute('type', 'text');
                 search.setAttribute('id', 'search-bar');
                 search.setAttribute('placeholder', 'Search');
+                let searchicon = document.createElement('img');
+                searchicon.src = "../res/images/searchicon.png";
+                searchBar.appendChild(searchicon);
                 searchBar.appendChild(search);
                 search.addEventListener('keyup', () =>{
                     let quizWrappers = document.querySelectorAll('.quiz-wrapper');

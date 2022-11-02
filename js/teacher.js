@@ -14,6 +14,7 @@ function clearSelected() {
 }
 
 let mainDiv = document.getElementById('main');
+let logoutButton = document.getElementById('logout-button');
 let questionsButton = document.getElementById('questions-button');
 let responsesButton = document.getElementById('responses-button');
 let categoryButton = document.getElementsByClassName('category-button');
@@ -23,6 +24,10 @@ let closeModalButton = document.getElementById('close-modal-button');
 closeModalButton.addEventListener('click', () => {
     modal.classList.remove('is-visible');
 });
+
+logoutButton.addEventListener('click', () => {
+    window.close();
+})
 
 questionsButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
@@ -71,39 +76,39 @@ function openModal() {
 
 responsesButton.addEventListener('click', () => {
     var responses = getResponses();
-    console.log(responses);
     removeAllChildNodes(mainDiv);
     let container = document.createElement('div');
     container.classList.add('container');
 
-    //side buttons for categories
+    // Side buttons for categories
     let sideContainer = document.createElement('div');
     sideContainer.classList.add('side-container');
 
-    //right pane for statistics
+    // Right pane for statistics
     let rightPane = document.createElement('div');
     rightPane.classList.add('right-pane');
     rightPane.classList.add('respondents');
-    rightPane.textContent = "Total Number of Respondents: \r\n";
-    rightPane.textContent += "Total Number of Respondents:" + responses.length;
-    // will continue tomorrow -- KIEFER
 
-    //button: clear all response
+    // Button: clear all response
     let rmAllResponse = document.createElement('button');
     rmAllResponse.classList.add('clr-btn-all');
-    rmAllResponse.textContent = "Clear All Response";
+    rmAllResponse.textContent = "Clear All Responses";
     rmAllResponse.addEventListener('click', () => {
         clearLocalStorage();
     })
     sideContainer.appendChild(rmAllResponse);
 
-    //button: for each categories
+    // Button: for each categories
     categories.forEach(category => {
         let categoryButton = document.createElement('button');
         categoryButton.classList.add('category-button');
         categoryButton.textContent = category.name;
 
         categoryButton.addEventListener('click', () => {
+            document.querySelectorAll('.category-button').forEach(cb => {
+                cb.classList.remove('selected');
+            });
+            categoryButton.classList.add('selected');
             let hasResponse = false;
             removeAllChildNodes(container);
             scores = [];

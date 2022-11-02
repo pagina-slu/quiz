@@ -9,6 +9,11 @@ function removeAllChildNodes(parent) {
     }
 }
 
+// Stores responses locally
+function storeResponses(responses) {
+    localStorage.setItem('responses', JSON.stringify(responses));
+}
+
 // Returns all responses
 function getResponses() {
     return JSON.parse(localStorage.getItem('responses')) || [];
@@ -19,6 +24,14 @@ function getResponsesForCategory(_category) {
     return getResponses().filter(({category}) => category === _category);
 }
 
+// Clears the local storage
 function clearLocalStorage() {
     localStorage.clear();
+}
+
+// Creates a div with the given class
+function createDiv(_class) {
+    let div = document.createElement('div');
+    div.classList.add(_class);
+    return div;
 }

@@ -2,21 +2,37 @@ var btn = document.getElementById('login-form-btn');
 var ovrly = document.getElementById('overlay');
 var cross = document.getElementById('cross');
 var login = document.getElementById('login');
+var loginButton = document.getElementById('login-btn');
+const INPUTS = document.querySelectorAll("#login .input input");
+
+// Add event listeners
 btn.addEventListener('click', openForm);
 ovrly.addEventListener('click', closeForm);
 cross.addEventListener('click', closeForm);
+loginButton.addEventListener('click', loginUser);
+
+// Make label float when input element has focus
+INPUTS.forEach(input => {
+	input.addEventListener("focus", () => {
+		input.parentElement.classList.add("focus");
+	});
+	input.addEventListener("blur", () => {
+		console.log(input.value);
+		if (input.value === "") {
+			input.parentElement.classList.remove("focus");
+		}
+	});
+})
 
 function openForm() {
 	ovrly.style.display = "block";
 	login.style.display = "block";
 }
+
 function closeForm() {
 	ovrly.style.display = "none";
 	login.style.display = "none";
 }
-
-var loginButton = document.getElementById('login-btn');
-loginButton.addEventListener('click', loginUser);
 
 function loginUser() {
 	let uname = document.getElementById('uname').value;
@@ -38,18 +54,3 @@ function clearInputs() {
 	uname.parentElement.classList.remove("focus");
 	upass.parentElement.classList.remove("focus");
 }
-
-// Make label float when input element has focus
-const INPUTS = document.querySelectorAll("#login .input input");
-
-INPUTS.forEach(input => {
-	input.addEventListener("focus", () => {
-		input.parentElement.classList.add("focus");
-	});
-	input.addEventListener("blur", () => {
-		console.log(input.value);
-		if (input.value === "") {
-			input.parentElement.classList.remove("focus");
-		}
-	});
-})

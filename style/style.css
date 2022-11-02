@@ -13,63 +13,63 @@
 html {
   font-family: 'OpenSans';
   font-size: 10px;
-  scroll-behavior: smooth;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   background-color: #222629;
-  position: relative;
   color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  width: 100vw;
 }
 
 main {
-  width: 80vw;
-  padding-bottom: 5rem;
   display: flex;
   flex-direction: column;
+  padding-bottom: 5rem;
+  width: 80vw;
 }
 
 #user-wrapper {
-  margin-top: 2rem;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
   gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 2rem;
 }
 
 
 #user-wrapper input {
-  margin-bottom: 1rem;
-  width: 40rem;
-  padding: 1.5rem;
-  font-size: 1.8rem;
   border: none;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  width: 40rem;
 }
 
 #enter-button {
-  font-size: 1.8rem;
-  padding: 1rem 0;
-  width: 20rem;
-  text-align: center;
-  border-radius: 1rem;
-  margin-bottom: 1rem;
-  text-decoration: none;
-  color: #000000;
   background-color: white;
+  border-radius: 1rem;
+  color: #000000;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+  text-align: center;
+  text-decoration: none;
+  width: 20rem;
 }
 
 #enter-button:hover {
-  cursor: pointer;
   background: #86c232;
   color: #fff;
+  cursor: pointer;
   transform: translateY(-0.1rem);
   transition: transform 150ms;
 }
@@ -80,29 +80,29 @@ main {
 
 
 #title-wrapper {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  height: 10rem;  
-  width: 100%;
-  padding: 1.5rem;
-  text-align: left;
-  margin-top: 15rem;
-  margin-bottom: 2rem;
   background-color:#86c232;
   color: white;
+  display: flex;
+  height: 10rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: 15rem;
+  padding: 1.5rem;
+  text-align: left;  
+  width: 100%;
 }
 
 #title {
-  font-weight: bold;
   font-size: 3.4rem;
+  font-weight: bold;
   
 }
 
 #category-wrapper {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -110,11 +110,11 @@ main {
   border: none;
   border-radius: 10px;
   font-size: 2.5rem;
-  min-height: 10rem;
   margin: 3rem;
+  min-height: 10rem;
+  min-width: 25rem;
   padding: 5rem;
   text-align: center;
-  min-width: 25rem;
   /* Pagandahin pa */
 }
 
@@ -130,19 +130,19 @@ h1 {
 }
 
 #quiz-wrapper {
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
-  border-radius: 20px;
   width: 80vw;
 }
 
 .question-wrapper {
   display: flex;
   flex-direction: column;
+  gap: 4rem;
   justify-content: space-between;
   padding: 3rem 0 3rem 3rem;
-  gap: 4rem;
 }
 
 .question {
@@ -156,13 +156,13 @@ h1 {
 }
 
 .input-wrapper .input, .multiple-choice, .true-false{
-  display: flex;
   align-items: center;
-  width: 50%;
   border: 1px solid transparent;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 0;
   cursor: pointer;
+  display: flex;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  width: 50%;
 }
 
 .input-wrapper .input:hover {
@@ -172,14 +172,14 @@ h1 {
 
 .input-wrapper input[type="radio"] {
   appearance: none;
-  border-radius: 50%;
-  width: 1.6rem;
-  height: 1.6rem;
-  cursor: pointer;
 
   border: 2px solid white;
-  transition: 0.2s all linear;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 1.6rem;
   margin-right: 1rem;
+  transition: 0.2s all linear;
+  width: 1.6rem;
 }
 
 .input-wrapper input[type="radio"]:checked {
@@ -195,14 +195,14 @@ h1 {
 }
 
 .button-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   align-items: center;
-  height: 75px;
-  width: 100%;
   border: solid 1px;
   border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-direction: row;
+  height: 75px;
+  justify-content: center;
+  width: 100%;
 }
 
 .button-wrapper span {
@@ -212,10 +212,10 @@ h1 {
 
 #question-number {
   border: none;
-  width: 2rem;
-  text-align: center;
   font-size: 2rem;
   line-height: 4rem;
+  text-align: center;
+  width: 2rem;
 }
 
 /* Chrome, Safari, Edge, Opera https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp*/
@@ -242,91 +242,88 @@ input[type="number"] {
   color: white;
   font-size: 1.6rem;
   height: 50px;
-  width: 100%;
   padding-left: 1rem;
+  width: 100%;
 }
 
 .input-wrapper input[type="text"]:focus {
-  outline: none;
   border-color: #86c232;
   border-radius: 5px;
   border-width: 2px;
+  outline: none;
 }
 
 #submit-wrapper{
   display: flex;
+  justify-content: center;
   margin: 2rem;
   margin-bottom: 5rem;
-  justify-content: center;
 }
 
 #submit-button{
-  font-size: 1.5rem;
-  width: 15rem;
-  height: 5rem;
-  border-radius: 10px;
   border-color: transparent;
+  border-radius: 10px;
   cursor: pointer;
+  font-size: 1.5rem;
+  height: 5rem;
+  width: 15rem;
 }
 
 #submit-button:hover{
   background-color: #86c232;
-  color: aliceblue;
   border-color: transparent;
+  color: aliceblue;
 }
 
 /* progress bar style */
 
 #progress-circle {
-  font-size: 20px;
-  bottom: 10px;
-  right: 5px;
-  position: fixed;
-  /* so that children can be absolutely positioned */
-  padding: 0;
-  width: 5em;
-  height: 5em;
   background-color: #c9c9c9;
   border-radius: 50%;
-  line-height: 5em;
-  z-index: 1;
+  bottom: 10px;
   filter:drop-shadow(5px 2px 5px rgba(0, 0, 0, 0.514));
+  font-size: 20px;
+  height: 5em;
+  line-height: 5em;
+  /* so that children can be absolutely positioned */
+  padding: 0;
+  position: fixed;
+  right: 5px;
+  width: 5em;
+  z-index: 1;
 }
 
 #progress-circle:after {
-  border: none;
-  position: absolute;
-  top: 0.35em;
-  left: 0.35em;
-  text-align: center;
-  display: block;
-  border-radius: 50%;
-  width: 4.3em;
-  height: 4.3em;
   background-color: white;
+  border: none;
+  border-radius: 50%;
   content: " ";
+  display: block;
+  height: 4.3em;
+  left: 0.35em;
+  position: absolute;
+  text-align: center;
+  top: 0.35em;
+  width: 4.3em;
 }
 
 #progress-circle span {
-  position: absolute;
-  line-height: 5em;
-  width: 5em;
-  text-align: center;
-  display: block;
   color: #3cbe00;
-  z-index: 2;
   cursor: default;
+  display: block;
+  line-height: 5em;
+  position: absolute;
+  text-align: center;
+  width: 5em;
+  z-index: 2;
 }
 
 .left-half-clipper {
-  /* a round circle */
   border-radius: 50%;
-  width: 5em;
+  clip: rect(0, 5em, 5em, 2.5em);
   height: 5em;
   position: absolute;
-  /* needed for clipping */
-  clip: rect(0, 5em, 5em, 2.5em);
-  /* clips the whole left half*/
+  width: 5em;
 }
 
 
@@ -336,35 +333,26 @@ input[type="number"] {
 }
 
 #value-bar {
-  /*This is an overlayed square, that is made round with the border radius,
-   then it is cut to display only the left half, then rotated clockwise
-   to escape the outer clipping path.*/
-  position: absolute;
-  /*needed for clipping*/
-  clip: rect(0, 2.5em, 5em, 0);
-  width: 5em;
-  height: 5em;
-  border-radius: 50%;
   border: 0.45em solid #3cbe00;
-  /*The border is 0.35 but making it larger removes visual artifacts */
-  /*background-color: #4D642D;*/
-  /* for debug */
+  border-radius: 50%;
   box-sizing: border-box;
+  clip: rect(0, 2.5em, 5em, 0);
+  height: 5em;
+  position: absolute;
   transition: transform .5s ease-in-out;
+  width: 5em;
 }
 
 
 /* Progress bar filling the whole right half for values above 50% */
-
 #progress-circle.over50 .first50-bar {
-  /*Progress bar for the first 50%, filling the whole right half*/
-  position: absolute;
-  /*needed for clipping*/
-  clip: rect(0, 5em, 5em, 2.5em);
   background-color: #3cbe00;
   border-radius: 50%;
-  width: 5em;
+  clip: rect(0, 5em, 5em, 2.5em);
   height: 5em;
+  /*Progress bar for the first 50%, filling the whole right half*/
+  position: absolute;
+  width: 5em;
 }
 
 #progress-circle:not(.over50) .first50-bar {
@@ -373,16 +361,16 @@ input[type="number"] {
 
 /* Footer */
 footer {
-  display: flex;
-  justify-content: center;
   align-items: center;
   background-color: #86c232;
-  color: #222629;
-  width: 100%;
-  text-align: center;
-  height: 5rem;
-  position: absolute;
   bottom: 0;
+  color: #222629;
+  display: flex;
+  height: 5rem;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+  width: 100%;
 }
 
 footer p {

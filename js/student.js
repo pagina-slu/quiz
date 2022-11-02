@@ -160,7 +160,7 @@ function generateSubmitButton() {
     submitWrapper.appendChild(submitButton);
 }
 
-// 
+// Stores response locally if all questions are answered
 function submitQuiz() {
     let answerWrapper = document.querySelectorAll(".input-wrapper");
     let answers = []; // Holds the answer of the user
@@ -239,12 +239,6 @@ function countAnsweredQuestions() {
     return answerCount;
 }
 
-function generateQuestionWrapper() {
-    let questionWrapper = document.createElement("div");
-    questionWrapper.classList = "question-wrapper";
-    return questionWrapper;
-}
-
 function generateQuestionLabel(question, index) {
     let label = document.createElement("label");
     label.className = "question";
@@ -252,19 +246,14 @@ function generateQuestionLabel(question, index) {
     return label;
 }
 
-function generateInputWrapper() {
-    let inputWrapper = document.createElement("div");
-    inputWrapper.classList = "input-wrapper";
-    return inputWrapper;
-}
-
 function multipleChoice(data, index) {
-    let questionWrapper = generateQuestionWrapper();
+    let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);
-    let inputWrapper = generateInputWrapper();
+    let inputWrapper = createDiv('input-wrapper');
 
     for (let i = 0; i < data.options.length; i++) {
-        let inputDiv = generateInputDiv("multiple-choice");
+        let inputDiv = createDiv('multiple-choice');
+        inputDiv.classList.add('input');
         let radioButton = generateRadioButton(`q${index + 1}`, data.options[i]);
         inputDiv.appendChild(radioButton);
         inputDiv.appendChild(generateLabelForRadioButton(data.options[i]));
@@ -281,11 +270,10 @@ function multipleChoice(data, index) {
 }
 
 function identification(data, index) {
-    let questionWrapper = generateQuestionWrapper();
+    let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);
-    let inputWrapper = generateInputWrapper();
-    let inputDiv = document.createElement('div')
-    inputDiv.className = "identification";
+    let inputWrapper = createDiv('input-wrapper');
+    let inputDiv = createDiv('identification');
 
     let input = document.createElement('input');
     input.type = "text";
@@ -302,13 +290,14 @@ function identification(data, index) {
 }
 
 function trueOrFalse(data, index) {
-    let questionWrapper = generateQuestionWrapper();
+    let questionWrapper = createDiv('question-wrapper');
     let label = generateQuestionLabel(data.question, index);
-    let inputWrapper = generateInputWrapper();
+    let inputWrapper = createDiv('input-wrapper');
 
     const options = ["True", "False"];
     for (let i = 0; i < options.length; i++) {
-        let inputDiv = generateInputDiv("true-false");
+        let inputDiv = createDiv('true-false');
+        inputDiv.classList.add('input');
         let radioButton = generateRadioButton(`q${index + 1}`, options[i]);
         inputDiv.appendChild(radioButton);
         inputDiv.appendChild(generateLabelForRadioButton(options[i]));
@@ -322,12 +311,6 @@ function trueOrFalse(data, index) {
     questionWrapper.appendChild(label);
     questionWrapper.appendChild(inputWrapper);
     return questionWrapper;
-}
-
-function generateInputDiv(questionType) {
-    let inputDiv = document.createElement("div");
-    inputDiv.className = `${questionType} input`;
-    return inputDiv;
 }
 
 function generateLabelForRadioButton(value) {
@@ -347,9 +330,7 @@ function generateRadioButton(name, value) {
     return input;
 }
 
-
 function rotateProgressBar(numOfAnswers) {
-    console.log("hi");
     const circle = document.getElementById('progress-circle');
     const bar = document.getElementById('value-bar');
     const text = document.getElementById('progress-text');
@@ -375,6 +356,7 @@ function showProgressBar() {
     const circle = document.getElementById('progress-circle');
     circle.style.display = "";
 }
+
 function saveLocally(name, idNum, category, answers, sequence) {
     let responses = getResponses();
     let response = {
@@ -386,6 +368,6 @@ function saveLocally(name, idNum, category, answers, sequence) {
         isChecked: false
     }
     responses.push(response);
-    localStorage.setItem('responses', JSON.stringify(responses));
+    storeResponses(responses);
 }
 

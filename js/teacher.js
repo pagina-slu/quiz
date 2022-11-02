@@ -1,4 +1,4 @@
-var scores = {};
+var scores = [];
 var mainDiv = document.getElementById('main');
 var logoutButton = document.getElementById('logout-button');
 var questionsButton = document.getElementById('questions-button');
@@ -16,7 +16,7 @@ BUTTONS.forEach(button => {
 });
 
 closeModalButton.addEventListener('click', () => {
-    modal.classList.remove('is-visible');
+    closeModal();
 });
 
 logoutButton.addEventListener('click', () => {
@@ -25,75 +25,57 @@ logoutButton.addEventListener('click', () => {
 
 responsesButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
-    let container = document.createElement('div');
-    container.classList.add('container');
+    let container = createDiv('container');
 
     // Side buttons for categories
-    let sideContainer = document.createElement('div');
-    sideContainer.classList.add('side-container');
+    let sideContainer = createDiv('side-container');
 
     // Right pane for statistics
-    let rightPane = document.createElement('div');
-    rightPane.classList.add('right-pane');
-    rightPane.classList.add('respondents');
+    let rightPane = createDiv('right-pane');
 
     // Button to clear all responses
-    let rmAllResponse = document.createElement('button');
-    rmAllResponse.classList.add('clr-btn-all');
-    rmAllResponse.textContent = "Clear All Responses";
-    rmAllResponse.addEventListener('click', () => {
+    let clearAllResponsesButton = createButton('clear-all', 'Clear All Responses')
+    clearAllResponsesButton.addEventListener('click', () => {
         clearLocalStorage();
-    })
-    sideContainer.appendChild(rmAllResponse);
+    });
+    sideContainer.appendChild(clearAllResponsesButton);
 
     // Create a button for each category
     categories.forEach(category => {
-        let categoryButton = document.createElement('button');
-        categoryButton.classList.add('category-button');
-        categoryButton.textContent = category.name;
-
+        let categoryButton = createButton('category-button', category.name);
         categoryButton.addEventListener('click', () => {
+            scores = calculateScores(category.name);
             document.querySelectorAll('.category-button').forEach(cb => {
                 cb.classList.remove('selected');
             });
             categoryButton.classList.add('selected');
             let hasResponse = false;
             removeAllChildNodes(container);
-            scores = [];
-            //for responses
-            let responses = getResponsesForCategory(category.name);
+
+            let responses = getResponses();
             responses.forEach(response => {
-                // Calculate scores
-                scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category.name);
-
+                if (response.category != category.name) {
+                    return;
+                }
                 hasResponse = true;
-                let quizWrapper = document.createElement('div');
-                quizWrapper.classList.add('quiz-wrapper');
-                let nameDiv = document.createElement('div');
-                nameDiv.setAttribute('class', 'name-div');
-                let scoreDiv = document.createElement('div'); // Div to store scores
-                scoreDiv.setAttribute('class', 'score-div');
-
+                let quizWrapper = createDiv('quiz-wrapper');
+                let nameDiv = createDiv('name-div') // Stores student name and ID number
+                let scoreDiv = createDiv('score-div'); // Stores student score
                 scoreDiv.innerHTML = `<sup>${scores[response.idNumber]}</sup>/<sub>${response.sequence.length}</sub>`;
 
-                let greenButton = document.createElement('button');
-                greenButton.classList.add('green-button');
-                greenButton.textContent = "Mark As Checked";
+                let greenButton = createButton('green-button', 'Mark As Checked');
                 if (response.isChecked == true) { // Adds classname 'clicked' to span and button if already checked
                     nameDiv.classList.add('clicked');
                     greenButton.classList.add('clicked');
                     greenButton.textContent = "Mark As Unchecked";
                 }
                 nameDiv.innerHTML = response.idNumber + "<br>" + response.name;
-                let buttonWrapper = document.createElement('div');
-                buttonWrapper.classList.add('button-wrapper');
-                let viewButton = document.createElement('button');
-                // View button
-                viewButton.classList.add('purple-button');
-                viewButton.textContent = "View";
+                let buttonWrapper = createDiv('button-wrapper');
+                let viewButton = createButton('purple-button', 'View');
                 viewButton.addEventListener('click', () => {
                     let content = "";
                     let counter = 1;
+                    // Adds all questions and answers to content variable
                     response.sequence.forEach(seq => {
                         let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], category.name);
                         content += `${counter}. ` +
@@ -101,39 +83,22 @@ responsesButton.addEventListener('click', () => {
                             "<br> Type: " + questions[category.name][seq].type +
                             `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[category.name][seq].answer}</span>`}<br><br>`;
                         counter++;
-
                     });
-
-                    //ALL QUESTIONS (DONT DELETE SALAMAT)
-                    // questions[category.name].forEach(question=>{
-                    //     var ans = " "
-                    //     console.log(response);
-                    //     content+=`${counter}. `+
-                    //         "Question: "+question.question+
-                    //         "<br> Type: "+question.type+
-                    //         "<br> Answer: "+
-                    //         "<br><br>";
-                    //     counter++;
-                    // })
                     setModalContent(category.name, content);
                     openModal();
-
                 });
 
                 greenButton.addEventListener('click', () => {
                     if (greenButton.className == 'green-button') {
                         greenButton.textContent = "Mark As Unchecked";
-                        nameDiv.classList.add('clicked');
-                        greenButton.classList.add('clicked');
                         response.isChecked = true;
-                        localStorage.setItem('responses', JSON.stringify(responses));
                     } else {
                         greenButton.textContent = "Mark As Checked";
-                        nameDiv.classList.remove('clicked');
-                        greenButton.classList.remove('clicked');
                         response.isChecked = false;
-                        localStorage.setItem('responses', JSON.stringify(responses));
                     }
+                    nameDiv.classList.toggle('clicked');
+                    greenButton.classList.toggle('clicked');
+                    storeResponses(responses);
                 });
 
                 buttonWrapper.appendChild(viewButton);
@@ -142,31 +107,24 @@ responsesButton.addEventListener('click', () => {
                 quizWrapper.appendChild(scoreDiv);
                 quizWrapper.appendChild(buttonWrapper);
                 container.appendChild(quizWrapper);
-                mainDiv.appendChild(container);
-                mainDiv.appendChild(rightPane);
-
             });
+
             // Checks if category has a response
-            if (hasResponse == false) {
-                let quizWrapper = document.createElement('div');
-                quizWrapper.classList.add('quiz-wrapper');
+            if (!hasResponse) {
+                let quizWrapper = createDiv('quiz-wrapper');
                 let nameDiv = document.createElement('span');
                 nameDiv.classList.add('name-div');
                 nameDiv.textContent = "No response available.";
+                rightPane.textContent = "No response for this category";
                 quizWrapper.appendChild(nameDiv);
                 container.appendChild(quizWrapper);
-                mainDiv.appendChild(container);
-                mainDiv.appendChild(rightPane);
-                rightPane.textContent = "No response for this category";
             } else {
                 rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(category.name) + "\r\n";
-                rightPane.textContent += "Highest Score: " + getHighestScore(category.name) + "\r\n";
-                rightPane.textContent += "Average Score: " + getAverageScore(category.name);
+                rightPane.textContent += "Highest Score: " + getHighestScore(scores) + "\r\n";
+                rightPane.textContent += "Average Score: " + getAverageScore(scores);
 
                 // Button to view number of correct answers per question
-                let seeMoreButton = document.createElement('button');
-                seeMoreButton.classList.add('purple-button');
-                seeMoreButton.textContent = "See More";
+                let seeMoreButton = createButton('purple-button', 'See More');
                 seeMoreButton.addEventListener('click', () => {
                     let buttonText = seeMoreButton.textContent;
                     let seeMoreDiv = document.createElement('div');
@@ -188,26 +146,26 @@ responsesButton.addEventListener('click', () => {
                         seeMoreButton.textContent = "Hide";
                     }
                     else if (buttonText == "Hide") {
-                        rightPane.removeChild(document.getElementById('see-more'));                        
+                        rightPane.removeChild(document.getElementById('see-more'));
                         seeMoreButton.textContent = "See More";
                     }
                 });
-
                 rightPane.appendChild(seeMoreButton);
             }
-
-            //button: clear response for this category 
-            let rmCategoryResponse = document.createElement('button');
-            rmCategoryResponse.classList.add('clr-btn-category');
-            rmCategoryResponse.textContent = "Clear Responses For This Category";
-            rmCategoryResponse.addEventListener('click', () => {
+            // Button to clear responses for the specified category
+            let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
+            clearCategoryResponsesButton.addEventListener('click', () => {
                 clearCategoryResponses(category.name);
             });
-            container.appendChild(rmCategoryResponse);
-        })
+            container.appendChild(clearCategoryResponsesButton);
+        });
 
         sideContainer.appendChild(categoryButton);
+
         mainDiv.appendChild(sideContainer);
+        mainDiv.appendChild(container);
+        mainDiv.appendChild(rightPane);
+
         var catButts = document.querySelectorAll(".category-button");
         catButts[0].click();
         catButts[0].focus();
@@ -216,39 +174,40 @@ responsesButton.addEventListener('click', () => {
 
 questionsButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
-    let container = document.createElement('div');
-    container.classList.add('container');
+    let container = createDiv('container');
     categories.forEach(category => {
-        let quizWrapper = document.createElement('div');
-        quizWrapper.classList.add('quiz-wrapper');
-        let categorySpan = document.createElement('div');
-        categorySpan.setAttribute('class', 'name-div');
+        let quizWrapper = createDiv('quiz-wrapper');
+        let categorySpan = createDiv('name-div');
         categorySpan.textContent = category.name;
-        let buttonWrapper = document.createElement('div');
-        buttonWrapper.classList.add('button-wrapper');
-        let viewButton = document.createElement('button');
-        viewButton.classList.add('green-button');
-        viewButton.textContent = "View";
+        let buttonWrapper = createDiv('button-wrapper');
+
+        let viewButton = createButton('green-button', 'View');
         viewButton.addEventListener('click', () => {
             let content = "";
             let counter = 1;
             questions[category.name].forEach(question => {
                 content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
                 counter++;
-            })
+            });
             setModalContent(category.name, content);
             openModal();
         });
         buttonWrapper.appendChild(viewButton);
         quizWrapper.appendChild(categorySpan);
         quizWrapper.appendChild(buttonWrapper);
-
         container.appendChild(quizWrapper);
-        mainDiv.appendChild(container);
     });
+    mainDiv.appendChild(container);
 });
 
 // Functions
+function createButton(_class, textContent) {
+    let button = document.createElement('button');
+    button.classList.add(_class);
+    button.textContent = textContent;
+    return button;
+}
+
 function clearSelectedButtons() {
     BUTTONS.forEach(button => {
         button.classList.remove('selected');
@@ -264,6 +223,10 @@ function openModal() {
     modal.classList.add('is-visible');
 }
 
+function closeModal() {
+    modal.classList.remove('is-visible');
+}
+
 function clearCategoryResponses(category) {
     let responses = getResponses();
     let toRemove = [];
@@ -277,7 +240,7 @@ function clearCategoryResponses(category) {
         delete responses[num];
     })
     responses = removeNullValues(responses);
-    localStorage.setItem('responses', JSON.stringify(responses));
+    storeResponses(responses);
 }
 
 function removeNullValues(array) {
@@ -307,28 +270,25 @@ function getCorrectAnswersCount(category, questionNumber) {
     return count;
 }
 
-function getHighestScore(category) {
+function calculateScores(category) {
+    let scores = [];
     let responses = getResponsesForCategory(category);
-    scores = [];
-    counter = [];
     responses.forEach(response => {
-        counter.push(scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category));
+        scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category);
     });
+    console.log(scores);
+    return scores;
+}
+
+function getHighestScore(scores) {
+    let counter = Object.values(scores)
     return Math.max.apply(null, counter);
 }
 
-function getAverageScore(category) {
-    let responses = getResponsesForCategory(category);
-    scores = [];
-    counter = [];
+function getAverageScore(scores) {
     let sum = 0;
-    responses.forEach(response => {
-
-        counter.push(scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category));
-
-    })
-    counter.forEach((num) => { sum += num });
-    average = sum / counter.length;
+    scores.forEach((num) => { sum += num });
+    let average = sum / Object.keys(scores).length;
     return average.toFixed(2);
 }
 
@@ -344,7 +304,6 @@ function getTotalNumberOfResponses() {
 // Returns true if the answer is correct, and false if not
 function checkAnswer(studentAnswer, questionNumber, category) {
     let currentQuestions = questions[category];
-    console.log(currentQuestions);
     let currentQuestion = currentQuestions[questionNumber];
     let correctAnswer = currentQuestion.answer;
     let correct = false;

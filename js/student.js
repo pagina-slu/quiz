@@ -58,7 +58,7 @@ function generateUserLogIn() {
 
     let idnum = document.createElement("input");
     idnum.setAttribute("id", "idnum");
-    idnum.setAttribute("type", "text");
+    idnum.setAttribute("type", "number");
     idnum.setAttribute("name", "Enter your ID number");
     idnum.setAttribute("placeholder", "Enter your ID number");
 

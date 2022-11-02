@@ -652,5 +652,167 @@ let questions = {
             ],
             "answer": "Formal"
         },
+    ],
+    "Personality Development": [
+    {
+        "type": "multiple-choice",
+        "question": "Work-related values are ____ and beliefs that are important to you",
+        "options": [
+            "Ideas",
+            "Principles",
+            "Standards",
+            "Motives"
+        ],
+        "answer": "Ideas"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "What generation refers to people born on 1946-1964",
+        "options": [
+            "Traditionalist",
+            "Boomer",
+            "Gen X",
+            "Millenials"
+        ],
+        "answer": "Boomer"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "Which of the following best describes interest inventory?",
+        "options": [
+            "Interest inventories are questionnaires that have been developed for the purpose of assessing an individual's answers.",
+            "An interest inventory is a testing instrument designed to measure and evaluate the level of an individual's interest in, or preference for, a variety of activities.",
+            "Is the goal must have a decent level of difficulty to motivate you to strive toward the goal",
+            "An interest inventory are ways to test the interest of an individual and give proper evaluation"
+        ],
+        "answer": "An interest inventory is a testing instrument designed to measure and evaluate the level of an individual's interest in, or preference for, a variety of activities."
+    },
+    {
+        "type": "multiple-choice",
+        "question": "Willpower is your ability to control yourself or the strong _______ that allows you to do something difficult",
+        "options": [
+            "Mindset",
+            "Spirit",
+            "Self-control",
+            "Determination"
+        ],
+        "answer": "Determination"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "What can be compared to willpower?",
+        "options": [
+            "Muscle",
+            "Strength",
+            "Fuel",
+            "Durability"
+        ],
+        "answer": "Muscle"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "Why is it important to determine our personality type?",
+        "options": [
+            "To comprehend how you think, feel, and behave.",
+            "To determine our compatibility to other people.",
+            "To comprehend how should we express ourselves.",
+            "To give ourselves the answer how we act on things"
+        ],
+        "answer": "To comprehend how you think, feel, and behave."
+    },
+    {
+        "type": "multiple-choice",
+        "question": "The ________________ personality inventory is to make the theory of psychological types described by C.G. Jung understandable and useful in people’s lives.",
+        "options": [
+            "DiSC",
+            "Hogan Personality Inventory",
+            "MBTI",
+            "HIGH5"
+        ],
+        "answer": "MBTI"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "What is the meaning of DiSC profile?",
+        "options": [
+            "Decisiveness, Intelligence, Steadiness, Conscientiousness",
+            "Dominance, Intelligence, Steadiness, Conscientiousness",
+            "Dominance, Influence, Steadiness, Conscientiousness",
+            "Dominance, Intelligence, Steadiness, Capacity"
+        ],
+        "answer": "Dominance, Influence, Steadiness, Conscientiousness"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "What refers to routines that you have developed over time?",
+        "options": [
+            "Habits",
+            "Lifestyle",
+            "Mannerism",
+            "Traits"
+        ],
+        "answer": "Habits"
+    },
+    {
+        "type": "multiple-choice",
+        "question": "It is the behavioral expectations that are external (skills, knowledge, attitude, habits)",
+        "options": [
+            "Competencies",
+            "Adeptness",
+            "Expertise",
+            "Proficiency"
+        ],
+        "answer": "Competencies"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Temparament is the natural part of everyone’s personality that is not biological. ",
+        "answer": "False"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Personality, temperament, and character are three concepts that are used in psychology to talk about different ways of feeling and thinking.",
+        "answer": "True"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Character is the part of you that comes from your environment.",
+        "answer": "True"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Personality didn’t come from adding character and learned habits, it includes biological nature and acquired nature.",
+        "answer": "False"
+    },
+    {
+        "type": "true-or-false",
+        "question": "Habits can be formed and break.",
+        "answer": "True"
+    },
+    {
+        "type": "identification",
+        "question": "Refers to the creativity: thinking of novel and productive ways to do things",
+        "answer": "Wisdom and Knowledge"
+    },
+    {
+        "type": "identification",
+        "question": "Refers to the honesty, bravery, persistence, and zest.",
+        "answer": "Courage"
+    },
+    {
+        "type": "identification",
+        "question": "This is where fairness and leadership are included.",
+        "answer": "Justice"
+    },
+    {
+        "type": "identification",
+        "question": "Refers to the kindness, love, and social intelligence of an individual.",
+        "answer": "Humanity"
+    },
+    {
+        "type": "identification",
+        "question": "This refers to the forgiveness, modesty, prudence, and self regulation of each individual.",
+        "answer": "Temperance"
+    }
     ]
-};
+}

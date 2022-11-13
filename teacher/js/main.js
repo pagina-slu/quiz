@@ -6,6 +6,20 @@ var responsesButton = document.getElementById('responses-button');
 var categoryButton = document.getElementsByClassName('category-button');
 var modal = document.getElementById('modal');
 var closeModalButton = document.getElementById('close-modal-button');
+let categories = [];
+$(document).ready(() => {
+    $.ajax('processing/all_classes.php',
+    {
+        success: (classes) => {
+            classes = JSON.parse(classes);
+            classes.forEach(_class => {
+                categories.push({name: _class});
+            });
+        }
+    })
+});
+
+
 
 const BUTTONS = document.querySelectorAll('#top-nav li');
 BUTTONS.forEach(button => {

@@ -19,7 +19,7 @@ class Student {
     }
 
     // Setters
-    public function setId(string $id) {
+    public function setId($id) {
         $this -> studentId = $id;
     }
 

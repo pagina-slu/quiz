@@ -1,10 +1,7 @@
 
 <?php
-include 'config/db.php';
-
-$db_connection = open_connection();
-
-close_connection($db_connection);
+session_start();
+include 'models/Teacher.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,8 +38,7 @@ close_connection($db_connection);
         <div class="modal-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, aut. Consequatur dolores itaque iure minima rerum ipsa temporibus! Dolorem magni quis aperiam non quae blanditiis ipsum similique commodi? Cum, ad.</div>
       </div>
     </div>
-    <script src="../res/categories.js"></script>
-    <script src="../res/questions.js"></script>
+    <script src="../js/jquery-3.6.1.min.js"></script>
     <script src="../js/functions.js"></script>
     <script src="js/main.js"></script>
   </body>

@@ -1,3 +1,13 @@
+
+<?php
+include 'config/db.php';
+
+$db_connection = open_connection();
+
+echo "<script>console.log('Connected!');</script>";
+
+close_connection($db_connection);
+?>
 <!DOCTYPE html>
 <html>
   <head>

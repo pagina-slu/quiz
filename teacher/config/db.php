@@ -14,5 +14,6 @@ function open_connection()
 
 function close_connection($conn)
 {
+    echo "<script>console.log('Closing connection.');</script>";
     $conn->close();
 }

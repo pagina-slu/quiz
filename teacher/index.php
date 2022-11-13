@@ -4,14 +4,11 @@ include 'config/db.php';
 
 $db_connection = open_connection();
 
-echo "<script>console.log('Connected!');</script>";
-
 close_connection($db_connection);
 ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- HTML Codes by Quackit.com -->
     <title>Instructor View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style/style.css" />

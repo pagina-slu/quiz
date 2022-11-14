@@ -1,5 +1,5 @@
 <?php
     session_start();
     
-    echo json_encode($_SESSION['classes']);
+    echo $_SESSION['classes'];
 ?>

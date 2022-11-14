@@ -12,11 +12,17 @@ $(document).ready(() => {
     {
         success: (classes) => {
             classes = JSON.parse(classes);
+            console.log(classes);
             classes.forEach(_class => {
-                categories.push({name: _class});
+                categories.push(_class);
+            });
+
+            categories.forEach(category => {
+                console.log(category);
             });
         }
-    })
+    });
+
 });
 
 
@@ -60,9 +66,10 @@ responsesButton.addEventListener('click', () => {
 
     // Create a button for each category
     categories.forEach(category => {
-        let categoryButton = createButton('category-button', category.name);
+
+        let categoryButton = createButton('category-button', category.classDescription);
         categoryButton.addEventListener('click', () => {
-            scores = calculateScores(category.name);
+            scores = calculateScores(category.classDescription);
             document.querySelectorAll('.category-button').forEach(cb => {
                 cb.classList.remove('selected');
             });
@@ -73,7 +80,7 @@ responsesButton.addEventListener('click', () => {
 
         
             responses.forEach(response => {
-                if (response.category != category.name) {
+                if (response.category != category.classDescription) {
                     return;
                 }
                 hasResponse = true;
@@ -96,14 +103,14 @@ responsesButton.addEventListener('click', () => {
                     let counter = 1;
                     // Adds all questions and answers to content variable
                     response.sequence.forEach(seq => {
-                        let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], category.name);
+                        let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], category.classDescription);
                         content += `${counter}. ` +
-                            "Question: " + questions[category.name][seq].question +
-                            "<br> Type: " + questions[category.name][seq].type +
-                            `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[category.name][seq].answer}</span>`}<br><br>`;
+                            "Question: " + questions[category.classDescription][seq].question +
+                            "<br> Type: " + questions[category.classDescription][seq].type +
+                            `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[category.classDescription][seq].answer}</span>`}<br><br>`;
                         counter++;
                     });
-                    setModalContent(category.name, content);
+                    setModalContent(category.classDescription, content);
                     openModal();
                 });
 
@@ -162,7 +169,7 @@ responsesButton.addEventListener('click', () => {
                     }
                 )
                 
-                rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(category.name) + "\r\n";
+                rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(category.classDescription) + "\r\n";
                 rightPane.textContent += "Highest Score: " + getHighestScore(scores) + "\r\n";
                 rightPane.textContent += "Average Score: " + getAverageScore(scores);
 
@@ -174,12 +181,12 @@ responsesButton.addEventListener('click', () => {
                     seeMoreDiv.id = "see-more";
                     if (buttonText == "See More") {
                         let content = "Correct answers per question:\n";
-                        let questionCount = questions[category.name].length;
+                        let questionCount = questions[category.classDescription].length;
                         let responsesCount = responses.length;
 
                         // Add statistics to content
                         for (let i = 0; i < questionCount; i++) {
-                            let correctAnswerCount = getCorrectAnswersCount(category.name, i);
+                            let correctAnswerCount = getCorrectAnswersCount(category.classDescription, i);
                             content += `${(`Question ${i + 1}:`).padEnd(13)} ${correctAnswerCount.toString().padStart(3)} / ${responsesCount}, ${(correctAnswerCount / responsesCount * 100).toString().padStart(3)}%\n`;
                         }
 
@@ -200,7 +207,7 @@ responsesButton.addEventListener('click', () => {
             let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
             clearCategoryResponsesButton.addEventListener('click', () => {
                 if (confirm("Are you sure you want to clear responses for this category?")) {
-                    clearCategoryResponses(category.name);
+                    clearCategoryResponses(category.classDescription);
                     responsesButton.click();
                 }
             });
@@ -224,20 +231,31 @@ questionsButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
     let container = createDiv('container');
     categories.forEach(category => {
+        $.ajax(`processing/get_questions.php?classCode=${category.classCode}`,
+        {
+            success: (questions) => {
+                console.log(questions);
+                questions = JSON.parse(questions);
+                console.log(questions);
+                classes.forEach(question => {
+                    questions[category.classDescription].push(_class);
+                });
+            }
+        });
         let quizWrapper = createDiv('quiz-wrapper');
         let categorySpan = createDiv('name-div');
-        categorySpan.textContent = category.name;
+        categorySpan.textContent = category.classDescription;
         let buttonWrapper = createDiv('button-wrapper');
 
         let viewButton = createButton('green-button', 'View');
         viewButton.addEventListener('click', () => {
             let content = "";
             let counter = 1;
-            questions[category.name].forEach(question => {
+            questions[category.classDescription].forEach(question => {
                 content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
                 counter++;
             });
-            setModalContent(category.name, content);
+            setModalContent(category.classDescription, content);
             openModal();
         });
         buttonWrapper.appendChild(viewButton);

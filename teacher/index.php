@@ -1,7 +1,8 @@
-
 <?php
-session_start();
-include 'models/Teacher.php';
+$GLOBALS['root'] = dirname(__FILE__);
+echo "<script>console.log('".$GLOBALS['root']."');</script>";
+include_once $GLOBALS['root'].'/controllers/TeacherController.php';
+new TeacherController();
 ?>
 <!DOCTYPE html>
 <html>

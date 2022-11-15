@@ -7,10 +7,12 @@ var categoryButton = document.getElementsByClassName('category-button');
 var modal = document.getElementById('modal');
 var closeModalButton = document.getElementById('close-modal-button');
 let categories = [];
+
 $(document).ready(() => {
-    $.ajax('processing/all_classes.php',
+    $.ajax('processing/get_all_classes.php',
     {
         success: (classes) => {
+            console.log(classes);
             classes = JSON.parse(classes);
             console.log(classes);
             classes.forEach(_class => {
@@ -231,15 +233,11 @@ questionsButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
     let container = createDiv('container');
     categories.forEach(category => {
+        let questions = [];
         $.ajax(`processing/get_questions.php?classCode=${category.classCode}`,
         {
-            success: (questions) => {
-                console.log(questions);
-                questions = JSON.parse(questions);
-                console.log(questions);
-                classes.forEach(question => {
-                    questions[category.classDescription].push(_class);
-                });
+            success: (q) => {
+                questions = JSON.parse(q);
             }
         });
         let quizWrapper = createDiv('quiz-wrapper');
@@ -251,7 +249,8 @@ questionsButton.addEventListener('click', () => {
         viewButton.addEventListener('click', () => {
             let content = "";
             let counter = 1;
-            questions[category.classDescription].forEach(question => {
+            console.log(questions);
+            questions.forEach(question => {
                 content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
                 counter++;
             });

@@ -1,10 +1,9 @@
 <?php
+require '../models/Teacher.php';
 
-require_once '../controllers/TeacherController.php';
-session_start();
 $classCode = $_GET['classCode'];
 
-$teacherController = new TeacherController();
-$teacherController -> getQuestions($classCode);
+$teacher = new Teacher();
+$questions = $teacher->getQuestions($classCode);
 
-echo $_SESSION['questions'];
+echo json_encode($questions);

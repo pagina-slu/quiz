@@ -35,3 +35,11 @@ function createDiv(_class) {
     div.classList.add(_class);
     return div;
 }
+
+// Creates a span with the given class
+function createSpan(_class, content) {
+    let span = document.createElement('span');
+    span.classList.add(_class);
+    span.textContent = content;
+    return span;
+}

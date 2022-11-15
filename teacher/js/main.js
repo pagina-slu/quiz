@@ -6,28 +6,6 @@ var responsesButton = document.getElementById('responses-button');
 var categoryButton = document.getElementsByClassName('category-button');
 var modal = document.getElementById('modal');
 var closeModalButton = document.getElementById('close-modal-button');
-let categories = [];
-
-$(document).ready(() => {
-    $.ajax('processing/get_all_classes.php',
-    {
-        success: (classes) => {
-            console.log(classes);
-            classes = JSON.parse(classes);
-            console.log(classes);
-            classes.forEach(_class => {
-                categories.push(_class);
-            });
-
-            categories.forEach(category => {
-                console.log(category);
-            });
-        }
-    });
-
-});
-
-
 
 const BUTTONS = document.querySelectorAll('#top-nav li');
 BUTTONS.forEach(button => {
@@ -48,11 +26,11 @@ logoutButton.addEventListener('click', () => {
 responsesButton.addEventListener('click', () => {
     removeAllChildNodes(mainDiv);
     let container = createDiv('container');
-   
+
     // Side buttons for categories
     let sideContainer = createDiv('side-container');
 
-    
+
     // Right pane for statistics
     let rightPane = createDiv('right-pane');
 
@@ -65,7 +43,7 @@ responsesButton.addEventListener('click', () => {
         }
     });
     sideContainer.appendChild(clearAllResponsesButton);
-
+    let categories = getClasses();
     // Create a button for each category
     categories.forEach(category => {
 
@@ -80,7 +58,7 @@ responsesButton.addEventListener('click', () => {
             removeAllChildNodes(container);
             let responses = getResponses();
 
-        
+
             responses.forEach(response => {
                 if (response.category != category.classDescription) {
                     return;
@@ -158,19 +136,19 @@ responsesButton.addEventListener('click', () => {
                 searchicon.src = "res/images/searchicon.png";
                 searchBar.appendChild(searchicon);
                 searchBar.appendChild(search);
-                search.addEventListener('keyup', () =>{
+                search.addEventListener('keyup', () => {
                     let quizWrappers = document.querySelectorAll('.quiz-wrapper');
                     let searchkey = document.getElementById('search-bar').value.toLowerCase();
-                    for(i = 0; i < responses.length; i++){
-                        if(responses[i].idNumber.indexOf(searchkey) > -1 ||  responses[i].name.toLowerCase().indexOf(searchkey) > -1 ){
+                    for (i = 0; i < responses.length; i++) {
+                        if (responses[i].idNumber.indexOf(searchkey) > -1 || responses[i].name.toLowerCase().indexOf(searchkey) > -1) {
                             quizWrappers[i].style.display = 'flex';
-                        } else{
+                        } else {
                             quizWrappers[i].style.display = 'none';
                         }
                     }
-                    }
+                }
                 )
-                
+
                 rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(category.classDescription) + "\r\n";
                 rightPane.textContent += "Highest Score: " + getHighestScore(scores) + "\r\n";
                 rightPane.textContent += "Average Score: " + getAverageScore(scores);
@@ -213,7 +191,7 @@ responsesButton.addEventListener('click', () => {
                     responsesButton.click();
                 }
             });
-            
+
             container.appendChild(clearCategoryResponsesButton);
         });
 
@@ -229,21 +207,21 @@ responsesButton.addEventListener('click', () => {
     })
 });
 
-questionsButton.addEventListener('click', () => {
+questionsButton.addEventListener('click', async () => {
     removeAllChildNodes(mainDiv);
     let container = createDiv('container');
-    categories.forEach(category => {
+    let categories = await getClasses();
+    let tests = await getTests();
+    console.log(tests);
+    tests.forEach(async test => {
+        let classDescription = await getClassDescription(test.classCode);
         let questions = [];
-        $.ajax(`processing/get_questions.php?classCode=${category.classCode}`,
-        {
-            success: (q) => {
-                questions = JSON.parse(q);
-            }
-        });
-        let quizWrapper = createDiv('quiz-wrapper');
-        let categorySpan = createDiv('name-div');
-        categorySpan.textContent = category.classDescription;
-        let buttonWrapper = createDiv('button-wrapper');
+        $.ajax(`processing/get_questions.php?classCode=${test.classCode}`,
+            {
+                success: (q) => {
+                    questions = JSON.parse(q);
+                }
+            });
 
         let viewButton = createButton('green-button', 'View');
         viewButton.addEventListener('click', () => {
@@ -254,14 +232,26 @@ questionsButton.addEventListener('click', () => {
                 content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
                 counter++;
             });
-            setModalContent(category.classDescription, content);
+            setModalContent(test.classDescription, content);
             openModal();
         });
+        let testDetails = createDiv('test-details');
+        let testName = createSpan('test-name', classDescription);
+        let categoryName = createSpan('category-name', test.name);
+        testDetails.appendChild(testName);
+        testDetails.appendChild(categoryName);
+
+        let buttonWrapper = createDiv('button-wrapper');
         buttonWrapper.appendChild(viewButton);
-        quizWrapper.appendChild(categorySpan);
-        quizWrapper.appendChild(buttonWrapper);
-        container.appendChild(quizWrapper);
+
+        let testWrapper = createDiv('test-wrapper');
+        testWrapper.appendChild(testDetails);
+        testWrapper.appendChild(buttonWrapper);
+
+        container.appendChild(testWrapper);
     });
+    let addTestButton = createButton('add-test-button', 'Add new test');
+    container.appendChild(addTestButton);
     mainDiv.appendChild(container);
 });
 
@@ -399,4 +389,43 @@ function checkAnswers(answers, sequence, category) {
         if (checkAnswer(answers[i], sequence[i], category)) counter++;
     }
     return counter;
+}
+
+async function getClasses() {
+    let classes = [];
+    await $.ajax(
+        {
+            url: 'processing/get_all_classes.php',
+            dataType: 'json',
+            success: (c) => {
+                classes = c;
+            }
+        });
+    return classes;
+}
+
+async function getTests() {
+    let tests = [];
+    await $.ajax(
+        {
+            url: 'processing/get_all_tests.php',
+            dataType: 'json',
+            success: (t) => {
+                tests = t;
+            }
+        });
+    return tests;
+}
+
+async function getClassDescription(classCode) {
+    let classDescription = "";
+    await $.ajax(
+        {
+            url: `processing/get_class_description.php?classCode=${classCode}`,
+            dataType: 'text',
+            success: (cd) => {
+                classDescription = cd.replace(/['"]+/g, "");;
+            }
+        });
+    return classDescription;
 }

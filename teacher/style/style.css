@@ -129,13 +129,30 @@ main > div {
   width: 60%;
 }
 
-.quiz-wrapper {
+.quiz-wrapper, .test-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0.5rem;
   height: 100%;
   justify-content: center;
+}
+
+.test-name, .category-name {
+  display: inline-block;
+}
+
+.test-details {
+  background-color: rgb(190, 190, 190);
+  border-radius: 10px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 2rem 0;
+  text-align: center;
+  width: 55%;
 }
 
 .name-div,
@@ -324,7 +341,12 @@ main > div {
   color: #c23232;
 }
 
-.clear-category {
+.add-test-button:hover {
+  background: #86c232;
+}
+
+.clear-category,
+.add-test-button {
   background: rgb(190, 190, 190);
   border-radius: 5px;
   color: black;
@@ -347,21 +369,19 @@ main > div {
   background: rgb(190, 15, 15);
 }
 
-#search-bar{
+#search-bar {
   width: 90%;
   height: 2rem;
-  
+
   border: none;
 }
 
-#search-bar:focus{
+#search-bar:focus {
   outline: none;
   border-bottom: 1px solid black;
 }
-.search-bar-div img{
-
+.search-bar-div img {
   max-height: 50%;
-
 }
 
 .search-bar-div {

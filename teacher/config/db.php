@@ -3,7 +3,7 @@ function open_connection()
 {
     $dbhost = "localhost";
     $dbuser = "root";
-    $dbpass = "root";
+    $dbpass = "";
     $db = "pagina";
 
     // Stores the database connection

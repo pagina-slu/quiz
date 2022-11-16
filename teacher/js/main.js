@@ -23,13 +23,12 @@ logoutButton.addEventListener('click', () => {
     window.close();
 });
 
-responsesButton.addEventListener('click', () => {
+responsesButton.addEventListener('click', async () => {
     removeAllChildNodes(mainDiv);
     let container = createDiv('container');
 
     // Side buttons for categories
     let sideContainer = createDiv('side-container');
-
 
     // Right pane for statistics
     let rightPane = createDiv('right-pane');
@@ -43,7 +42,7 @@ responsesButton.addEventListener('click', () => {
         }
     });
     sideContainer.appendChild(clearAllResponsesButton);
-    let categories = getClasses();
+    let categories = await getClasses();
     // Create a button for each category
     categories.forEach(category => {
 

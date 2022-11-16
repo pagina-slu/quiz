@@ -265,6 +265,25 @@ questionsButton.addEventListener('click', async () => {
                     submitButton.setAttribute('type', 'submit');
                     submitButton.setAttribute('value', 'Submit');
     
+                    
+                    questionType.addEventListener('change', () => {
+                        if (questionType.value == 'Multiple Choice') {
+
+                        } else if (questionType.value== 'True or False') {
+                            let answerLabel = createLabel('answer', 'Answer');
+                            let answers = document.createElement('select');
+                            answers.setAttribute('name', 'answer');
+                            ['True', 'False'].forEach(choice => {
+                                let c = document.createElement('option');
+                                c.value = choice;
+                                c.textContent = choice;
+                                answers.appendChild(c);
+                            });
+                            form.insertBefore(answerLabel, submitButton);
+                            form.insertBefore(answers, submitButton);
+                        }
+                    })
+
                     let testID = document.createElement('input');
                     testID.setAttribute('type', 'hidden');
                     testID.setAttribute('name', 'test-id');
@@ -275,6 +294,7 @@ questionsButton.addEventListener('click', async () => {
                     form.appendChild(question);
                     form.appendChild(questionTypeLabel);
                     form.appendChild(questionType);
+
                     form.appendChild(submitButton);
                     setModalContent('Add new question', form);
                     openModal();

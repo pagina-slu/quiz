@@ -99,4 +99,36 @@ class Teacher
         }
         return $classDescription;
     }
+
+    public function getResponses()
+    {
+        $query = "SELECT * FROM responses";
+        $result = $this->conn->query($query);
+        $responses = array();
+        while ($row = $result->fetch_assoc()) {
+            $response = array();
+            $response['id'] = $row['response_id'];
+            $response['t_id'] = $row['test_id'];
+            $response['username'] = $row['username'];
+            $response['isChecked'] = $row['isChecked'];
+            $response['timestamp'] = $row['timestamp'];
+            array_push($responses, $response);
+        }
+        return $responses;
+    }
+
+    public function getResponseDetails()
+    {
+        $query = "SELECT * FROM response_details";
+        $result = $this->conn->query($query);
+        $responses = array();
+        while ($row = $result->fetch_assoc()) {
+            $response = array();
+            $response['id'] = $row['response_id'];
+            $response['q_id'] = $row['question_id'];
+            $response['answer'] = $row['answer'];
+            array_push($responses, $response);
+        }
+        return $responses;
+    }
 }

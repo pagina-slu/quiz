@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="student/style/style.css" />
+    <link rel="stylesheet" href="student/style/loginstyle.css" />
+    <title>p&#0224;gina quiz</title>
+  </head>
+  <body>
+    <!-- Instructor log in -->
+    <div id="login-wrapper">
+      <button id="login-form-btn"></button>
+      <div id="overlay"></div>
+      <div id="login">
+        <button id="cross">&cross;</button>
+        <h1>Quiz Instructor</h1>
+        <form>
+          <div class="input">
+            <label for="uname">Username:</label>
+            <input
+              type="text"
+              class="username"
+              id="uname"
+              name="uname"
+            />
+          </div>
+          <div class="input">
+            <label for="upass">Password:</label>
+            <input
+              type="password"
+              class="password"
+              id="upass"
+              name="upass"
+            />
+          </div>
+          <input type="button" value="Log in" id="login-btn" />
+        </form>
+      </div>
+    </div>
+    <!-- Category selector -->
+    <main id="main">
+    </main>
+
+    <!-- Progress bar -->
+    <div id="progress-circle">
+        <span id="progress-text">0%</span>
+        <div class="left-half-clipper">
+            <div class="first50-bar"></div>
+            <div id="value-bar"></div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer>
+      <p>p&#0224;gina &#0169; 2022</p>
+    </footer>
+    <script src="res/categories.js"></script>
+    <script src="res/questions.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="student/js/main.js"></script>
+    <script src="student/js/login.js"></script>
+  </body>
+</html>

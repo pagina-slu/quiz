@@ -340,6 +340,10 @@ questionsButton.addEventListener('click', async () => {
     });
     mainDiv.appendChild(sideContainer);
     mainDiv.appendChild(container);
+
+    var classButtons = document.querySelectorAll(".class-button");
+    classButtons[0].click();
+    classButtons[0].focus();
 });
 function populateTests(classCode) {
 

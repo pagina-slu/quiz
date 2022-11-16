@@ -210,52 +210,148 @@ responsesButton.addEventListener('click', () => {
 questionsButton.addEventListener('click', async () => {
     removeAllChildNodes(mainDiv);
     let container = createDiv('container');
-    let categories = await getClasses();
-    let tests = await getTests();
-    console.log(tests);
-    tests.forEach(async test => {
-        let classDescription = await getClassDescription(test.classCode);
-        let questions = [];
-        $.ajax(`processing/get_questions.php?classCode=${test.classCode}`,
-            {
-                success: (q) => {
-                    questions = JSON.parse(q);
-                }
+    // Side buttons for categories
+    let sideContainer = createDiv('side-container');
+    let classes = await getClasses();
+    classes.forEach(_class => {
+        let classButton = createButton('class-button', _class.classDescription);
+        sideContainer.appendChild(classButton);
+        classButton.addEventListener('click', async () => {
+            document.querySelectorAll('.class-button').forEach(cb => {
+                cb.classList.remove('selected');
             });
-
-        let viewButton = createButton('green-button', 'View');
-        viewButton.addEventListener('click', () => {
-            let content = "";
-            let counter = 1;
-            console.log(questions);
-            questions.forEach(question => {
-                content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
-                counter++;
+            classButton.classList.add('selected');
+            removeAllChildNodes(container);
+            let tests = await getTests(_class.classCode);
+            tests.forEach(async test => {
+                let classDescription = await getClassDescription(test.classCode);
+                let questions = await getQuestions(test.classCode);
+    
+    
+                let viewButton = createButton('green-button', 'View');
+                viewButton.addEventListener('click', () => {
+                    let content = "";
+                    let counter = 1;
+                    console.log(questions);
+                    questions.forEach(question => {
+                        content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
+                        counter++;
+                    });
+                    setModalContent(test.classDescription, content);
+                    openModal();
+                });
+    
+                let addQuestionButton = createButton('green-button', 'Add Question');
+                addQuestionButton.addEventListener('click', () => {
+                    console.log(test);
+                    let form = document.createElement('form');
+                    form.setAttribute('method', 'post');
+                    form.setAttribute('action', 'processing/new_question.php');
+                    let questionLabel = createLabel('question', 'Question:');
+                    let question = document.createElement('input');
+                    question.setAttribute('type', 'text');
+                    question.setAttribute('name', 'question');
+                    let questionTypeLabel = createLabel('question-type', 'Question Type');
+                    let questionType = document.createElement('select');
+                    questionType.setAttribute('name', 'question-type');
+                    let types = ['Identification', 'Multiple Choice', 'True or False'];
+                    types.forEach(type => {
+                        let option = document.createElement('option');
+                        option.value = type;
+                        option.textContent = type;
+                        questionType.appendChild(option);
+                    });
+    
+                    let submitButton = document.createElement('input');
+                    submitButton.setAttribute('type', 'submit');
+                    submitButton.setAttribute('value', 'Submit');
+    
+                    let testID = document.createElement('input');
+                    testID.setAttribute('type', 'hidden');
+                    testID.setAttribute('name', 'test-id');
+                    testID.setAttribute('value', parseInt(test.id));
+    
+                    form.appendChild(testID);
+                    form.appendChild(questionLabel);
+                    form.appendChild(question);
+                    form.appendChild(questionTypeLabel);
+                    form.appendChild(questionType);
+                    form.appendChild(submitButton);
+                    setModalContent('Add new question', form);
+                    openModal();
+                });
+                let testDetails = createDiv('test-details');
+                let testName = createSpan('test-name', test.name);
+                testDetails.appendChild(testName);
+    
+                let buttonWrapper = createDiv('button-wrapper');
+                buttonWrapper.appendChild(viewButton);
+                buttonWrapper.appendChild(addQuestionButton);
+    
+                let testWrapper = createDiv('test-wrapper');
+                testWrapper.appendChild(testDetails);
+                testWrapper.appendChild(buttonWrapper);
+    
+                container.appendChild(testWrapper);
             });
-            setModalContent(test.classDescription, content);
-            openModal();
+            let addTestButton = createButton('add-test-button', 'Add new test');
+            addTestButton.addEventListener('click', async () => {
+                let form = document.createElement('form');
+                form.setAttribute('method', 'post');
+                form.setAttribute('action', 'processing/new_test.php');
+                let testNameLabel = createLabel('test-name', 'Test Name');
+                let testName = document.createElement('input');
+                testName.setAttribute('type', 'text');
+                testName.setAttribute('name', 'test-name');
+                testName.id = 'test-name';
+                let testTypeLabel = createLabel('test-type', 'Test Type');
+                let testType = document.createElement('input');
+                testType.setAttribute('type', 'text');
+                testType.setAttribute('name', 'test-type');
+                testType.id = 'test-type';
+                let classLabel = createLabel('class-code', 'Class');
+                let classSelector = document.createElement('select');
+                classSelector.setAttribute('name', 'class-code');
+                let classes = await getClasses();
+                classes.forEach(_class => {
+                    let option = document.createElement('option');
+                    option.value = _class.classCode;
+                    option.textContent = _class.classDescription;
+                    classSelector.appendChild(option);
+                });
+    
+                let submitButton = document.createElement('input');
+                submitButton.setAttribute('type', 'submit');
+                submitButton.setAttribute('value', 'Submit');
+    
+                form.appendChild(testNameLabel);
+                form.appendChild(testName);
+                form.appendChild(testTypeLabel);
+                form.appendChild(testType);
+                form.appendChild(classLabel);
+                form.appendChild(classSelector);
+                form.appendChild(submitButton);
+                setModalContent('Add new test', form);
+                openModal();
+            });
+            container.appendChild(addTestButton);
         });
-        let testDetails = createDiv('test-details');
-        let testName = createSpan('test-name', classDescription);
-        let categoryName = createSpan('category-name', test.name);
-        testDetails.appendChild(testName);
-        testDetails.appendChild(categoryName);
-
-        let buttonWrapper = createDiv('button-wrapper');
-        buttonWrapper.appendChild(viewButton);
-
-        let testWrapper = createDiv('test-wrapper');
-        testWrapper.appendChild(testDetails);
-        testWrapper.appendChild(buttonWrapper);
-
-        container.appendChild(testWrapper);
+        
     });
-    let addTestButton = createButton('add-test-button', 'Add new test');
-    container.appendChild(addTestButton);
+    mainDiv.appendChild(sideContainer);
     mainDiv.appendChild(container);
 });
+function populateTests(classCode) {
 
+}
 // Functions
+function createLabel(_for, content) {
+    let label = document.createElement('label');
+    label.htmlFor = _for;
+    label.textContent = content;
+    return label;
+}
+
 function createButton(_class, textContent) {
     let button = document.createElement('button');
     button.classList.add(_class);
@@ -270,8 +366,8 @@ function clearSelectedButtons() {
 }
 
 function setModalContent(header, content) {
-    document.querySelector('.modal-header span').innerHTML = header;
-    document.querySelector('.modal-content').innerHTML = content;
+    $('.modal-header span').html(header);
+    $('.modal-content').html(content);
 }
 
 function openModal() {
@@ -404,11 +500,24 @@ async function getClasses() {
     return classes;
 }
 
-async function getTests() {
+async function getAllTests() {
     let tests = [];
     await $.ajax(
         {
             url: 'processing/get_all_tests.php',
+            dataType: 'json',
+            success: (t) => {
+                tests = t;
+            }
+        });
+    return tests;
+}
+
+async function getTests(classCode) {
+    let tests = [];
+    await $.ajax(
+        {
+            url: `processing/get_tests.php?classCode=${classCode}`,
             dataType: 'json',
             success: (t) => {
                 tests = t;
@@ -428,4 +537,15 @@ async function getClassDescription(classCode) {
             }
         });
     return classDescription;
+}
+
+async function getQuestions(classCode) {
+    let questions = [];
+    await $.ajax(`processing/get_questions.php?classCode=${classCode}`,
+        {
+            success: (q) => {
+                questions = JSON.parse(q);
+            }
+        });
+    return questions;
 }

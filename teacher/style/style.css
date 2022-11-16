@@ -241,6 +241,11 @@ main > div {
   margin-top: 1rem;
 }
 
+#modal form {
+  display: flex;
+  flex-direction: column;
+}
+
 .button-wrapper {
   display: flex;
   flex-direction: column;
@@ -312,7 +317,7 @@ main > div {
   overflow: auto;
 }
 
-.category-button {
+.category-button, .class-button {
   background: white;
   border-bottom: 0.5rem solid transparent;
   border-radius: 5px;
@@ -321,13 +326,13 @@ main > div {
   padding: 2rem 2rem 1.5rem 2rem;
 }
 
-.category-button:hover {
+.category-button:hover, .class-button:hover {
   background: white;
   border-bottom: 0.5rem solid #86c232;
   color: black;
 }
 
-.category-button.selected {
+.category-button.selected, .class-button.selected {
   background-color: #86c232;
   color: white;
   outline: none;

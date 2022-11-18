@@ -53,14 +53,14 @@ header {
   border-bottom: 1rem solid white;
   display: flex;
   justify-content: flex-end;
-  padding: 30px 10%;
+  padding: 1.5rem 10%;
   width: 100%;
 }
 
 .logo {
   cursor: pointer;
   margin-right: auto;
-  width: 6.5rem;
+  width: 4.5rem;
 }
 
 button {

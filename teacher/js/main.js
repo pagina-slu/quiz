@@ -280,8 +280,7 @@ function populateTests(classCode) {
 }
 function createNewTestForm(classCode) {
     let form = document.createElement('form');
-    form.setAttribute('method', 'post');
-    form.setAttribute('action', 'processing/new_test.php');
+    form.id = 'new-test-form';
     let testNameLabel = createLabel('test-name', 'Test Name');
     let testName = document.createElement('input');
     testName.setAttribute('type', 'text');
@@ -293,9 +292,22 @@ function createNewTestForm(classCode) {
     testType.setAttribute('name', 'test-type');
     testType.id = 'test-type';
 
-    let submitButton = document.createElement('input');
-    submitButton.setAttribute('type', 'submit');
-    submitButton.setAttribute('value', 'Submit');
+    let submitButton = document.createElement('button');
+    submitButton.textContent = "Submit";
+    submitButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        let form = $('#new-test-form').serialize();
+        console.log(form);
+        $.ajax({
+            type: 'POST',
+            url: 'processing/new_test.php',
+            data: form,
+            dataType: 'text',
+            success: () => {
+                closeModal();
+            }
+        })
+    });
 
     form.appendChild(createHiddenInput('class-code', classCode));
     form.appendChild(testNameLabel);
@@ -309,8 +321,7 @@ function createNewTestForm(classCode) {
 
 function createNewQuestionForm(id) {
     let form = document.createElement('form');
-    form.setAttribute('method', 'post');
-    form.setAttribute('action', 'processing/new_question.php');
+    form.id = 'new-question-form';
     let questionLabel = createLabel('question', 'Question:');
     let question = document.createElement('input');
     question.setAttribute('type', 'text');
@@ -326,9 +337,22 @@ function createNewQuestionForm(id) {
         questionType.appendChild(option);
     });
 
-    let submitButton = document.createElement('input');
-    submitButton.setAttribute('type', 'submit');
-    submitButton.setAttribute('value', 'Submit');
+    let submitButton = document.createElement('button');
+    submitButton.textContent = "Submit";
+    submitButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        let form = $('#new-question-form').serialize();
+        console.log(form);
+        $.ajax({
+            type: 'POST',
+            url: 'processing/new_question.php',
+            data: form,
+            dataType: 'text',
+            success: () => {
+                closeModal();
+            }
+        })
+    });
 
     questionType.addEventListener('change', () => {
         if ($('#answers-div').length > 0) $('#answers-div').empty();

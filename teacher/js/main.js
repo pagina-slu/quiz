@@ -225,8 +225,8 @@ questionsButton.addEventListener('click', async () => {
             tests.forEach(async test => {
                 let classDescription = await getClassDescription(test.classCode);
                 let questions = await getQuestions(test.classCode);
-    
-    
+
+
                 let viewButton = createButton('green-button', 'View');
                 viewButton.addEventListener('click', () => {
                     let content = "";
@@ -236,126 +236,37 @@ questionsButton.addEventListener('click', async () => {
                         content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
                         counter++;
                     });
-                    setModalContent(test.classDescription, content);
+                    setModalContent(_class.classDescription, content);
                     openModal();
                 });
-    
+
                 let addQuestionButton = createButton('green-button', 'Add Question');
                 addQuestionButton.addEventListener('click', () => {
-                    console.log(test);
-                    let form = document.createElement('form');
-                    form.setAttribute('method', 'post');
-                    form.setAttribute('action', 'processing/new_question.php');
-                    let questionLabel = createLabel('question', 'Question:');
-                    let question = document.createElement('input');
-                    question.setAttribute('type', 'text');
-                    question.setAttribute('name', 'question');
-                    let questionTypeLabel = createLabel('question-type', 'Question Type');
-                    let questionType = document.createElement('select');
-                    questionType.setAttribute('name', 'question-type');
-                    let types = ['Identification', 'Multiple Choice', 'True or False'];
-                    types.forEach(type => {
-                        let option = document.createElement('option');
-                        option.value = type;
-                        option.textContent = type;
-                        questionType.appendChild(option);
-                    });
-    
-                    let submitButton = document.createElement('input');
-                    submitButton.setAttribute('type', 'submit');
-                    submitButton.setAttribute('value', 'Submit');
-    
-                    
-                    questionType.addEventListener('change', () => {
-                        if (questionType.value == 'Multiple Choice') {
-
-                        } else if (questionType.value== 'True or False') {
-                            let answerLabel = createLabel('answer', 'Answer');
-                            let answers = document.createElement('select');
-                            answers.setAttribute('name', 'answer');
-                            ['True', 'False'].forEach(choice => {
-                                let c = document.createElement('option');
-                                c.value = choice;
-                                c.textContent = choice;
-                                answers.appendChild(c);
-                            });
-                            form.insertBefore(answerLabel, submitButton);
-                            form.insertBefore(answers, submitButton);
-                        }
-                    })
-
-                    let testID = document.createElement('input');
-                    testID.setAttribute('type', 'hidden');
-                    testID.setAttribute('name', 'test-id');
-                    testID.setAttribute('value', parseInt(test.id));
-    
-                    form.appendChild(testID);
-                    form.appendChild(questionLabel);
-                    form.appendChild(question);
-                    form.appendChild(questionTypeLabel);
-                    form.appendChild(questionType);
-
-                    form.appendChild(submitButton);
-                    setModalContent('Add new question', form);
+                    setModalContent('Add new question', createNewQuestionForm(test.id));
                     openModal();
                 });
                 let testDetails = createDiv('test-details');
                 let testName = createSpan('test-name', test.name);
                 testDetails.appendChild(testName);
-    
+
                 let buttonWrapper = createDiv('button-wrapper');
                 buttonWrapper.appendChild(viewButton);
                 buttonWrapper.appendChild(addQuestionButton);
-    
+
                 let testWrapper = createDiv('test-wrapper');
                 testWrapper.appendChild(testDetails);
                 testWrapper.appendChild(buttonWrapper);
-    
+
                 container.appendChild(testWrapper);
             });
             let addTestButton = createButton('add-test-button', 'Add new test');
-            addTestButton.addEventListener('click', async () => {
-                let form = document.createElement('form');
-                form.setAttribute('method', 'post');
-                form.setAttribute('action', 'processing/new_test.php');
-                let testNameLabel = createLabel('test-name', 'Test Name');
-                let testName = document.createElement('input');
-                testName.setAttribute('type', 'text');
-                testName.setAttribute('name', 'test-name');
-                testName.id = 'test-name';
-                let testTypeLabel = createLabel('test-type', 'Test Type');
-                let testType = document.createElement('input');
-                testType.setAttribute('type', 'text');
-                testType.setAttribute('name', 'test-type');
-                testType.id = 'test-type';
-                let classLabel = createLabel('class-code', 'Class');
-                let classSelector = document.createElement('select');
-                classSelector.setAttribute('name', 'class-code');
-                let classes = await getClasses();
-                classes.forEach(_class => {
-                    let option = document.createElement('option');
-                    option.value = _class.classCode;
-                    option.textContent = _class.classDescription;
-                    classSelector.appendChild(option);
-                });
-    
-                let submitButton = document.createElement('input');
-                submitButton.setAttribute('type', 'submit');
-                submitButton.setAttribute('value', 'Submit');
-    
-                form.appendChild(testNameLabel);
-                form.appendChild(testName);
-                form.appendChild(testTypeLabel);
-                form.appendChild(testType);
-                form.appendChild(classLabel);
-                form.appendChild(classSelector);
-                form.appendChild(submitButton);
-                setModalContent('Add new test', form);
+            addTestButton.addEventListener('click', () => {
+                setModalContent('Add new test', createNewTestForm(_class.classCode));
                 openModal();
             });
             container.appendChild(addTestButton);
         });
-        
+
     });
     mainDiv.appendChild(sideContainer);
     mainDiv.appendChild(container);
@@ -366,6 +277,140 @@ questionsButton.addEventListener('click', async () => {
 });
 function populateTests(classCode) {
 
+}
+function createNewTestForm(classCode) {
+    let form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', 'processing/new_test.php');
+    let testNameLabel = createLabel('test-name', 'Test Name');
+    let testName = document.createElement('input');
+    testName.setAttribute('type', 'text');
+    testName.setAttribute('name', 'test-name');
+    testName.id = 'test-name';
+    let testTypeLabel = createLabel('test-type', 'Test Type');
+    let testType = document.createElement('input');
+    testType.setAttribute('type', 'text');
+    testType.setAttribute('name', 'test-type');
+    testType.id = 'test-type';
+
+    let submitButton = document.createElement('input');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.setAttribute('value', 'Submit');
+
+    form.appendChild(createHiddenInput('class-code', classCode));
+    form.appendChild(testNameLabel);
+    form.appendChild(testName);
+    form.appendChild(testTypeLabel);
+    form.appendChild(testType);
+    form.appendChild(submitButton);
+
+    return form;
+}
+
+function createNewQuestionForm(id) {
+    let form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', 'processing/new_question.php');
+    let questionLabel = createLabel('question', 'Question:');
+    let question = document.createElement('input');
+    question.setAttribute('type', 'text');
+    question.setAttribute('name', 'question');
+    let questionTypeLabel = createLabel('question-type', 'Question Type');
+    let questionType = document.createElement('select');
+    questionType.setAttribute('name', 'question-type');
+    let types = ['Identification', 'Multiple Choice', 'True or False'];
+    types.forEach(type => {
+        let option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        questionType.appendChild(option);
+    });
+
+    let submitButton = document.createElement('input');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.setAttribute('value', 'Submit');
+
+    questionType.addEventListener('change', () => {
+        if ($('#answers-div').length > 0) $('#answers-div').empty();
+        if ($('#choices-div').length > 0) $('#choices-div').empty();
+
+        if (questionType.value == 'Multiple Choice') {
+            let choicesLabel = createLabel('choices', 'Choices');
+
+            let choicesDiv = createDiv('choices-div');
+            choicesDiv.id = 'choices-div';
+            choicesDiv.appendChild(choicesLabel);
+            let choices = [];
+            for (let i = 0; i < 4; i++) {
+                let choice = document.createElement('input');
+                choice.setAttribute('type', 'text');
+                choice.setAttribute('name', 'choices[]');
+                choices.push(choice);
+                choicesDiv.appendChild(choice);
+            }
+
+            let answerLabel = createLabel('answer', 'Answer');
+            let answers = document.createElement('select');
+            answers.setAttribute('name', 'answer');
+
+            choices.forEach(choiceInput => {
+                choiceInput.addEventListener('input', () => {
+                    removeAllChildNodes(answers);
+                    let values = [];
+                    choices.forEach(ci => {
+                        values.push(ci.value);
+                    });
+                    values.forEach(choice => {
+                        let c = document.createElement('option');
+                        c.value = choice;
+                        c.textContent = choice;
+                        answers.appendChild(c);
+                    });
+                });
+            });
+
+            let answersDiv = createDiv('answers-div');
+            answersDiv.id = 'answers-div';
+            answersDiv.appendChild(answerLabel);
+            answersDiv.appendChild(answers);
+
+            form.insertBefore(choicesDiv, submitButton);
+            form.insertBefore(answersDiv, submitButton);
+        } else if (questionType.value == 'True or False') {
+            let answerLabel = createLabel('answer', 'Answer');
+            let answers = document.createElement('select');
+            answers.setAttribute('name', 'answer');
+            ['True', 'False'].forEach(choice => {
+                let c = document.createElement('option');
+                c.value = choice;
+                c.textContent = choice;
+                answers.appendChild(c);
+            });
+
+            let answersDiv = createDiv('answers-div');
+            answersDiv.id = 'answers-div';
+            answersDiv.appendChild(answerLabel);
+            answersDiv.appendChild(answers);
+            form.insertBefore(answersDiv, submitButton);
+        }
+    })
+
+    form.appendChild(createHiddenInput('test-id', parseInt(id)));
+    form.appendChild(questionLabel);
+    form.appendChild(question);
+    form.appendChild(questionTypeLabel);
+    form.appendChild(questionType);
+    form.appendChild(submitButton);
+
+    return form;
+}
+
+function createHiddenInput(name, value) {
+    let hidden = document.createElement('input');
+    hidden.setAttribute('type', 'hidden');
+    hidden.setAttribute('name', name);
+    hidden.setAttribute('value', value);
+    return hidden;
 }
 // Functions
 function createLabel(_for, content) {

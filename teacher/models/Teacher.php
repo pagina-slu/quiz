@@ -18,8 +18,21 @@ class Teacher
 
     public function createNewQuestion($data) {
         $query = $this->conn->prepare("INSERT INTO questions(test_id, question, question_type) VALUES(?, ?, ?)");
-        $query->bind_param("iss", $data[0], $data[1], $data[2]);
+        $query->bind_param("iss", $data['test-id'], $data['question'], $data['question-type']);
         $query->execute();
+        $last_id = $this->conn->insert_id;
+        if (isset($data['choices'])) {
+            $query = $this->conn->prepare("INSERT INTO question_choices(question_id, choice) VALUES (?, ?)");
+            foreach ($data['choices'] as &$choice) {
+                $query->bind_param("is", $last_id, $choice);
+                $query->execute();
+            }
+        }
+        if (isset($data['answer'])) {
+            $query = $this->conn->prepare("INSERT INTO question_answers(question_id, answer) VALUES (?, ?)");
+            $query->bind_param("is", $last_id, $data['answer']);
+            $query->execute();
+        }
     }
 
     // READ
@@ -130,5 +143,13 @@ class Teacher
             array_push($responses, $response);
         }
         return $responses;
+    }
+
+    public function getAnswers($questionId) {
+        
+    }
+
+    public function getChocies($questionId) {
+
     }
 }

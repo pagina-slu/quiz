@@ -35,6 +35,12 @@ class Teacher
         }
     }
 
+    public function createNewClass($data) {
+        $query = $this->conn->prepare("INSERT INTO classes(class_code, class_description) VALUES (?, ?)");
+        $query->bind_param("ss", $data['class-code'], $data['class-description']);
+        $query->execute();
+    }
+
     // READ
     public function getAllClasses()
     {

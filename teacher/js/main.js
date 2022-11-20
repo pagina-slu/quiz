@@ -1,5 +1,4 @@
 $(document).ready(async () => {
-    let currentClass = (await getCurrentClass());
     let currentTest = await getCurrentTest();
     console.log(currentTest);
     let scores = [];
@@ -13,179 +12,164 @@ $(document).ready(async () => {
     });
 
     responsesButton.addEventListener('click', async () => {
+        document.getElementById("main").style.flexDirection = "row";
+        console.log(mainDiv.style.display.flexDirection );
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
-
-        // Side buttons for categories
-        let sideContainer = createDiv('side-container');
 
         // Right pane for statistics
         let rightPane = createDiv('right-pane');
 
-        let tests = await getTests(currentClass.classCode);
-        // Create a button for each category
-        tests.forEach(test => {
-            console.log(test);
-            let testButton = createButton('category-button', test.name);
-            testButton.addEventListener('click', () => {
-                scores = calculateScores(test.name);
-                document.querySelectorAll('.category-button').forEach(cb => {
-                    cb.classList.remove('selected');
+        scores = calculateScores(currentTest.name);
+        document.querySelectorAll('.category-button').forEach(cb => {
+            cb.classList.remove('selected');
+        });
+
+        let hasResponse = false;
+        removeAllChildNodes(container);
+        let responses = getResponses(currentTest.id);
+
+        responses.forEach(response => {
+            console.log(response);
+            hasResponse = jQuery.isEmptyObject(responses);
+            let quizWrapper = createDiv('quiz-wrapper');
+            let nameDiv = createDiv('name-div') // Stores student name and ID number
+            let scoreDiv = createDiv('score-div'); // Stores student score
+            scoreDiv.innerHTML = `<sup>${scores[response.idNumber]}</sup>/<sub>${response.sequence.length}</sub>`;
+
+            let greenButton = createButton('green-button', 'Mark As Checked');
+            if (response.isChecked == true) { // Adds classname 'clicked' to span and button if already checked
+                nameDiv.classList.add('clicked');
+                greenButton.classList.add('clicked');
+                greenButton.textContent = "Mark As Unchecked";
+            }
+            nameDiv.innerHTML = response.idNumber + "<br>" + response.name;
+            let buttonWrapper = createDiv('button-wrapper');
+            let viewButton = createButton('purple-button', 'View');
+            viewButton.addEventListener('click', () => {
+                let content = "";
+                let counter = 1;
+                // Adds all questions and answers to content letiable
+                response.sequence.forEach(seq => {
+                    /*
+                    let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], test.classDescription);
+                    content += `${counter}. ` +
+                        "Question: " + questions[currentTest.classDescription][seq].question +
+                        "<br> Type: " + questions[currentTest.classDescription][seq].type +
+                        `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[test.classDescription][seq].answer}</span>`}<br><br>`;
+                    counter++;
+                    */
                 });
-                testButton.classList.add('selected');
-                let hasResponse = false;
-                removeAllChildNodes(container);
-                let responses = getResponses();
-
-                responses.forEach(response => {
-                    console.log(response);
-                    if (response.category != test.classDescription) {
-                        return;
-                    }
-                    hasResponse = true;
-                    let quizWrapper = createDiv('quiz-wrapper');
-                    let nameDiv = createDiv('name-div') // Stores student name and ID number
-                    let scoreDiv = createDiv('score-div'); // Stores student score
-                    scoreDiv.innerHTML = `<sup>${scores[response.idNumber]}</sup>/<sub>${response.sequence.length}</sub>`;
-
-                    let greenButton = createButton('green-button', 'Mark As Checked');
-                    if (response.isChecked == true) { // Adds classname 'clicked' to span and button if already checked
-                        nameDiv.classList.add('clicked');
-                        greenButton.classList.add('clicked');
-                        greenButton.textContent = "Mark As Unchecked";
-                    }
-                    nameDiv.innerHTML = response.idNumber + "<br>" + response.name;
-                    let buttonWrapper = createDiv('button-wrapper');
-                    let viewButton = createButton('purple-button', 'View');
-                    viewButton.addEventListener('click', () => {
-                        let content = "";
-                        let counter = 1;
-                        // Adds all questions and answers to content letiable
-                        response.sequence.forEach(seq => {
-                            let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], test.classDescription);
-                            content += `${counter}. ` +
-                                "Question: " + questions[test.classDescription][seq].question +
-                                "<br> Type: " + questions[test.classDescription][seq].type +
-                                `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[test.classDescription][seq].answer}</span>`}<br><br>`;
-                            counter++;
-                        });
-                        setModalContent(test.classDescription, content);
-                        openModal();
-                    });
-
-                    greenButton.addEventListener('click', () => {
-                        if (greenButton.className == 'green-button') {
-                            greenButton.textContent = "Mark As Unchecked";
-                            response.isChecked = true;
-                        } else {
-                            greenButton.textContent = "Mark As Checked";
-                            response.isChecked = false;
-                        }
-                        nameDiv.classList.toggle('clicked');
-                        greenButton.classList.toggle('clicked');
-                        storeResponses(responses);
-                    });
-
-                    buttonWrapper.appendChild(viewButton);
-                    buttonWrapper.appendChild(greenButton);
-                    quizWrapper.appendChild(nameDiv);
-                    quizWrapper.appendChild(scoreDiv);
-                    quizWrapper.appendChild(buttonWrapper);
-                    container.appendChild(quizWrapper);
-                });
-
-                // Checks if category has a response
-                if (!hasResponse) {
-                    let quizWrapper = createDiv('quiz-wrapper');
-                    let nameDiv = document.createElement('span');
-                    nameDiv.classList.add('name-div');
-                    nameDiv.textContent = "No response available.";
-                    rightPane.textContent = "No response for this category";
-                    quizWrapper.appendChild(nameDiv);
-                    container.appendChild(quizWrapper);
-
-
-                } else {
-                    let searchBar = createDiv('search-bar-div');
-                    let search = document.createElement('input');
-                    search.setAttribute('type', 'text');
-                    search.setAttribute('id', 'search-bar');
-                    search.setAttribute('placeholder', 'Search');
-                    let searchicon = document.createElement('img');
-                    searchicon.src = "res/images/searchicon.png";
-                    searchBar.appendChild(searchicon);
-                    searchBar.appendChild(search);
-                    search.addEventListener('keyup', () => {
-                        let quizWrappers = document.querySelectorAll('.quiz-wrapper');
-                        let searchkey = document.getElementById('search-bar').value.toLowerCase();
-                        for (i = 0; i < responses.length; i++) {
-                            if (responses[i].idNumber.indexOf(searchkey) > -1 || responses[i].name.toLowerCase().indexOf(searchkey) > -1) {
-                                quizWrappers[i].style.display = 'flex';
-                            } else {
-                                quizWrappers[i].style.display = 'none';
-                            }
-                        }
-                    }
-                    )
-
-                    rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(test.classDescription) + "\r\n";
-                    rightPane.textContent += "Highest Score: " + getHighestScore(scores) + "\r\n";
-                    rightPane.textContent += "Average Score: " + getAverageScore(scores);
-
-                    // Button to view number of correct answers per question
-                    let seeMoreButton = createButton('purple-button', 'See More');
-                    seeMoreButton.addEventListener('click', () => {
-                        let buttonText = seeMoreButton.textContent;
-                        let seeMoreDiv = document.createElement('div');
-                        seeMoreDiv.id = "see-more";
-                        if (buttonText == "See More") {
-                            let content = "Correct answers per question:\n";
-                            let questionCount = questions[test.classDescription].length;
-                            let responsesCount = responses.length;
-
-                            // Add statistics to content
-                            for (let i = 0; i < questionCount; i++) {
-                                let correctAnswerCount = getCorrectAnswersCount(test.classDescription, i);
-                                content += `${(`Question ${i + 1}:`).padEnd(13)} ${correctAnswerCount.toString().padStart(3)} / ${responsesCount}, ${(correctAnswerCount / responsesCount * 100).toString().padStart(3)}%\n`;
-                            }
-
-                            seeMoreDiv.textContent = content;
-
-                            rightPane.appendChild(seeMoreDiv);
-                            seeMoreButton.textContent = "Hide";
-                        }
-                        else if (buttonText == "Hide") {
-                            rightPane.removeChild(document.getElementById('see-more'));
-                            seeMoreButton.textContent = "See More";
-                        }
-                    });
-                    container.insertBefore(searchBar, container.firstChild);
-                    rightPane.appendChild(seeMoreButton);
-                }
-                // Button to clear responses for the specified category
-                let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
-                clearCategoryResponsesButton.addEventListener('click', () => {
-                    if (confirm("Are you sure you want to clear responses for this category?")) {
-                        clearCategoryResponses(test.classDescription);
-                        responsesButton.click();
-                    }
-                });
-
-                container.appendChild(clearCategoryResponsesButton);
+                setModalContent(currentTest.classDescription, content);
+                openModal();
             });
 
-            sideContainer.appendChild(testButton);
+            greenButton.addEventListener('click', () => {
+                if (greenButton.className == 'green-button') {
+                    greenButton.textContent = "Mark As Unchecked";
+                    response.isChecked = true;
+                } else {
+                    greenButton.textContent = "Mark As Checked";
+                    response.isChecked = false;
+                }
+                nameDiv.classList.toggle('clicked');
+                greenButton.classList.toggle('clicked');
+                storeResponses(responses);
+            });
 
-            mainDiv.appendChild(sideContainer);
-            mainDiv.appendChild(container);
-            mainDiv.appendChild(rightPane);
+            buttonWrapper.appendChild(viewButton);
+            buttonWrapper.appendChild(greenButton);
+            quizWrapper.appendChild(nameDiv);
+            quizWrapper.appendChild(scoreDiv);
+            quizWrapper.appendChild(buttonWrapper);
+            container.appendChild(quizWrapper);
         });
-        let catButts = document.querySelectorAll(".category-button");
-        catButts[0].click();
-        catButts[0].focus();
+
+        // Checks if category has a response
+        if (!hasResponse) {
+            let quizWrapper = createDiv('quiz-wrapper');
+            let nameDiv = document.createElement('span');
+            nameDiv.classList.add('name-div');
+            nameDiv.textContent = "No response available.";
+            rightPane.textContent = "No response for this category";
+            quizWrapper.appendChild(nameDiv);
+            container.appendChild(quizWrapper);
+        } else {
+            let searchBar = createDiv('search-bar-div');
+            let search = document.createElement('input');
+            search.setAttribute('type', 'text');
+            search.setAttribute('id', 'search-bar');
+            search.setAttribute('placeholder', 'Search');
+            let searchicon = document.createElement('img');
+            searchicon.src = "res/images/searchicon.png";
+            searchBar.appendChild(searchicon);
+            searchBar.appendChild(search);
+            search.addEventListener('keyup', () => {
+                let quizWrappers = document.querySelectorAll('.quiz-wrapper');
+                let searchkey = document.getElementById('search-bar').value.toLowerCase();
+                for (i = 0; i < responses.length; i++) {
+                    if (responses[i].idNumber.indexOf(searchkey) > -1 || responses[i].name.toLowerCase().indexOf(searchkey) > -1) {
+                        quizWrappers[i].style.display = 'flex';
+                    } else {
+                        quizWrappers[i].style.display = 'none';
+                    }
+                }
+            }
+            );
+
+            rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(test.classDescription) + "\r\n";
+            rightPane.textContent += "Highest Score: " + getHighestScore(scores) + "\r\n";
+            rightPane.textContent += "Average Score: " + getAverageScore(scores);
+
+            // Button to view number of correct answers per question
+            let seeMoreButton = createButton('purple-button', 'See More');
+            seeMoreButton.addEventListener('click', () => {
+                let buttonText = seeMoreButton.textContent;
+                let seeMoreDiv = document.createElement('div');
+                seeMoreDiv.id = "see-more";
+                if (buttonText == "See More") {
+                    let content = "Correct answers per question:\n";
+                    let questionCount = questions[test.classDescription].length;
+                    let responsesCount = responses.length;
+
+                    // Add statistics to content
+                    for (let i = 0; i < questionCount; i++) {
+                        let correctAnswerCount = getCorrectAnswersCount(test.classDescription, i);
+                        content += `${(`Question ${i + 1}:`).padEnd(13)} ${correctAnswerCount.toString().padStart(3)} / ${responsesCount}, ${(correctAnswerCount / responsesCount * 100).toString().padStart(3)}%\n`;
+                    }
+
+                    seeMoreDiv.textContent = content;
+
+                    rightPane.appendChild(seeMoreDiv);
+                    seeMoreButton.textContent = "Hide";
+                }
+                else if (buttonText == "Hide") {
+                    rightPane.removeChild(document.getElementById('see-more'));
+                    seeMoreButton.textContent = "See More";
+                }
+            });
+            container.insertBefore(searchBar, container.firstChild);
+            rightPane.appendChild(seeMoreButton);
+        }
+        // Button to clear responses for the specified category
+        let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
+        clearCategoryResponsesButton.addEventListener('click', () => {
+            if (confirm("Are you sure you want to clear responses for this category?")) {
+                clearCategoryResponses(test.classDescription);
+                responsesButton.click();
+            }
+        });
+
+        container.appendChild(clearCategoryResponsesButton);
+
+
+        mainDiv.appendChild(container);
+        mainDiv.appendChild(rightPane);
     });
+
     let questions = await getQuestions(currentTest.id);
     questionsButton.addEventListener('click', async () => {
+        document.getElementById("main").style.flexDirection = "column";
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
         // Side buttons for categories

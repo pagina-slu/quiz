@@ -180,9 +180,14 @@ $(document).ready(async () => {
 
         let addQuestionButton = createButton('add-question-button', 'Add new question');
         addQuestionButton.addEventListener('click', () => {
-            container.appendChild(createNewQuestionForm(currentTest.id));
+            let questionWrapper = createDiv('question-wrapper');
+            questionWrapper.appendChild(createNewQuestionForm(currentTest.id));
+            container.appendChild(questionWrapper);
         });
+
+        let saveChangesButton = createButton('save-changes-button', 'Save changes');
         mainDiv.appendChild(addQuestionButton);
+        mainDiv.appendChild(saveChangesButton);
 
         let questions = await getQuestions(currentTest.testId);
         console.log(questions);
@@ -375,6 +380,7 @@ function createQuestionForm(q, id) {
 
 function createNewQuestionForm(id) {
     let form = document.createElement('form');
+    let wrapper = createDiv('wrapper');
     let questionLabel = createLabel('question', 'Question:');
     let question = document.createElement('input');
     question.setAttribute('type', 'text');
@@ -452,8 +458,12 @@ function createNewQuestionForm(id) {
             answersDiv.id = 'answers-div';
             answersDiv.appendChild(answerLabel);
             answersDiv.appendChild(answers);
-            form.appendChild(choicesDiv);
-            form.appendChild(answersDiv);
+            wrapper = createDiv('wrapper');
+            wrapper.appendChild(choicesDiv);
+            form.appendChild(wrapper);
+            wrapper = createDiv('wrapper');
+            wrapper.appendChild(answersDiv);
+            form.appendChild(wrapper);
         } else if (questionType.value == 'true-or-false') {
             let answerLabel = createLabel('answer', 'Answer');
             let answers = document.createElement('select');
@@ -469,15 +479,21 @@ function createNewQuestionForm(id) {
             answersDiv.id = 'answers-div';
             answersDiv.appendChild(answerLabel);
             answersDiv.appendChild(answers);
-            form.appendChild(answersDiv);
+            wrapper = createDiv('wrapper');
+            wrapper.appendChild(answersDiv);
+            form.appendChild(wrapper);
         }
     })
     form.appendChild(createHiddenInput('question-id', null));
     form.appendChild(createHiddenInput('test-id', parseInt(id)));
-    form.appendChild(questionLabel);
-    form.appendChild(question);
-    form.appendChild(questionTypeLabel);
-    form.appendChild(questionType);
+
+    wrapper.appendChild(questionLabel);
+    wrapper.appendChild(question);
+    form.appendChild(wrapper);
+    wrapper = createDiv('wrapper');
+    wrapper.appendChild(questionTypeLabel);
+    wrapper.appendChild(questionType);
+    form.appendChild(wrapper);
     // form.appendChild(submitButton);
 
     return form;

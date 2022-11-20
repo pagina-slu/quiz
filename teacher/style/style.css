@@ -182,15 +182,14 @@ main > div {
   color: #c23232;
 }
 
-.add-question-button:hover {
-  background: #86c232;
-}
-
-.clear-category,
-.add-question-button {
+.add-question-button, .save-changes-button {
   background: rgb(190, 190, 190);
   border-radius: 5px;
   color: black;
+}
+
+.add-question-button:hover, .save-changes-button:hover {
+  background: #86c232;
 }
 
 .clear-category:hover {

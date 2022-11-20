@@ -236,3 +236,22 @@ main > div {
   justify-content: center;
   align-items: center;
 }
+
+
+form {
+  width: 100%;
+  font-size: 1.6rem;
+}
+
+form .wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-wrapper {
+  color: black;
+  width: 100%;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 5px;
+}

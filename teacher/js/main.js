@@ -206,6 +206,7 @@ BUTTONS.forEach(button => {
 
 function createQuestionForm(q, id) {
     let form = document.createElement('form');
+    let wrapper = createDiv('wrapper');
     let questionLabel = createLabel('question', 'Question:');
     let question = document.createElement('input');
     question.value = q.question;
@@ -225,11 +226,14 @@ function createQuestionForm(q, id) {
 
     form.appendChild(createHiddenInput('question-id', null));
     form.appendChild(createHiddenInput('test-id', parseInt(id)));
-    form.appendChild(questionLabel);
-    form.appendChild(question);
-    form.appendChild(questionTypeLabel);
-    form.appendChild(questionType);
 
+    wrapper.appendChild(questionLabel);
+    wrapper.appendChild(question);
+    form.appendChild(wrapper);
+    wrapper = createDiv('wrapper');
+    wrapper.appendChild(questionTypeLabel);
+    wrapper.appendChild(questionType);
+    form.appendChild(wrapper);
     if (questionType.value == 'multiple-choice') {
         let choicesLabel = createLabel('choices', 'Choices');
 
@@ -269,8 +273,12 @@ function createQuestionForm(q, id) {
         answersDiv.id = 'answers-div';
         answersDiv.appendChild(answerLabel);
         answersDiv.appendChild(answers);
-        form.appendChild(choicesDiv);
-        form.appendChild(answersDiv);
+        wrapper = createDiv('wrapper');
+        wrapper.appendChild(choicesDiv);
+        form.appendChild(wrapper);
+        wrapper = createDiv('wrapper');
+        wrapper.appendChild(answersDiv);
+        form.appendChild(wrapper);
     } else if (questionType.value == 'true-or-false') {
         let answerLabel = createLabel('answer', 'Answer');
         let answers = document.createElement('select');
@@ -287,7 +295,9 @@ function createQuestionForm(q, id) {
         answersDiv.id = 'answers-div';
         answersDiv.appendChild(answerLabel);
         answersDiv.appendChild(answers);
-        form.appendChild(answersDiv);
+        wrapper = createDiv('wrapper');
+        wrapper.appendChild(answersDiv);
+        form.appendChild(wrapper);
     }
 
     questionType.addEventListener('change', () => {
@@ -333,8 +343,12 @@ function createQuestionForm(q, id) {
             answersDiv.id = 'answers-div';
             answersDiv.appendChild(answerLabel);
             answersDiv.appendChild(answers);
-            form.appendChild(choicesDiv);
-            form.appendChild(answersDiv);
+            wrapper = createDiv('wrapper');
+            wrapper.appendChild(choicesDiv);
+            form.appendChild(wrapper);
+            wrapper = createDiv('wrapper');
+            wrapper.appendChild(answersDiv);
+            form.appendChild(wrapper);
         } else if (questionType.value == 'true-or-false') {
             let answerLabel = createLabel('answer', 'Answer');
             let answers = document.createElement('select');
@@ -350,7 +364,9 @@ function createQuestionForm(q, id) {
             answersDiv.id = 'answers-div';
             answersDiv.appendChild(answerLabel);
             answersDiv.appendChild(answers);
-            form.appendChild(answersDiv);
+            wrapper = createDiv('wrapper');
+            wrapper.appendChild(answersDiv);
+            form.appendChild(wrapper);
         }
     })
 

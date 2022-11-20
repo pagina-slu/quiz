@@ -1,6 +1,7 @@
 $(document).ready(async () => {
     let currentClass = (await getCurrentClass());
-
+    let currentTest = await getCurrentTest();
+    console.log(currentTest);
     let scores = [];
     let mainDiv = document.getElementById('main');
     let logoutButton = document.getElementById('logout-button');
@@ -183,7 +184,7 @@ $(document).ready(async () => {
         catButts[0].click();
         catButts[0].focus();
     });
-
+    let questions = await getQuestions(currentTest.id);
     questionsButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
@@ -193,51 +194,11 @@ $(document).ready(async () => {
         });
         removeAllChildNodes(container);
 
-        let tests = await getTests(currentClass.classCode);
-
-        let addTestButton = createButton('add-test-button', 'Add new test');
-        addTestButton.addEventListener('click', () => {
-            setModalContent('Add new test', createNewTestForm(currentClass.classCode));
-            openModal();
+        let addQuestionButton = createButton('add-question-button', 'Add new question');
+        addQuestionButton.addEventListener('click', () => {
+            container.appendChild(createNewQuestionForm(currentTest.id));
         });
-        container.appendChild(addTestButton);
-
-        tests.forEach(async test => {
-            console.log(test);
-            let questions = await getQuestions(test.id);
-
-            let viewButton = createButton('green-button', 'View');
-            viewButton.addEventListener('click', () => {
-                let content = "";
-                let counter = 1;
-                console.log(questions);
-                questions.forEach(question => {
-                    content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.choices}` : ""}<br>Answer: ${question.answer}<br><br>`;
-                    counter++;
-                });
-                setModalContent(currentClass.classDescription, content);
-                openModal();
-            });
-
-            let addQuestionButton = createButton('green-button', 'Add Question');
-            addQuestionButton.addEventListener('click', () => {
-                setModalContent('Add new question', createNewQuestionForm(test.id));
-                openModal();
-            });
-            let testDetails = createDiv('test-details');
-            let testName = createSpan('test-name', test.name);
-            testDetails.appendChild(testName);
-
-            let buttonWrapper = createDiv('button-wrapper');
-            buttonWrapper.appendChild(viewButton);
-            buttonWrapper.appendChild(addQuestionButton);
-
-            let testWrapper = createDiv('test-wrapper');
-            testWrapper.appendChild(testDetails);
-            testWrapper.appendChild(buttonWrapper);
-
-            container.appendChild(testWrapper);
-        });
+        mainDiv.appendChild(addQuestionButton);
 
         mainDiv.appendChild(container);
     });
@@ -253,7 +214,6 @@ BUTTONS.forEach(button => {
 
 function createNewQuestionForm(id) {
     let form = document.createElement('form');
-    form.id = 'new-question-form';
     let questionLabel = createLabel('question', 'Question:');
     let question = document.createElement('input');
     question.setAttribute('type', 'text');
@@ -269,11 +229,12 @@ function createNewQuestionForm(id) {
         questionType.appendChild(option);
     });
 
+    /*
     let submitButton = document.createElement('button');
     submitButton.textContent = "Submit";
     submitButton.addEventListener('click', (e) => {
         e.preventDefault();
-        let form = $('#new-question-form').serialize();
+        form = form.serialize();
         console.log(form);
         $.ajax({
             type: 'POST',
@@ -285,6 +246,7 @@ function createNewQuestionForm(id) {
             }
         })
     });
+    */
 
     questionType.addEventListener('change', () => {
         if ($('#answers-div').length > 0) $('#answers-div').empty();

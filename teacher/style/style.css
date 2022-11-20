@@ -13,7 +13,7 @@
 }
 
 #top-nav ul li {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.87);
   border-bottom: 5px solid transparent;
   border-radius: 5px;
   cursor: pointer;
@@ -30,7 +30,12 @@
 }
 
 #top-nav ul li a {
-  color: black;
+  color: #121212;
+}
+
+main {
+  flex-direction: column;
+  width: 60%;
 }
 
 main > div {
@@ -41,12 +46,12 @@ main > div {
 }
 
 .container {
+  background-color: rgba(255, 255, 255, 0.87);
   display: flex;
   flex-direction: column;
   gap: 5rem;
   height: 100%;
   padding: 2rem;
-  width: 60%;
 }
 
 .quiz-wrapper, .test-wrapper {
@@ -177,12 +182,12 @@ main > div {
   color: #c23232;
 }
 
-.add-test-button:hover {
+.add-question-button:hover {
   background: #86c232;
 }
 
 .clear-category,
-.add-test-button {
+.add-question-button {
   background: rgb(190, 190, 190);
   border-radius: 5px;
   color: black;

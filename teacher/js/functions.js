@@ -74,6 +74,19 @@ async function getCurrentClass() {
     return _class;
 }
 
+async function getCurrentTest() {
+    let test = [];
+    await $.ajax(
+        {
+            url: 'processing/get_current_test.php',
+            dataType: 'json',
+            success: (t) => {
+                test = t;
+            }
+        });
+    return test;
+}
+
 function setModalContent(header, content) {
     $('.modal-header span').html(header);
     $('.modal-content').html(content);

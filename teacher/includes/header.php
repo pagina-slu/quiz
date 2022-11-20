@@ -10,7 +10,11 @@ if (!isset($_SESSION)) {
     <div id="class-details">
         <span id="class-code">
             <?php
-            echo $_SESSION['class-code'];
+            if (isset($_SESSION['test-name'])) {
+                echo $_SESSION['test-name'];
+            } else {
+                echo $_SESSION['class-code'];
+            }
             ?>
         </span>
         <span id="class-description">

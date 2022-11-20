@@ -20,7 +20,7 @@ if (!isset($_SESSION)) {
   ?>
   <nav id="top-nav">
     <ul>
-      <li id="tests-button"><a>Tests</a></li>
+      <li id="questions-button"><a>Questions</a></li>
       <li id="responses-button"><a>Responses</a></li>
     </ul>
   </nav>

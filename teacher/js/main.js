@@ -4,8 +4,6 @@ var logoutButton = document.getElementById('logout-button');
 var questionsButton = document.getElementById('questions-button');
 var responsesButton = document.getElementById('responses-button');
 var categoryButton = document.getElementsByClassName('category-button');
-var modal = document.getElementById('modal');
-var closeModalButton = document.getElementById('close-modal-button');
 
 const BUTTONS = document.querySelectorAll('#top-nav li');
 BUTTONS.forEach(button => {
@@ -15,9 +13,7 @@ BUTTONS.forEach(button => {
     });
 });
 
-closeModalButton.addEventListener('click', () => {
-    closeModal();
-});
+
 
 logoutButton.addEventListener('click', () => {
     window.close();
@@ -56,7 +52,6 @@ responsesButton.addEventListener('click', async () => {
             let hasResponse = false;
             removeAllChildNodes(container);
             let responses = getResponses();
-
 
             responses.forEach(response => {
                 if (response.category != category.classDescription) {

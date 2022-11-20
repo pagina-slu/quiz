@@ -1,3 +1,8 @@
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -10,12 +15,9 @@
 
 <body>
   <?php
+  include_once 'includes/header.php';
   include_once 'includes/modal.php';
   ?>
-  <header>
-    <img class="logo white" src="images/book.svg" alt="logo" width="240" height="60" />
-    <a id="logout-button"><button>Logout</button></a>
-  </header>
   <nav id="top-nav">
     <ul>
       <li id="responses-button"><a>Responses</a></li>
@@ -27,6 +29,7 @@
 
   <script src="../js/jquery-3.6.1.min.js"></script>
   <script src="../js/functions.js"></script>
+  <script src="js/modal.js"></script>
   <script src="js/functions.js"></script>
   <script src="js/main.js"></script>
 </body>

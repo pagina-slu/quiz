@@ -36,28 +36,56 @@ main {
   width: 80%;
 }
 
+h1 {
+  cursor: default;
+}
+
 li,
 a,
 button {
-  color: #edf0f1;
+  color: #121212;
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
+}
+
+button {
+  background-color: #86c232;
+  border: none;
+  border-radius: 25px;
+  color: rgba(255, 255, 255, 0.87);
+  cursor: pointer;
+  padding: 9px 25px;
+  transition: all 0.3s ease 0s;
+}
+
+button:hover {
+  background-color: #446910;
 }
 
 header {
   align-items: center;
   border-bottom: 0.25rem solid white;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 2rem 0;
   width: 80%;
+}
+
+#class-details {
+  display: flex;
+  flex-direction: column;
+}
+
+#class-code, #class-description {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 #logo {
   display: flex;
   cursor: pointer;
-  margin-right: auto;
   font-size: 2rem;
   align-items: center;
   gap: 1rem;
@@ -65,6 +93,10 @@ header {
 
 #logo img {
   width: 4.5rem;
+}
+
+#class-details {
+  margin: auto;
 }
 
 #modal {
@@ -76,20 +108,12 @@ header {
   justify-content: center;
   left: 0;
   opacity: 0;
-  padding: 1rem;
+  padding: 2rem;
   position: fixed;
   right: 0;
   top: 0;
   transition: all 0.35s ease-in;
   visibility: hidden;
-}
-
-#modal button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: inherit;
-  outline: none;
 }
 
 #modal.is-visible {
@@ -118,10 +142,28 @@ header {
   background: #efefef;
   display: flex;
   justify-content: space-between;
+  padding: 1rem 2rem;
 }
 
 .modal-header .close-modal-button {
   font-size: 1.5rem;
+}
+
+.modal-content {
+  padding: 1rem 2rem;
+}
+
+#close-modal-button {
+  color: #86c232;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  outline: none;
+}
+
+#close-modal-button:hover {
+  color: #446910;
 }
 
 #modal p + p {
@@ -140,4 +182,39 @@ header {
 .green {
   filter: invert(65%) sepia(47%) saturate(611%) hue-rotate(43deg)
     brightness(97%) contrast(89%);
+}
+
+.green-button {
+  background-color: #86c232;
+  border-radius: 10px;
+  color: white;
+}
+
+.green-button.clicked {
+  background-color: rgb(190, 190, 190);
+  border-radius: 10px;
+  color: black;
+}
+
+.red-button {
+  background-color: rgb(200, 40, 40);
+  border-radius: 10px;
+  color: white;
+}
+
+.purple-button {
+  background-color: rgb(168, 40, 200);
+  border-radius: 10px;
+  color: white;
+}
+
+form button {
+  background-color: #86c232;
+  border-radius: 10px;
+  color: white;
+  margin-top: 2rem;
+}
+
+form button:hover {
+  background-color: #446910;
 }

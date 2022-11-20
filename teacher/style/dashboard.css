@@ -40,8 +40,3 @@ main {
     height: 10rem;
     border-radius: 0 0 1rem 1rem;
 }
-
-button {
-    border: none;
-    background-color: transparent;
-}

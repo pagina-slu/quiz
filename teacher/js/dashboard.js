@@ -8,7 +8,6 @@ $(document).ready(async () => {
 
     let classes = await getClasses();
     classes.forEach(_class => {
-        console.log(_class);
         let classCard = createDiv('class-card');
         let classImage = createDiv('class-image');
         let classDetails = createDiv('class-details');
@@ -19,6 +18,18 @@ $(document).ready(async () => {
         classDetails.appendChild(classDescription);
         classCard.appendChild(classImage);
         classCard.appendChild(classDetails);
+
+        classCard.addEventListener('click', () => {
+            console.log(_class);
+            $.ajax({
+                url: 'processing/session.php',
+                type: 'POST',
+                data: { 'class-code': _class.classCode, 'class-description': _class.classDescription },
+                success: () => {
+                    window.location.assign('index.php');
+                }
+            });
+        })
 
         main.appendChild(classCard);
     });
@@ -49,8 +60,7 @@ function createNewClassForm() {
             url: 'processing/new_class.php',
             data: form,
             dataType: 'text',
-            success: (r) => {
-                console.log(r);
+            success: () => {
                 closeModal();
             }
         })

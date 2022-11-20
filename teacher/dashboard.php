@@ -1,3 +1,10 @@
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+$_SESSION['class-code'] = "";
+$_SESSION['class-description'] = "";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,6 +35,7 @@
   </main>
   <script src="../js/jquery-3.6.1.min.js"></script>
   <script src="../js/functions.js"></script>
+  <script src="js/modal.js"></script>
   <script src="js/functions.js"></script>
   <script src="js/dashboard.js"></script>
 </body>

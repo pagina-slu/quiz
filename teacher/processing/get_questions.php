@@ -1,9 +1,9 @@
 <?php
 require '../models/Teacher.php';
 
-$classCode = $_GET['classCode'];
+$testId = $_GET['testId'];
 
 $teacher = new Teacher();
-$questions = $teacher->getQuestions($classCode);
+$questions = $teacher->getQuestions($testId);
 
 echo json_encode($questions);

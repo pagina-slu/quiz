@@ -50,9 +50,9 @@ async function getClassDescription(classCode) {
     return classDescription;
 }
 
-async function getQuestions(classCode) {
+async function getQuestions(testId) {
     let questions = [];
-    await $.ajax(`processing/get_questions.php?classCode=${classCode}`,
+    await $.ajax(`processing/get_questions.php?testId=${testId}`,
         {
             success: (q) => {
                 questions = JSON.parse(q);
@@ -68,7 +68,6 @@ async function getCurrentClass() {
             url: 'processing/get_session.php',
             dataType: 'json',
             success: (c) => {
-                console.log(c);
                 _class = c;
             }
         });

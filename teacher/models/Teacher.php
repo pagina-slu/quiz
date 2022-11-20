@@ -56,9 +56,9 @@ class Teacher
         return $classes;
     }
 
-    public function getQuestions($classCode)
+    public function getQuestions($testId)
     {
-        $query = "SELECT * FROM questions INNER JOIN tests ON questions.test_id = tests.test_id WHERE class_code = " . $classCode;
+        $query = "SELECT * FROM questions WHERE test_id = " . $testId;
         $result = $this->conn->query($query);
         $questions = array();
 

@@ -4,7 +4,7 @@ $(document).ready(async () => {
     let scores = [];
     let mainDiv = document.getElementById('main');
     let logoutButton = document.getElementById('logout-button');
-    let questionsButton = document.getElementById('questions-button');
+    let testsButton = document.getElementById('tests-button');
     let responsesButton = document.getElementById('responses-button');
 
     logoutButton.addEventListener('click', () => {
@@ -193,7 +193,7 @@ $(document).ready(async () => {
         })
     });
 
-    questionsButton.addEventListener('click', async () => {
+    testsButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
         // Side buttons for categories
@@ -203,7 +203,8 @@ $(document).ready(async () => {
         removeAllChildNodes(container);
         let tests = await getTests(currentClass.classCode);
         tests.forEach(async test => {
-            let questions = await getQuestions(test.classCode);
+            console.log(test);
+            let questions = await getQuestions(test.id);
 
             let viewButton = createButton('green-button', 'View');
             viewButton.addEventListener('click', () => {
@@ -247,10 +248,6 @@ $(document).ready(async () => {
 
 
         mainDiv.appendChild(container);
-
-        let classButtons = document.querySelectorAll(".class-button");
-        classButtons[0].click();
-        classButtons[0].focus();
     });
 });
 

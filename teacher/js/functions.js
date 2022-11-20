@@ -65,7 +65,7 @@ async function getCurrentClass() {
     let _class = [];
     await $.ajax(
         {
-            url: 'processing/get_session.php',
+            url: 'processing/get_current_class.php',
             dataType: 'json',
             success: (c) => {
                 _class = c;

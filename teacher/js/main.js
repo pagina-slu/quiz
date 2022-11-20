@@ -4,7 +4,7 @@ $(document).ready(async () => {
     let scores = [];
     let mainDiv = document.getElementById('main');
     let logoutButton = document.getElementById('logout-button');
-    let testsButton = document.getElementById('tests-button');
+    let questionsButton = document.getElementById('questions-button');
     let responsesButton = document.getElementById('responses-button');
 
     logoutButton.addEventListener('click', () => {
@@ -184,7 +184,7 @@ $(document).ready(async () => {
         catButts[0].focus();
     });
 
-    testsButton.addEventListener('click', async () => {
+    questionsButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
         // Side buttons for categories
@@ -250,47 +250,6 @@ BUTTONS.forEach(button => {
         button.classList.add('selected');
     });
 });
-
-function createNewTestForm(classCode) {
-    let form = document.createElement('form');
-    form.id = 'new-test-form';
-    let testNameLabel = createLabel('test-name', 'Test Name');
-    let testName = document.createElement('input');
-    testName.setAttribute('type', 'text');
-    testName.setAttribute('name', 'test-name');
-    testName.id = 'test-name';
-    let testTypeLabel = createLabel('test-type', 'Test Type');
-    let testType = document.createElement('input');
-    testType.setAttribute('type', 'text');
-    testType.setAttribute('name', 'test-type');
-    testType.id = 'test-type';
-
-    let submitButton = document.createElement('button');
-    submitButton.textContent = "Submit";
-    submitButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        let form = $('#new-test-form').serialize();
-        console.log(form);
-        $.ajax({
-            type: 'POST',
-            url: 'processing/new_test.php',
-            data: form,
-            dataType: 'text',
-            success: () => {
-                closeModal();
-            }
-        })
-    });
-
-    form.appendChild(createHiddenInput('class-code', classCode));
-    form.appendChild(testNameLabel);
-    form.appendChild(testName);
-    form.appendChild(testTypeLabel);
-    form.appendChild(testType);
-    form.appendChild(submitButton);
-
-    return form;
-}
 
 function createNewQuestionForm(id) {
     let form = document.createElement('form');

@@ -22,11 +22,11 @@ $(document).ready(async () => {
         classCard.addEventListener('click', () => {
             console.log(_class);
             $.ajax({
-                url: 'processing/set_session.php',
+                url: 'processing/set_current_class.php',
                 type: 'POST',
                 data: { 'class-code': _class.classCode, 'class-description': _class.classDescription },
                 success: () => {
-                    window.location.assign('index.php');
+                    window.location.assign('tests.php');
                 }
             });
         })

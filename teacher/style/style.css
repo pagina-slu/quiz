@@ -54,7 +54,7 @@ main > div {
   padding: 2rem;
 }
 
-.quiz-wrapper, .test-wrapper {
+.quiz-wrapper, .test-wrapper, .question-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

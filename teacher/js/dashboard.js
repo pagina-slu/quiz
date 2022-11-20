@@ -22,7 +22,7 @@ $(document).ready(async () => {
         classCard.addEventListener('click', () => {
             console.log(_class);
             $.ajax({
-                url: 'processing/session.php',
+                url: 'processing/set_session.php',
                 type: 'POST',
                 data: { 'class-code': _class.classCode, 'class-description': _class.classDescription },
                 success: () => {

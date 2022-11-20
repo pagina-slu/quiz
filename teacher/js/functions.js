@@ -61,6 +61,20 @@ async function getQuestions(classCode) {
     return questions;
 }
 
+async function getCurrentClass() {
+    let _class = [];
+    await $.ajax(
+        {
+            url: 'processing/get_session.php',
+            dataType: 'json',
+            success: (c) => {
+                console.log(c);
+                _class = c;
+            }
+        });
+    return _class;
+}
+
 function setModalContent(header, content) {
     $('.modal-header span').html(header);
     $('.modal-content').html(content);

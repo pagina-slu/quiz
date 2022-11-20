@@ -73,6 +73,7 @@ header {
 }
 
 #class-details {
+  cursor: default;
   display: flex;
   flex-direction: column;
 }

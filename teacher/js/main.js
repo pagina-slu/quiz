@@ -21,32 +21,24 @@ $(document).ready(async () => {
         // Right pane for statistics
         let rightPane = createDiv('right-pane');
 
-        // Button to clear all responses
-        let clearAllResponsesButton = createButton('clear-all', 'Clear All Responses')
-        clearAllResponsesButton.addEventListener('click', () => {
-            if (confirm("Are you sure you want to clear all responses?")) {
-                clearLocalStorage();
-                responsesButton.click();
-            }
-        });
-        sideContainer.appendChild(clearAllResponsesButton);
-        let categories = await getClasses();
+        let tests = await getTests(currentClass.classCode);
         // Create a button for each category
-        categories.forEach(category => {
-
-            let categoryButton = createButton('category-button', category.classDescription);
-            categoryButton.addEventListener('click', () => {
-                scores = calculateScores(category.classDescription);
+        tests.forEach(test => {
+            console.log(test);
+            let testButton = createButton('category-button', test.name);
+            testButton.addEventListener('click', () => {
+                scores = calculateScores(test.name);
                 document.querySelectorAll('.category-button').forEach(cb => {
                     cb.classList.remove('selected');
                 });
-                categoryButton.classList.add('selected');
+                testButton.classList.add('selected');
                 let hasResponse = false;
                 removeAllChildNodes(container);
                 let responses = getResponses();
 
                 responses.forEach(response => {
-                    if (response.category != category.classDescription) {
+                    console.log(response);
+                    if (response.category != test.classDescription) {
                         return;
                     }
                     hasResponse = true;
@@ -69,14 +61,14 @@ $(document).ready(async () => {
                         let counter = 1;
                         // Adds all questions and answers to content letiable
                         response.sequence.forEach(seq => {
-                            let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], category.classDescription);
+                            let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], test.classDescription);
                             content += `${counter}. ` +
-                                "Question: " + questions[category.classDescription][seq].question +
-                                "<br> Type: " + questions[category.classDescription][seq].type +
-                                `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[category.classDescription][seq].answer}</span>`}<br><br>`;
+                                "Question: " + questions[test.classDescription][seq].question +
+                                "<br> Type: " + questions[test.classDescription][seq].type +
+                                `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[test.classDescription][seq].answer}</span>`}<br><br>`;
                             counter++;
                         });
-                        setModalContent(category.classDescription, content);
+                        setModalContent(test.classDescription, content);
                         openModal();
                     });
 
@@ -135,7 +127,7 @@ $(document).ready(async () => {
                     }
                     )
 
-                    rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(category.classDescription) + "\r\n";
+                    rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(test.classDescription) + "\r\n";
                     rightPane.textContent += "Highest Score: " + getHighestScore(scores) + "\r\n";
                     rightPane.textContent += "Average Score: " + getAverageScore(scores);
 
@@ -147,12 +139,12 @@ $(document).ready(async () => {
                         seeMoreDiv.id = "see-more";
                         if (buttonText == "See More") {
                             let content = "Correct answers per question:\n";
-                            let questionCount = questions[category.classDescription].length;
+                            let questionCount = questions[test.classDescription].length;
                             let responsesCount = responses.length;
 
                             // Add statistics to content
                             for (let i = 0; i < questionCount; i++) {
-                                let correctAnswerCount = getCorrectAnswersCount(category.classDescription, i);
+                                let correctAnswerCount = getCorrectAnswersCount(test.classDescription, i);
                                 content += `${(`Question ${i + 1}:`).padEnd(13)} ${correctAnswerCount.toString().padStart(3)} / ${responsesCount}, ${(correctAnswerCount / responsesCount * 100).toString().padStart(3)}%\n`;
                             }
 
@@ -173,7 +165,7 @@ $(document).ready(async () => {
                 let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
                 clearCategoryResponsesButton.addEventListener('click', () => {
                     if (confirm("Are you sure you want to clear responses for this category?")) {
-                        clearCategoryResponses(category.classDescription);
+                        clearCategoryResponses(test.classDescription);
                         responsesButton.click();
                     }
                 });
@@ -181,16 +173,15 @@ $(document).ready(async () => {
                 container.appendChild(clearCategoryResponsesButton);
             });
 
-            sideContainer.appendChild(categoryButton);
+            sideContainer.appendChild(testButton);
 
             mainDiv.appendChild(sideContainer);
             mainDiv.appendChild(container);
             mainDiv.appendChild(rightPane);
-
-            let catButts = document.querySelectorAll(".category-button");
-            catButts[0].click();
-            catButts[0].focus();
-        })
+        });
+        let catButts = document.querySelectorAll(".category-button");
+        catButts[0].click();
+        catButts[0].focus();
     });
 
     testsButton.addEventListener('click', async () => {
@@ -201,7 +192,16 @@ $(document).ready(async () => {
             cb.classList.remove('selected');
         });
         removeAllChildNodes(container);
+
         let tests = await getTests(currentClass.classCode);
+
+        let addTestButton = createButton('add-test-button', 'Add new test');
+        addTestButton.addEventListener('click', () => {
+            setModalContent('Add new test', createNewTestForm(currentClass.classCode));
+            openModal();
+        });
+        container.appendChild(addTestButton);
+
         tests.forEach(async test => {
             console.log(test);
             let questions = await getQuestions(test.id);
@@ -212,7 +212,7 @@ $(document).ready(async () => {
                 let counter = 1;
                 console.log(questions);
                 questions.forEach(question => {
-                    content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.options}` : ""}<br>Answer: ${question.answer}<br><br>`;
+                    content += `${counter}. ${question.question}<br>Type: ${question.type}${question.type == 'multiple-choice' ? `<br>Choices: ${question.choices}` : ""}<br>Answer: ${question.answer}<br><br>`;
                     counter++;
                 });
                 setModalContent(currentClass.classDescription, content);
@@ -238,14 +238,6 @@ $(document).ready(async () => {
 
             container.appendChild(testWrapper);
         });
-        let addTestButton = createButton('add-test-button', 'Add new test');
-        addTestButton.addEventListener('click', () => {
-            setModalContent('Add new test', createNewTestForm(currentClass.classCode));
-            openModal();
-        });
-        container.appendChild(addTestButton);
-
-
 
         mainDiv.appendChild(container);
     });
@@ -310,7 +302,7 @@ function createNewQuestionForm(id) {
     let questionTypeLabel = createLabel('question-type', 'Question Type');
     let questionType = document.createElement('select');
     questionType.setAttribute('name', 'question-type');
-    let types = ['Identification', 'Multiple Choice', 'True or False'];
+    let types = ['identification', 'multiple-choice', 'true-or-false'];
     types.forEach(type => {
         let option = document.createElement('option');
         option.value = type;
@@ -339,7 +331,7 @@ function createNewQuestionForm(id) {
         if ($('#answers-div').length > 0) $('#answers-div').empty();
         if ($('#choices-div').length > 0) $('#choices-div').empty();
 
-        if (questionType.value == 'Multiple Choice') {
+        if (questionType.value == 'multiple-choice') {
             let choicesLabel = createLabel('choices', 'Choices');
 
             let choicesDiv = createDiv('choices-div');
@@ -381,7 +373,7 @@ function createNewQuestionForm(id) {
 
             form.insertBefore(choicesDiv, submitButton);
             form.insertBefore(answersDiv, submitButton);
-        } else if (questionType.value == 'True or False') {
+        } else if (questionType.value == 'true-or-false') {
             let answerLabel = createLabel('answer', 'Answer');
             let answers = document.createElement('select');
             answers.setAttribute('name', 'answer');

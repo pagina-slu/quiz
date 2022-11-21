@@ -196,4 +196,11 @@ class Teacher
         }
         return $choices;
     }
+
+    // Update
+    public function updateQuestion($question) {
+        $query = $this->conn->prepare("UPDATE questions SET question = ?, question_type = ? WHERE question_id = ?");
+        $query->bind_param("ssi", $question['question'], $question['question-type'], $question['question-id']);
+        $query->execute();
+    }
 }

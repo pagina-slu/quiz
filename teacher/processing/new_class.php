@@ -1,5 +1,4 @@
 <?php
-
 require '../models/Teacher.php';
 
 $teacher = new Teacher();

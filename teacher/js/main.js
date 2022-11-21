@@ -8,7 +8,7 @@ $(document).ready(async () => {
     let responsesButton = document.getElementById('responses-button');
 
     logoutButton.addEventListener('click', () => {
-        window.close();
+        resetSession();
     });
 
     responsesButton.addEventListener('click', async () => {

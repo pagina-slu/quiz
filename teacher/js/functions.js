@@ -87,6 +87,13 @@ async function getCurrentTest() {
     return test;
 }
 
+async function resetSession() {
+    await $.ajax(
+        {
+            url: 'processing/reset_session.php'
+        });
+}
+
 function setModalContent(header, content) {
     $('.modal-header span').html(header);
     $('.modal-content').html(content);

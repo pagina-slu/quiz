@@ -2,8 +2,8 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-$_SESSION['class-code'] = "";
-$_SESSION['class-description'] = "";
+unset($_SESSION['class-code']);
+unset($_SESSION['class-description']);
 ?>
 <!DOCTYPE html>
 <html lang="en">

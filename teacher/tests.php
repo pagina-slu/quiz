@@ -3,8 +3,10 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['class-code'])) {
-    header("Location:dashboard.php");
-  }
+  header("Location:dashboard.php");
+}
+unset($_SESSION['test-id']);
+unset($_SESSION['test-name']);
 ?>
 <!DOCTYPE html>
 <html lang="en">

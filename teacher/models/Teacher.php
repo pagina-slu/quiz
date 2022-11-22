@@ -219,4 +219,14 @@ class Teacher
             // Add choices
         }
     }
+
+    // Delete
+    public function deleteQuestion($questionId) {
+        $query = "DELETE FROM question_answers WHERE question_id = " . $questionId;
+        $this->conn->query($query);
+        $query = "DELETE FROM question_choices WHERE question_id = " . $questionId;
+        $this->conn->query($query);
+        $query = "DELETE FROM questions WHERE question_id = " . $questionId;
+        $this->conn->query($query);
+    }
 }

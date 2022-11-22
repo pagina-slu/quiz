@@ -198,13 +198,15 @@ $(document).ready(async () => {
                 let formArray = form.serializeArray();
                 let isNew = false;
                 let willDelete = false;
+                let questionId = null;
                 // Check if current form contains a new question or not
                 formArray.forEach(data => {
                     if (data.name == 'questionId') {
                         isNew = data.value == 'null';
+                        questionId = parseInt(data.value);
                     }
-                    if (data.delete == 'true') {
-                        willDelete = true;
+                    if (data.name == 'delete') {
+                        willDelete = data.value == 'true';
                     }
                 });
 
@@ -222,15 +224,7 @@ $(document).ready(async () => {
                 } else {
                     // Delete question
                     if (willDelete) {
-                        $.ajax({
-                            type: 'POST',
-                            url: 'processing/delete_question.php',
-                            data: form.serialize(),
-                            success: () => {
-                                console.log("Deleted question.");
-                            }
-                        });
-                        return;
+                        deleteQuestion(questionId);
                     } else {
                         // Update question
                         $.ajax({

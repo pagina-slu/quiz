@@ -87,6 +87,15 @@ async function getCurrentTest() {
     return test;
 }
 
+async function deleteQuestion(questionId) {
+    await $.ajax(`processing/delete_question.php?questionId=${questionId}`,
+    {
+        success: () => {
+            console.log("Deleted question.");
+        }
+    });
+}
+
 async function resetSession() {
     await $.ajax(
         {

@@ -3,13 +3,8 @@ $(document).ready(async () => {
     console.log(currentTest);
     let scores = [];
     let mainDiv = document.getElementById('main');
-    let logoutButton = document.getElementById('logout-button');
     let questionsButton = document.getElementById('questions-button');
     let responsesButton = document.getElementById('responses-button');
-
-    logoutButton.addEventListener('click', () => {
-        resetSession();
-    });
 
     responsesButton.addEventListener('click', async () => {
         document.getElementById("main").style.flexDirection = "row";

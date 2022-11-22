@@ -99,7 +99,10 @@ async function deleteQuestion(questionId) {
 async function resetSession() {
     await $.ajax(
         {
-            url: 'processing/reset_session.php'
+            url: 'processing/reset_session.php',
+            success: () => {
+                window.location.assign('dashboard.php');
+            }
         });
 }
 

@@ -12,14 +12,17 @@ if (!isset($_SESSION)) {
             <?php
             if (isset($_SESSION['test-name'])) {
                 echo $_SESSION['test-name'];
-            } else {
+            } else if (isset($_SESSION['class-code'])) {
                 echo $_SESSION['class-code'];
             }
             ?>
         </span>
         <span id="class-description">
             <?php
-            echo $_SESSION['class-description'];
+            if (isset($_SESSION['class-description'])) {
+                echo $_SESSION['class-description'];
+            }
+
             ?></span>
     </div>
     <a id="logout-button"><button>Logout</button></a>

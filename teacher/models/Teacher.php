@@ -198,9 +198,25 @@ class Teacher
     }
 
     // Update
-    public function updateQuestion($question) {
+    public function updateQuestion($question)
+    {
+        $query = "SELECT question_type FROM questions WHERE question_id = " . $question['question-id'] . " LIMIT 1";
+        $result = $this->conn->query($query);
+        $questionType = "";
+        while ($row = $result->fetch_assoc()) {
+            $questionType = $row['question_type'];
+        }
         $query = $this->conn->prepare("UPDATE questions SET question = ?, question_type = ? WHERE question_id = ?");
         $query->bind_param("ssi", $question['question'], $question['question-type'], $question['question-id']);
         $query->execute();
+        if ($questionType == "multiple-choice" && $question['question-type'] != "multiple-choice") {
+            // Remove choices
+            $query = "DELETE FROM question_choices WHERE question_id = " . $question['question-id'];
+            $this->conn->query($query);
+        } else if ($questionType == "multiple-choice" && $question['question-type'] == "multiple-choice") {
+            // Update choices
+        } else if ($questionType != "multiple-choice" && $question['question-type'] != "multiple-choice") {
+            // Add choices
+        }
     }
 }

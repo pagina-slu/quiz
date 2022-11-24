@@ -23,7 +23,7 @@ $(document).ready(async () => {
         responses.forEach(response => {
             console.log(response);
             hasResponse = jQuery.isEmptyObject(responses);
-            let quizWrapper = createDiv('quiz-wrapper');
+            let responseWrapper = createDiv('response-wrapper');
             let nameDiv = createDiv('name-div') // Stores student name and ID number
             let scoreDiv = createDiv('score-div'); // Stores student score
             scoreDiv.innerHTML = `<sup>${scores[response.idNumber]}</sup>/<sub>${response.sequence.length}</sub>`;
@@ -70,20 +70,20 @@ $(document).ready(async () => {
 
             buttonWrapper.appendChild(viewButton);
             buttonWrapper.appendChild(greenButton);
-            quizWrapper.appendChild(nameDiv);
-            quizWrapper.appendChild(scoreDiv);
-            quizWrapper.appendChild(buttonWrapper);
-            container.appendChild(quizWrapper);
+            responseWrapper.appendChild(nameDiv);
+            responseWrapper.appendChild(scoreDiv);
+            responseWrapper.appendChild(buttonWrapper);
+            container.appendChild(responseWrapper);
         });
 
         // Checks if category has a response
         if (!hasResponse) {
-            let quizWrapper = createDiv('quiz-wrapper');
+            let responseWrapper = createDiv('response-wrapper');
             let nameDiv = document.createElement('span');
             nameDiv.classList.add('name-div');
             nameDiv.textContent = "No response available.";
-            quizWrapper.appendChild(nameDiv);
-            container.appendChild(quizWrapper);
+            responseWrapper.appendChild(nameDiv);
+            container.appendChild(responseWrapper);
         } else {
             let searchBar = createDiv('search-bar-div');
             let search = document.createElement('input');
@@ -95,13 +95,13 @@ $(document).ready(async () => {
             searchBar.appendChild(searchicon);
             searchBar.appendChild(search);
             search.addEventListener('keyup', () => {
-                let quizWrappers = document.querySelectorAll('.quiz-wrapper');
+                let responseWrappers = document.querySelectorAll('.response-wrapper');
                 let searchkey = document.getElementById('search-bar').value.toLowerCase();
                 for (i = 0; i < responses.length; i++) {
                     if (responses[i].idNumber.indexOf(searchkey) > -1 || responses[i].name.toLowerCase().indexOf(searchkey) > -1) {
-                        quizWrappers[i].style.display = 'flex';
+                        responseWrappers[i].style.display = 'flex';
                     } else {
-                        quizWrappers[i].style.display = 'none';
+                        responseWrappers[i].style.display = 'none';
                     }
                 }
             }

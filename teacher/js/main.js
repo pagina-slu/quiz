@@ -195,13 +195,9 @@ $(document).ready(async () => {
                 console.log(JSON.stringify(form.serialize()));
             })
         });
-        mainDiv.appendChild(addQuestionButton);
-        mainDiv.appendChild(saveChangesButton);
 
         let questions = await getQuestions(currentTest.testId);
-        console.log(questions);
         questions.forEach(question => {
-            console.log(question);
             let questionWrapper = createDiv('question-wrapper');
             let form = createQuestionForm(question, currentTest.testId);
             forms.push(form);
@@ -209,11 +205,21 @@ $(document).ready(async () => {
             container.appendChild(questionWrapper);
         });
 
+        mainDiv.appendChild(addQuestionButton);
+        mainDiv.appendChild(saveChangesButton);
         mainDiv.appendChild(container);
     });
 
     schedulesButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
+        let schedules = getSchedules(currentTest.testId);
+
+        let addScheduleButton = createButton('add-schedule-button', 'Add new schedule');
+        addScheduleButton.addEventListener('click', () => {
+
+        });
+        
+        mainDiv.appendChild(addScheduleButton);
     });
 });
 

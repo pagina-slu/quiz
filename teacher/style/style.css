@@ -54,7 +54,7 @@ main > div {
   padding: 2rem;
 }
 
-.response-wrapper, .test-wrapper, .question-wrapper {
+.response-wrapper, .test-wrapper, .question-wrapper, .schedule-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -182,13 +182,13 @@ main > div {
   color: #c23232;
 }
 
-.add-question-button, .save-changes-button {
+.add-question-button, .save-changes-button, .add-schedule-button {
   background: rgb(190, 190, 190);
   border-radius: 5px;
   color: black;
 }
 
-.add-question-button:hover, .save-changes-button:hover {
+.add-question-button:hover, .save-changes-button:hover, .add-schedule-button:hover {
   background: #86c232;
 }
 

@@ -197,6 +197,20 @@ class Teacher
         return $choices;
     }
 
+    public function getSchedules($testId) {
+        $query = "SELECT * FROM schedules WHERE test_id = " . $testId;
+        $result = $this->conn->query($query);
+        $schedules = array();
+        while ($row = $result->fetch_assoc()) {
+            $schedule = array();
+            $schedule['id'] = $row['schedule_id'];
+            $schedule['open_date'] = $row['open_date'];
+            $schedule['close_date'] = $row['close_date'];
+            array_push($schedules, $schedule);
+        }
+        return $schedules;
+    }
+
     // Update
     public function updateQuestion($question)
     {

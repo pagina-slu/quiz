@@ -61,6 +61,17 @@ async function getQuestions(testId) {
     return questions;
 }
 
+async function getSchedules(testId) {
+    let schedules = [];
+    await $.ajax(`processing/get_schedules.php?testId=${testId}`,
+        {
+            success: (q) => {
+                schedules = JSON.parse(q);
+            }
+        });
+    return schedules;
+}
+
 async function getCurrentClass() {
     let _class = [];
     await $.ajax(

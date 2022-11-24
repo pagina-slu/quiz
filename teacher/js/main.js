@@ -5,15 +5,11 @@ $(document).ready(async () => {
     let mainDiv = document.getElementById('main');
     let questionsButton = document.getElementById('questions-button');
     let responsesButton = document.getElementById('responses-button');
+    let schedulesButton = document.getElementById('schedules-button');
 
     responsesButton.addEventListener('click', async () => {
-        document.getElementById("main").style.flexDirection = "row";
-        console.log(mainDiv.style.display.flexDirection);
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
-
-        // Right pane for statistics
-        let rightPane = createDiv('right-pane');
 
         scores = calculateScores(currentTest.name);
         document.querySelectorAll('.category-button').forEach(cb => {
@@ -86,7 +82,6 @@ $(document).ready(async () => {
             let nameDiv = document.createElement('span');
             nameDiv.classList.add('name-div');
             nameDiv.textContent = "No response available.";
-            rightPane.textContent = "No response for this category";
             quizWrapper.appendChild(nameDiv);
             container.appendChild(quizWrapper);
         } else {
@@ -111,60 +106,22 @@ $(document).ready(async () => {
                 }
             }
             );
-
-            rightPane.textContent = "Total Number of Respondents: " + getNumberOfResponses(test.classDescription) + "\r\n";
-            rightPane.textContent += "Highest Score: " + getHighestScore(scores) + "\r\n";
-            rightPane.textContent += "Average Score: " + getAverageScore(scores);
-
-            // Button to view number of correct answers per question
-            let seeMoreButton = createButton('purple-button', 'See More');
-            seeMoreButton.addEventListener('click', () => {
-                let buttonText = seeMoreButton.textContent;
-                let seeMoreDiv = document.createElement('div');
-                seeMoreDiv.id = "see-more";
-                if (buttonText == "See More") {
-                    let content = "Correct answers per question:\n";
-                    let questionCount = questions[test.classDescription].length;
-                    let responsesCount = responses.length;
-
-                    // Add statistics to content
-                    for (let i = 0; i < questionCount; i++) {
-                        let correctAnswerCount = getCorrectAnswersCount(test.classDescription, i);
-                        content += `${(`Question ${i + 1}:`).padEnd(13)} ${correctAnswerCount.toString().padStart(3)} / ${responsesCount}, ${(correctAnswerCount / responsesCount * 100).toString().padStart(3)}%\n`;
-                    }
-
-                    seeMoreDiv.textContent = content;
-
-                    rightPane.appendChild(seeMoreDiv);
-                    seeMoreButton.textContent = "Hide";
-                }
-                else if (buttonText == "Hide") {
-                    rightPane.removeChild(document.getElementById('see-more'));
-                    seeMoreButton.textContent = "See More";
+            container.insertBefore(searchBar, container.firstChild);
+            // Button to clear responses for the specified category
+            let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
+            clearCategoryResponsesButton.addEventListener('click', () => {
+                if (confirm("Are you sure you want to clear responses for this category?")) {
+                    clearCategoryResponses(test.classDescription);
+                    responsesButton.click();
                 }
             });
-            container.insertBefore(searchBar, container.firstChild);
-            rightPane.appendChild(seeMoreButton);
+            container.appendChild(clearCategoryResponsesButton);
         }
-        // Button to clear responses for the specified category
-        let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
-        clearCategoryResponsesButton.addEventListener('click', () => {
-            if (confirm("Are you sure you want to clear responses for this category?")) {
-                clearCategoryResponses(test.classDescription);
-                responsesButton.click();
-            }
-        });
-
-        container.appendChild(clearCategoryResponsesButton);
-
 
         mainDiv.appendChild(container);
-        mainDiv.appendChild(rightPane);
     });
 
-
     questionsButton.addEventListener('click', async () => {
-        document.getElementById("main").style.flexDirection = "column";
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
         let forms = [];
@@ -253,6 +210,10 @@ $(document).ready(async () => {
         });
 
         mainDiv.appendChild(container);
+    });
+
+    schedulesButton.addEventListener('click', async () => {
+        removeAllChildNodes(mainDiv);
     });
 });
 

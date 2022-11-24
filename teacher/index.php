@@ -25,6 +25,7 @@ if (!isset($_SESSION['class-code'])) {
     <ul>
       <li id="questions-button"><a>Questions</a></li>
       <li id="responses-button"><a>Responses</a></li>
+      <li id="schedules-button"><a>Schedules</a></li>
     </ul>
   </nav>
   <main id="main">

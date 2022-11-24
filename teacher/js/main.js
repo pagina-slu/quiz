@@ -19,6 +19,7 @@ $(document).ready(async () => {
         let hasResponse = false;
         removeAllChildNodes(container);
         let responses = getResponses(currentTest.id);
+        console.log(responses);
 
         responses.forEach(response => {
             console.log(response);
@@ -212,14 +213,34 @@ $(document).ready(async () => {
 
     schedulesButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
-        let schedules = getSchedules(currentTest.testId);
+        let container = createDiv('container');
+        let schedules = await getSchedules(currentTest.testId);
+        let hasSchedule = false;
 
+
+        schedules.forEach(schedule => {
+            hasSchedule = true;
+        });
         let addScheduleButton = createButton('add-schedule-button', 'Add new schedule');
         addScheduleButton.addEventListener('click', () => {
-
+            console.log('clicked');
+            setModalContent('Add new schedule', createScheduleForm(currentTest.testId));
+            openModal();
         });
-        
+
+        if (!hasSchedule) {
+            console.log('hashdfd');
+            let scheduleWrapper = createDiv('schedule-wrapper');
+            let scheduleDetails = document.createElement('span');
+            scheduleDetails.classList.add('schedule-details');
+            scheduleDetails.textContent = 'No schedule available.';
+
+            scheduleWrapper.appendChild(scheduleDetails);
+            container.appendChild(scheduleWrapper);
+        }
+
         mainDiv.appendChild(addScheduleButton);
+        mainDiv.appendChild(container);
     });
 });
 
@@ -231,6 +252,7 @@ BUTTONS.forEach(button => {
     });
 });
 
+// Functions
 function createBlankQuestion() {
     let question = [];
     question.question = '';
@@ -240,14 +262,14 @@ function createBlankQuestion() {
     return question;
 }
 
-function createQuestionForm(q, id) {
+function createQuestionForm(question, testId) {
     let form = document.createElement('form');
 
     let questionLabel = createLabel('question', 'Question:');
-    let question = document.createElement('input');
-    question.value = q.question;
-    question.setAttribute('type', 'text');
-    question.setAttribute('name', 'question');
+    let questionInput = document.createElement('input');
+    questionInput.value = question.question;
+    questionInput.setAttribute('type', 'text');
+    questionInput.setAttribute('name', 'question');
     let questionTypeLabel = createLabel('questionType', 'Question Type');
     let questionType = document.createElement('select');
     questionType.setAttribute('name', 'questionType');
@@ -258,18 +280,18 @@ function createQuestionForm(q, id) {
         option.textContent = type;
         questionType.appendChild(option);
     });
-    questionType.value = q.type;
+    questionType.value = question.type;
 
     let willDelete = createHiddenInput('delete', false);
     form.appendChild(willDelete);
-    form.appendChild(createHiddenInput('questionId', q.id));
-    form.appendChild(createHiddenInput('testId', parseInt(id)));
+    form.appendChild(createHiddenInput('questionId', question.id));
+    form.appendChild(createHiddenInput('testId', parseInt(testId)));
 
     let rowWrapper = createDiv('wrapper');
     rowWrapper.classList.add('row');
     let columnWrapper = createDiv('wrapper');
     columnWrapper.appendChild(questionLabel);
-    columnWrapper.appendChild(question);
+    columnWrapper.appendChild(questionInput);
     columnWrapper.style.flex = 0.8;
     rowWrapper.appendChild(columnWrapper);
     columnWrapper = createDiv('wrapper');
@@ -291,7 +313,7 @@ function createQuestionForm(q, id) {
             let choice = document.createElement('input');
             choice.setAttribute('type', 'text');
             choice.setAttribute('name', 'choices[]');
-            choice.value = q.choices[i];
+            choice.value = question.choices[i];
             choices.push(choice);
             choicesDiv.appendChild(choice);
         }
@@ -324,7 +346,7 @@ function createQuestionForm(q, id) {
                 });
             });
         });
-        answers.value = q.answer[0];
+        answers.value = question.answer[0];
 
         answersDiv.appendChild(answerLabel);
         answersDiv.appendChild(answers);
@@ -343,7 +365,7 @@ function createQuestionForm(q, id) {
             c.textContent = choice;
             answers.appendChild(c);
         });
-        answers.value = q.answer[0];
+        answers.value = question.answer[0];
 
         answersDiv.appendChild(answerLabel);
         answersDiv.appendChild(answers);
@@ -353,7 +375,7 @@ function createQuestionForm(q, id) {
     } else if (questionType.value == 'identification') {
         answers = document.createElement('input');
         answers.setAttribute('name', 'answer');
-        answers.value = q.answer[0];
+        answers.value = question.answer[0];
 
         answersDiv.appendChild(answerLabel);
         answersDiv.appendChild(answers);
@@ -431,7 +453,7 @@ function createQuestionForm(q, id) {
             let answerLabel = createLabel('answer', 'Answer');
             let answers = document.createElement('input');
             answers.setAttribute('name', 'answer');
-            answers.value = q.answer[0];
+            answers.value = question.answer[0];
 
             answersDiv = createDiv('answers-div');
             answersDiv.id = 'answers-div';
@@ -471,7 +493,61 @@ function createQuestionForm(q, id) {
     return form;
 }
 
-// Functions
+function createScheduleForm(testId) {
+    let form = document.createElement('form');
+    let openDateLabel = createLabel('open-date', 'Open Date');
+    let openDate = document.createElement('input');
+    openDate.setAttribute('type', 'datetime-local');
+    openDate.setAttribute('name', 'open-date');
+    openDate.id = 'open-date';
+    openDate.required = true;
+    let closeDateLabel = createLabel('close-date', 'Close Date');
+    let closeDate = document.createElement('input');
+    closeDate.setAttribute('type', 'datetime-local');
+    closeDate.setAttribute('name', 'close-date');
+    closeDate.id = 'close-date';
+
+    let errorMessage = document.createElement('p');
+    errorMessage.style.whiteSpace = 'pre';
+
+    let submitButton = document.createElement('button');
+    submitButton.textContent = 'Create Schedule';
+    submitButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        let errorMessageContent = '';
+        if (openDate.value == '') {
+            errorMessageContent += 'Open date is empty!\n';
+        }
+        if (closeDate.value == '') {
+            errorMessageContent += 'Close date is empty!\n';
+        }
+        errorMessage.textContent = errorMessageContent;
+        console.log(openDate.value);
+        openDate.value = new Date(openDate.value).toISOString().slice(0, 19).replace('T', ' ');
+        console.log(openDate.value);
+        let serialized = $(form).serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'processing/new_schedule.php',
+            data: serialized,
+            dataType: 'text',
+            success: () => {
+                closeModal();
+            }
+        });
+    });
+
+    form.appendChild(createHiddenInput('test-id', testId));
+    form.appendChild(errorMessage);
+    form.appendChild(openDateLabel);
+    form.appendChild(openDate);
+    form.appendChild(closeDateLabel);
+    form.appendChild(closeDate);
+    form.appendChild(submitButton);
+
+    return form;
+}
+
 function clearSelectedButtons() {
     BUTTONS.forEach(button => {
         button.classList.remove('selected');

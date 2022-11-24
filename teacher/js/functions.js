@@ -66,7 +66,8 @@ async function getSchedules(testId) {
     await $.ajax(`processing/get_schedules.php?testId=${testId}`,
         {
             success: (q) => {
-                schedules = JSON.parse(q);
+                //console.log(q);
+                //schedules = q;
             }
         });
     return schedules;

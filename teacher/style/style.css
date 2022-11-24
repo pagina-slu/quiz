@@ -82,7 +82,7 @@ main > div {
 }
 
 .name-div,
-.score-div {
+.score-div, .schedule-details {
   background-color: rgb(190, 190, 190);
   border-radius: 10px;
   color: black;

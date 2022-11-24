@@ -4,6 +4,6 @@ require '../models/Teacher.php';
 $testId = $_GET['testId'];
 
 $teacher = new Teacher();
-$questions = $teacher->getSchedules($testId);
+$schedules = $teacher->getSchedules($testId);
 
-echo json_encode($questions);
+echo json_encode($schedules);

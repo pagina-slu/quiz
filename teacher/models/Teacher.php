@@ -76,11 +76,11 @@ class Teacher
             $question["question"] = $row["question"];
             $question["id"] = $row['question_id'];
             $question["type"] = $row['question_type'];
+            $question["points"] = $row['points'];
             $question["answer"] = $this->getAnswers($question["id"]);
             if ($question["type"] == "multiple-choice") {
                 $question["choices"] = $this->getChoices($question["id"]);
             }
-            $question["points"] = 1;
             array_push($questions, $question);
         }
 
@@ -226,8 +226,8 @@ class Teacher
         while ($row = $result->fetch_assoc()) {
             $questionType = $row['question_type'];
         }
-        $query = $this->conn->prepare("UPDATE questions SET question = ?, question_type = ? WHERE question_id = ?");
-        $query->bind_param("ssi", $question['question'], $question['question-type'], $question['question-id']);
+        $query = $this->conn->prepare("UPDATE questions SET question = ?, question_type = ?, points = ? WHERE question_id = ?");
+        $query->bind_param("ssii", $question['question'], $question['question-type'], $question['points'], $question['question-id']);
         $query->execute();
         if ($questionType == "multiple-choice" && $question['question-type'] != "multiple-choice") {
             // Remove choices

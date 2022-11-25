@@ -473,14 +473,13 @@ function createQuestionForm(question, testId) {
     let pointsInput = document.createElement('input');
     pointsInput.setAttribute('type', 'number');
     pointsInput.setAttribute('name', 'points');
-    console.log(question);
     if (question.points) {
         pointsInput.value = question.points;
     } else {
         pointsInput.value = 1;
     }
    
-    let pointsLabel = createLabel('points', 'point');
+    let pointsLabel = createLabel('points', pointsInput.value == 1 ? 'point' : 'points');
     rowWrapper.appendChild(pointsInput);
     rowWrapper.appendChild(pointsLabel);
     lastRow.appendChild(rowWrapper);

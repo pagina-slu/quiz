@@ -219,17 +219,22 @@ $(document).ready(async () => {
 
 
         schedules.forEach(schedule => {
+            console.log(schedule);
             hasSchedule = true;
+            let scheduleWrapper = createDiv('schedule-wrapper');
+            let scheduleDetails = document.createElement('span');
+            scheduleDetails.classList.add('schedule-details');
+            scheduleDetails.textContent = `${schedule.open_date} to ${schedule.close_date}`;
+            scheduleWrapper.appendChild(scheduleDetails);
+            container.appendChild(scheduleWrapper);
         });
         let addScheduleButton = createButton('add-schedule-button', 'Add new schedule');
         addScheduleButton.addEventListener('click', () => {
-            console.log('clicked');
             setModalContent('Add new schedule', createScheduleForm(currentTest.testId));
             openModal();
         });
 
         if (!hasSchedule) {
-            console.log('hashdfd');
             let scheduleWrapper = createDiv('schedule-wrapper');
             let scheduleDetails = document.createElement('span');
             scheduleDetails.classList.add('schedule-details');

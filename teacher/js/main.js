@@ -483,6 +483,7 @@ function createQuestionForm(question, testId) {
     deleteButton.src = 'images/delete.svg';
     deleteButton.classList.add('delete-button');
     deleteButton.addEventListener('click', () => {
+        form.parentElement.style.display = 'none';
         willDelete.value = true;
     });
 

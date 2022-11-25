@@ -478,7 +478,7 @@ function createQuestionForm(question, testId) {
     } else {
         pointsInput.value = 1;
     }
-   
+
     let pointsLabel = createLabel('points', pointsInput.value == 1 ? 'point' : 'points');
     rowWrapper.appendChild(pointsInput);
     rowWrapper.appendChild(pointsLabel);
@@ -504,13 +504,11 @@ function createScheduleForm(testId) {
     let openDateLabel = createLabel('open-date', 'Open Date');
     let openDate = document.createElement('input');
     openDate.setAttribute('type', 'datetime-local');
-    openDate.setAttribute('name', 'open-date');
     openDate.id = 'open-date';
     openDate.required = true;
     let closeDateLabel = createLabel('close-date', 'Close Date');
     let closeDate = document.createElement('input');
     closeDate.setAttribute('type', 'datetime-local');
-    closeDate.setAttribute('name', 'close-date');
     closeDate.id = 'close-date';
 
     let errorMessage = document.createElement('p');
@@ -523,21 +521,24 @@ function createScheduleForm(testId) {
         let errorMessageContent = '';
         if (openDate.value == '') {
             errorMessageContent += 'Open date is empty!\n';
+        } else {
+            form.appendChild(createHiddenInput('open-date', new Date(openDate.value).toISOString().slice(0, 19).replace('T', ' ')));
         }
         if (closeDate.value == '') {
             errorMessageContent += 'Close date is empty!\n';
+        } else {
+            form.appendChild(createHiddenInput('close-date', new Date(closeDate.value).toISOString().slice(0, 19).replace('T', ' ')));
         }
         errorMessage.textContent = errorMessageContent;
-        console.log(openDate.value);
-        openDate.value = new Date(openDate.value).toISOString().slice(0, 19).replace('T', ' ');
-        console.log(openDate.value);
         let serialized = $(form).serialize();
+        console.log(serialized);
         $.ajax({
             type: 'POST',
             url: 'processing/new_schedule.php',
             data: serialized,
             dataType: 'text',
-            success: () => {
+            success: (e) => {
+                console.log(e);
                 closeModal();
             }
         });

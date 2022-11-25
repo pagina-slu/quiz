@@ -46,7 +46,7 @@ class Teacher
 
     public function createNewSchedule($data) {
         $query = $this->conn->prepare("INSERT INTO schedules(test_id, open_date, close_date) VALUES (?, ?, ?)");
-        $query->bind_param("dss", $data['test-id'], $data['open-date'], $data['close-date']);
+        $query->bind_param("iss", $data['test-id'], $data['open-date'], $data['close-date']);
         $query->execute();
     }
 

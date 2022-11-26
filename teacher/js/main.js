@@ -220,6 +220,8 @@ $(document).ready(async () => {
 
         schedules.forEach(schedule => {
             console.log(schedule);
+            let s = new Date(schedule.open_date);
+            console.log(s);
             hasSchedule = true;
             let scheduleWrapper = createDiv('schedule-wrapper');
             let scheduleDetails = document.createElement('span');
@@ -527,12 +529,12 @@ function createScheduleForm(testId) {
         if (openDate.value == '') {
             errorMessageContent += 'Open date is empty!\n';
         } else {
-            form.appendChild(createHiddenInput('open-date', new Date(openDate.value).toISOString().slice(0, 19).replace('T', ' ')));
+            form.appendChild(createHiddenInput('open-date', formatDateForSql(openDate.value)));
         }
         if (closeDate.value == '') {
             errorMessageContent += 'Close date is empty!\n';
         } else {
-            form.appendChild(createHiddenInput('close-date', new Date(closeDate.value).toISOString().slice(0, 19).replace('T', ' ')));
+            form.appendChild(createHiddenInput('close-date', formatDateForSql(closeDate.value)));
         }
         errorMessage.textContent = errorMessageContent;
         let serialized = $(form).serialize();
@@ -558,6 +560,10 @@ function createScheduleForm(testId) {
     form.appendChild(submitButton);
 
     return form;
+}
+
+function formatDateForSql(date) {
+    return new Date(date).toISOString().slice(0, 19).replace('T', ' ');
 }
 
 function clearSelectedButtons() {

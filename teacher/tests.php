@@ -40,6 +40,7 @@ unset($_SESSION['test-name']);
   <script src="../js/functions.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/functions.js"></script>
+  <script src="js/logout.js"></script>
   <script src="js/tests.js"></script>
 </body>
 

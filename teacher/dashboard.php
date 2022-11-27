@@ -37,6 +37,7 @@ unset($_SESSION['class-description']);
   <script src="../js/functions.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/functions.js"></script>
+  <script src="js/logout.js"></script>
   <script src="js/dashboard.js"></script>
 </body>
 

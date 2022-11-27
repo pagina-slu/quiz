@@ -434,10 +434,10 @@ function createQuestionForm(question, testId) {
             answersDiv.appendChild(answers);
             columnWrapper = createDiv('wrapper');
             columnWrapper.appendChild(choicesDiv);
-            form.appendChild(columnWrapper);
+            form.insertBefore(columnWrapper, lastRow);
             columnWrapper = createDiv('wrapper');
             columnWrapper.appendChild(answersDiv);
-            form.appendChild(columnWrapper);
+            form.insertBefore(columnWrapper, lastRow);
         } else if (questionType.value == 'true-or-false') {
             let answerLabel = createLabel('answer', 'Answer');
             let answers = document.createElement('select');
@@ -455,7 +455,7 @@ function createQuestionForm(question, testId) {
             answersDiv.appendChild(answers);
             columnWrapper = createDiv('wrapper');
             columnWrapper.appendChild(answersDiv);
-            form.appendChild(columnWrapper);
+            form.insertBefore(columnWrapper, lastRow);
         } else if (questionType.value == 'identification') {
             let answerLabel = createLabel('answer', 'Answer');
             let answers = document.createElement('input');
@@ -468,7 +468,7 @@ function createQuestionForm(question, testId) {
             answersDiv.appendChild(answers);
             columnWrapper = createDiv('wrapper');
             columnWrapper.appendChild(answersDiv);
-            form.appendChild(columnWrapper);
+            form.insertBefore(columnWrapper, lastRow);
         }
     });
 

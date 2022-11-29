@@ -155,7 +155,7 @@ $(document).ready(async () => {
                 // Check if current form contains a new question or not
                 formArray.forEach(data => {
                     if (data.name == 'questionId') {
-                        isNew = data.value == 'null';
+                        isNew = data.value == 'null' || data.value == 'undefined';
                         questionId = parseInt(data.value);
                     }
                     if (data.name == 'delete') {

@@ -43,7 +43,7 @@ function createNewClassForm() {
     classCode.setAttribute('type', 'text');
     classCode.setAttribute('name', 'class-code');
     classCode.id = 'class-code';
-    let classDescriptionLabel = createLabel('class-description', 'Test Type');
+    let classDescriptionLabel = createLabel('class-description', 'Class Description');
     let classDescription = document.createElement('input');
     classDescription.setAttribute('type', 'text');
     classDescription.setAttribute('name', 'class-description');
@@ -62,6 +62,7 @@ function createNewClassForm() {
             dataType: 'text',
             success: () => {
                 closeModal();
+                location.reload();
             }
         })
     });

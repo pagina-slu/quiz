@@ -151,15 +151,15 @@ class Teacher
 
     public function getResponses($testId)
     {
-        $query = "SELECT * FROM responses WHERE test_id = " . $testId;
+        $query = "SELECT * FROM responses WHERE test_id = '" . $testId . "'";
         $result = $this->conn->query($query);
         $responses = array();
         while ($row = $result->fetch_assoc()) {
             $response = array();
             $response['id'] = $row['response_id'];
-            $response['t_id'] = $row['test_id'];
-            $response['username'] = $row['username'];
-            $response['isChecked'] = $row['isChecked'];
+            $response['test_id'] = $row['test_id'];
+            $response['student_id'] = $row['student_id'];
+            $response['is_checked'] = $row['is_checked'];
             $response['timestamp'] = $row['timestamp'];
             array_push($responses, $response);
         }
@@ -190,6 +190,31 @@ class Teacher
             array_push($answers, $row['answer']);
         }
         return $answers;
+    }
+
+    public function getStudent($student_id){
+        $query = "SELECT * FROM students where student_id = '" . $student_id . "'";
+        $result = $this->conn->query($query);
+        $student = array();
+        while ($row = $result->fetch_assoc()){
+            $student['student_id'] = $row['student_id'];
+            $student['f_name'] = $row['first_name'];
+            $student['l_name'] = $row['last_name'];
+        }
+        return $student;
+    }
+
+    public function getAllStudents(){
+        $query = "SELECT * FROM students";
+        $result = $conn->query($query);
+        $students = array();
+        while ($row = $result->fetch_assoc()){
+            $student = array();
+            $student['student_id'] = $row['student_id'];
+            $student['f_name'] = $row['first_name'];
+            $student['l_name'] = $row['last_name'];
+            array_push($students, $student);
+        }
     }
 
     public function getChoices($questionId)

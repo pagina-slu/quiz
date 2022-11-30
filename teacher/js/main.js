@@ -11,23 +11,26 @@ $(document).ready(async () => {
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
 
-        scores = calculateScores(currentTest.name);
+        //scores = calculateScores(currentTest.testName);
         document.querySelectorAll('.category-button').forEach(cb => {
             cb.classList.remove('selected');
         });
 
         let hasResponse = false;
         removeAllChildNodes(container);
-        let responses = getResponses(currentTest.id);
+        let responses = await getResponses(currentTest.testId);
         console.log(responses);
+        console.log(currentTest.testId);
+        
 
-        responses.forEach(response => {
+        responses.forEach(async response => {
             console.log(response);
+            let student = await getStudent(response.student_id);
             hasResponse = jQuery.isEmptyObject(responses);
             let responseWrapper = createDiv('response-wrapper');
             let nameDiv = createDiv('name-div') // Stores student name and ID number
             let scoreDiv = createDiv('score-div'); // Stores student score
-            scoreDiv.innerHTML = `<sup>${scores[response.idNumber]}</sup>/<sub>${response.sequence.length}</sub>`;
+            //scoreDiv.innerHTML = `<sup>${scores[response.student_id]}</sup>/<sub>${response.sequence.length}</sub>`;
 
             let greenButton = createButton('green-button', 'Mark As Checked');
             if (response.isChecked == true) { // Adds classname 'clicked' to span and button if already checked
@@ -35,7 +38,7 @@ $(document).ready(async () => {
                 greenButton.classList.add('clicked');
                 greenButton.textContent = "Mark As Unchecked";
             }
-            nameDiv.innerHTML = response.idNumber + "<br>" + response.name;
+            nameDiv.innerHTML = response.student_id + "<br>" + student.f_name +" "+student.l_name;
             let buttonWrapper = createDiv('button-wrapper');
             let viewButton = createButton('purple-button', 'View');
             viewButton.addEventListener('click', () => {
@@ -99,7 +102,7 @@ $(document).ready(async () => {
                 let responseWrappers = document.querySelectorAll('.response-wrapper');
                 let searchkey = document.getElementById('search-bar').value.toLowerCase();
                 for (i = 0; i < responses.length; i++) {
-                    if (responses[i].idNumber.indexOf(searchkey) > -1 || responses[i].name.toLowerCase().indexOf(searchkey) > -1) {
+                    if (responses[i].student_id.indexOf(searchkey) > -1 || responses[i].name.toLowerCase().indexOf(searchkey) > -1) {
                         responseWrappers[i].style.display = 'flex';
                     } else {
                         responseWrappers[i].style.display = 'none';
@@ -616,14 +619,14 @@ function getCorrectAnswersCount(category, questionNumber) {
 }
 
 // Returns an array of scores, accessible through a given id number
-function calculateScores(category) {
-    let scores = [];
-    let responses = getResponsesForCategory(category);
-    responses.forEach(response => {
-        scores[response.idNumber] = checkAnswers(response.answers, response.sequence, category);
-    });
-    return scores;
-}
+// function calculateScores(category) {
+//     let scores = [];
+//     let responses = getResponsesForCategory(category);
+//     responses.forEach(response => {
+//         scores[response.student_id] = checkAnswers(response.answers, response.sequence, category);
+//     });
+//     return scores;
+// }
 
 function getHighestScore(scores) {
     let counter = Object.values(scores)

@@ -11,11 +11,22 @@ $(document).ready(async () => {
         let classCard = createDiv('class-card');
         let classImage = createDiv('class-image');
         let classDetails = createDiv('class-details');
+        classDetails.classList.add('row');
         let classCode = createSpan('class-code', _class.classCode);
         let classDescription = createSpan('class-description', _class.classDescription);
 
-        classDetails.appendChild(classCode);
-        classDetails.appendChild(classDescription);
+        let column = createDiv('column');
+        column.appendChild(classCode);
+        column.appendChild(classDescription);
+        classDetails.appendChild(column);
+
+        column = createDiv('column');
+        let settingsButton = document.createElement('img');
+        settingsButton.src = 'images/ellipsis.svg';
+        settingsButton.classList.add('settings-button');
+        column.appendChild(settingsButton);
+        classDetails.appendChild(column);
+
         classCard.appendChild(classImage);
         classCard.appendChild(classDetails);
 

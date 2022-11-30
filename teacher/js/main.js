@@ -158,7 +158,7 @@ $(document).ready(async () => {
                 // Check if current form contains a new question or not
                 formArray.forEach(data => {
                     if (data.name == 'questionId') {
-                        isNew = data.value == 'null';
+                        isNew = data.value == 'null' || data.value == 'undefined';
                         questionId = parseInt(data.value);
                     }
                     if (data.name == 'delete') {
@@ -219,7 +219,6 @@ $(document).ready(async () => {
         let container = createDiv('container');
         let schedules = await getSchedules(currentTest.testId);
         let hasSchedule = false;
-
 
         schedules.forEach(schedule => {
             console.log(schedule);
@@ -528,30 +527,40 @@ function createScheduleForm(testId) {
     submitButton.textContent = 'Create Schedule';
     submitButton.addEventListener('click', (e) => {
         e.preventDefault();
+        let proceed = false;
         let errorMessageContent = '';
         if (openDate.value == '') {
             errorMessageContent += 'Open date is empty!\n';
-        } else {
-            form.appendChild(createHiddenInput('open-date', formatDateForSql(openDate.value)));
         }
+
         if (closeDate.value == '') {
             errorMessageContent += 'Close date is empty!\n';
-        } else {
-            form.appendChild(createHiddenInput('close-date', formatDateForSql(closeDate.value)));
         }
+
+        if (openDate.value > closeDate.value) {
+            errorMessageContent += 'Open date cannot be later than close date!';
+        } else {
+            form.appendChild(createHiddenInput('open-date', formatDateForSql(openDate.value)));
+            form.appendChild(createHiddenInput('close-date', formatDateForSql(closeDate.value)));
+            proceed = true;
+        }
+
         errorMessage.textContent = errorMessageContent;
-        let serialized = $(form).serialize();
-        console.log(serialized);
-        $.ajax({
-            type: 'POST',
-            url: 'processing/new_schedule.php',
-            data: serialized,
-            dataType: 'text',
-            success: (e) => {
-                console.log(e);
-                closeModal();
-            }
-        });
+        if (proceed) {
+            let serialized = $(form).serialize();
+            console.log(serialized);
+            $.ajax({
+                type: 'POST',
+                url: 'processing/new_schedule.php',
+                data: serialized,
+                dataType: 'text',
+                success: (e) => {
+                    console.log(e);
+                    closeModal();
+                    document.getElementById('schedules-button').click();
+                }
+            });
+        }
     });
 
     form.appendChild(createHiddenInput('test-id', testId));

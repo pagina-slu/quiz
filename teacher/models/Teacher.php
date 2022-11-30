@@ -19,8 +19,8 @@ class Teacher
 
     public function createNewQuestion($data)
     {
-        $query = $this->conn->prepare("INSERT INTO questions(test_id, question, question_type) VALUES(?, ?, ?)");
-        $query->bind_param("iss", $data['test-id'], $data['question'], $data['question-type']);
+        $query = $this->conn->prepare("INSERT INTO questions(test_id, question, question_type, points) VALUES(?, ?, ?, ?)");
+        $query->bind_param("issi", $data['test-id'], $data['question'], $data['question-type'], $data['points']);
         $query->execute();
         $last_id = $this->conn->insert_id;
         if (isset($data['choices'])) {

@@ -3,5 +3,10 @@ $(document).ready(async () => {
     logoutButton.addEventListener('click', () => {
         resetSession();
     });
+
+    let logo = document.getElementById('logo');
+    logo.addEventListener('click', () => {
+        resetSession();
+    })
 });
 

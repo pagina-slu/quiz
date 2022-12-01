@@ -61,6 +61,28 @@ async function getQuestions(testId) {
     return questions;
 }
 
+async function getResponses(testId) {
+    let response = [];
+    await $.ajax(`processing/get_responses.php?testId=${testId}`,
+        {
+            success: (q) => {
+                response = JSON.parse(q);
+            }
+        });
+    return response;
+}
+
+async function getStudent(studentId) {
+    let student = [];
+    await $.ajax(`processing/get_student.php?studentID=${studentId}`,
+        {
+            success: (q) => {
+                student = JSON.parse(q);
+            }
+        });
+    return student;
+}
+
 async function getSchedules(testId) {
     let schedules = [];
     await $.ajax(`processing/get_schedules.php?testId=${testId}`,

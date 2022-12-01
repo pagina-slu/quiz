@@ -15,14 +15,14 @@ function storeResponses(responses) {
 }
 
 // Returns all responses
-function getResponses() {
-    return JSON.parse(localStorage.getItem('responses')) || [];
-}
+// function getResponses() {
+//     return JSON.parse(localStorage.getItem('responses')) || [];
+// }
 
 // Returns all responses in a given category
-function getResponsesForCategory(_category) {
-    return getResponses().filter(({category}) => category === _category);
-}
+// function getResponsesForCategory(_category) {
+//     return getResponses().filter(({category}) => category === _category);
+// }
 
 // Clears the local storage
 function clearLocalStorage() {

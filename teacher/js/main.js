@@ -1,7 +1,7 @@
 $(document).ready(async () => {
     let currentTest = await getCurrentTest();
     console.log(currentTest);
-    let scores = [];
+    let totalPoints = await getTotalPoints(currentTest.testId);
     let mainDiv = document.getElementById('main');
     let questionsButton = document.getElementById('questions-button');
     let responsesButton = document.getElementById('responses-button');
@@ -10,8 +10,6 @@ $(document).ready(async () => {
     responsesButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
-
-        //scores = calculateScores(currentTest.testName);
         document.querySelectorAll('.category-button').forEach(cb => {
             cb.classList.remove('selected');
         });
@@ -19,9 +17,6 @@ $(document).ready(async () => {
         let hasResponse = false;
         removeAllChildNodes(container);
         let responses = await getResponses(currentTest.testId);
-        console.log(responses);
-        console.log(currentTest.testId);
-        
 
         responses.forEach(async response => {
             console.log(response);
@@ -30,7 +25,7 @@ $(document).ready(async () => {
             let responseWrapper = createDiv('response-wrapper');
             let nameDiv = createDiv('name-div') // Stores student name and ID number
             let scoreDiv = createDiv('score-div'); // Stores student score
-            //scoreDiv.innerHTML = `<sup>${scores[response.student_id]}</sup>/<sub>${response.sequence.length}</sub>`;
+            scoreDiv.innerHTML = `<sup>${response.score}</sup>/<sub>${totalPoints}</sub>`;
 
             let greenButton = createButton('green-button', 'Mark As Checked');
             if (response.isChecked == true) { // Adds classname 'clicked' to span and button if already checked
@@ -81,7 +76,7 @@ $(document).ready(async () => {
         });
 
         // Checks if category has a response
-        if (!hasResponse) {
+        if (hasResponse) {
             let responseWrapper = createDiv('response-wrapper');
             let nameDiv = document.createElement('span');
             nameDiv.classList.add('name-div');

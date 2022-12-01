@@ -83,6 +83,17 @@ async function getStudent(studentId) {
     return student;
 }
 
+async function getTotalPoints(testID) {
+    let points = [];
+    await $.ajax(`processing/get_total_points.php?test_id=${testID}`,
+        {
+            success: (q) => {
+                points = JSON.parse(q);
+            }
+        });
+    return points;
+}
+
 async function getSchedules(testId) {
     let schedules = [];
     await $.ajax(`processing/get_schedules.php?testId=${testId}`,

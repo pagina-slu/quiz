@@ -160,10 +160,19 @@ class Teacher
             $response['test_id'] = $row['test_id'];
             $response['student_id'] = $row['student_id'];
             $response['is_checked'] = $row['is_checked'];
+            $response['score'] = $row['score'];
             $response['timestamp'] = $row['timestamp'];
             array_push($responses, $response);
         }
         return $responses;
+    }
+
+    public function getTotalPoints($testId)
+    {
+        $query = "SELECT SUM(points) AS points FROM questions where test_id ='" . $testId . "'";
+        $result = $this->conn->query($query);
+        $row = $result->fetch_assoc();
+        return $row['points'];
     }
 
     public function getResponseDetails()

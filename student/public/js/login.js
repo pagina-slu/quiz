@@ -6,7 +6,7 @@ var loginButton = document.getElementById('login-btn');
 const INPUTS = document.querySelectorAll("#login .input input");
 
 // Add event listeners
-loginButton.addEventListener('click', loginUser);
+// loginButton.addEventListener('click', loginUser);
 
 // Make label float when input element has focus
 INPUTS.forEach(input => {

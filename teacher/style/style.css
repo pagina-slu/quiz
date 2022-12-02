@@ -97,7 +97,6 @@ main > div {
   background-color: rgb(154, 152, 152);
   font-size: 2rem;
   padding-top: 3rem;
-  width: 15%;
 }
 
 .name-div.clicked {
@@ -115,7 +114,6 @@ main > div {
   flex-direction: column;
   flex-wrap: wrap;
   gap: 0.5rem;
-  width: 25%;
 }
 
 .button-wrapper button {
@@ -192,8 +190,16 @@ main > div {
   background: #86c232;
 }
 
+.clear-category{
+  background: rgb(219, 17, 17);;
+}
+
 .clear-category:hover {
-  background: rgb(190, 15, 15);
+  background: rgb(134, 8, 8);
+}
+
+.purple-button:hover{
+  background: rgb(126, 26, 151);
 }
 
 .clear-all {

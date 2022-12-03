@@ -9,13 +9,14 @@ const cookieParser = require("cookie-parser");
 const app = express();
 app.listen(5000);
 // app.use(express.json());
+app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
-   secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+   secret: "thisismysecrctekey",
    saveUninitialized: true,
    cookie: { maxAge: oneDay },
    resave: false
@@ -24,7 +25,7 @@ app.use(session({
 let connection;
 
 app.get('/', function (req, res) {
-   res.sendFile(__dirname + "/views/login.html");
+   res.render(__dirname + "/views/login.ejs");
    connection = mysql.createConnection({
       host: 'localhost',
       user: 'root',
@@ -63,13 +64,17 @@ app.post('/login', function (req, res) {
 
       if (req.session.userid) {
          console.log("should send file");
-         res.sendFile(__dirname + "/views/quiz.html");
+         res.redirect('/category');
       }
    }
 
 });
 
+app.get('/category', function(req,res){
 
+   // res.sendFile(__dirname + "/views/category.html");
+
+})
 
 
 

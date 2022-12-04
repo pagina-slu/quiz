@@ -15,9 +15,9 @@ function generateCategorySelector() {
 
     categories.forEach(category => {
         // Create category buttons for each category in the JSON
-        let categoryButton = document.createElement("button");
-        categoryButton.classList = "category-button";
-        categoryButton.innerHTML = category.name;
+        // let categoryButton = document.createElement("button");
+        // categoryButton.classList = "category-button";
+        // categoryButton.innerHTML = category.name;
 
         categoryButton.onclick = () => {
             document.getElementById('category-wrapper').remove();
@@ -25,9 +25,7 @@ function generateCategorySelector() {
             currentCategory = category.name;
             currentQuestions = questions[currentCategory];
             numberOfQuestions = currentQuestions.length;
-            generateUserLogIn();
         }
-        document.getElementById('category-wrapper').appendChild(categoryButton);
     });
 }
 

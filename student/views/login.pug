@@ -1,0 +1,24 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet' href='style/loginstyle.css')
+        title p&agrave;gina quiz
+    body
+        #login-wrapper
+            #login
+                h1 Quiz Application
+                form(action='/login' method='post')
+                    .input
+                        label(for='uname') Username:
+                        input#uname.username(type='text' name='uname')
+                    .input
+                        label(for='upass') Password:
+                        input#upass.password(type='password' name='upass')
+                    input#login-btn(type='submit' value='Log in')
+        // footer
+        footer
+            p p&agrave;gina &copy; 2022
+        script(src='/js/login.js')

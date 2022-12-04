@@ -4,12 +4,14 @@ const session = require('express-session');    //for session handling
 const bodyParser = require('body-parser');     //to get the body of html request
 const path = require('path');                     //to work with paths
 const cookieParser = require("cookie-parser");
+const { clearScreenDown } = require('readline');
 
 
 const app = express();
-app.listen(5000);
+app.listen(process.env.PORT || "8000");
 // app.use(express.json());
-app.set('view engine', 'ejs');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,15 +27,23 @@ app.use(session({
 let connection;
 
 app.get('/', function (req, res) {
-   res.render(__dirname + "/views/login.ejs");
    connection = mysql.createConnection({
       host: 'localhost',
       user: 'root',
       password: 'root',
       database: 'pagina'
    });
-
-
+   connection.connect(async function (err) {
+      if (err) {
+         return console.error('error: ' + err.message);
+      }
+      console.log('Connected to the MySQL server.');
+      if (req.session.userid) {
+         res.redirect("category");
+      }
+      res.render("login");
+   })
+   
 });
 
 app.post('/login', function (req, res) {
@@ -41,22 +51,14 @@ app.post('/login', function (req, res) {
    var password = req.body.upass;
    let sql = `SELECT username FROM accounts WHERE username = ? AND password = ?`;
 
-   connection.connect(async function (err) {
-      if (err) {
-         return console.error('error: ' + err.message);
+   connection.query(sql, [username, password], (error, results) => {
+      if (error) {
+         return console.error(error.message);
       }
-
-      console.log('Connected to the MySQL server.');
-      connection.query(sql, [username, password],  (error, results) => {
-         if (error) {
-            return console.error(error.message);
-         }
-         // console.log(results[0].username);
-         setUser(results[0].username);
-      });
-   
+      setUser(results[0].username);
    });
-   
+
+
 
    function setUser(value) {
       req.session.userid = value;
@@ -70,7 +72,20 @@ app.post('/login', function (req, res) {
 
 });
 
-app.get('/category', function(req,res){
+app.get('/category', function (req, res) {
+   let sql = "SELECT * from classes";
+   connection.query(sql, (error, results) => {
+      if (error) {
+         return console.error(error.message);
+      }
+      let classes = [];
+      for (var i = 0; i < results.length; i++){
+         classes.push([results[i].class_code,results[i].class_description]);
+      }
+      res.render("category",{classes: classes});
+   });
+
+
 
    // res.sendFile(__dirname + "/views/category.html");
 

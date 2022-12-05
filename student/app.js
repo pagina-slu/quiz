@@ -1,3 +1,4 @@
+const jsStringify = require('js-stringify');
 const express = require('express');           //to get get post method request 
 const mysql = require('mysql');               //to connect to database
 const session = require('express-session');    //for session handling
@@ -5,7 +6,6 @@ const bodyParser = require('body-parser');     //to get the body of html request
 const path = require('path');                     //to work with paths
 // const cookieParser = require("cookie-parser");
 // const { clearScreenDown } = require('readline');
-
 
 const app = express();
 app.listen(process.env.PORT || "8000");
@@ -119,7 +119,7 @@ app.post("/quiz/:code", function (req, res){
          if (error) {
             return console.error(error.message);
          }
-         res.render("quiz", {code: classCode, subject: classes[classCode].toString(), tests: results});
+         res.render("quiz", {jsStringify: jsStringify, questions: results});
 
       })
    } else{

@@ -12,12 +12,11 @@ html
         #title-wrapper
             span#title Select a subject
         #category-wrapper
-            - var classes = #{classes}
-            .script
-                classes.forEach((x)=>{
-                    console.log(x);
-                })
+            form(action='/quiz' method='post')
+                each value, key in classes
+                    input(type='submit' class='category-button' id=key value=value)
+            
         // footer
         footer
             p p&agrave;gina &copy; 2022
-        script(src='../public/js/category.js')
+        script(src='js/category.js')

@@ -1,11 +1,22 @@
-var currentQuestions = "";                 // List of questions
-var sequence;                       // List of question order
-var numberOfQuestions = 5;        // Number of questions to show
-var currentName;
-var currentCategory;
-var idNum;
+var buttons = document.getElementsByClassName("category-button");
+console.log(buttons);
+buttons.forEach(function(button) {
+    button.onclick = function() {
+        button.setAttribute("name","selected");
+    }
+});
 
-generateCategorySelector();
+
+
+
+// var currentQuestions = "";                 // List of questions
+// var sequence;                       // List of question order
+// var numberOfQuestions = 5;        // Number of questions to show
+// var currentName;
+// var currentCategory;
+// var idNum;
+
+//generateCategorySelector();
 
 
 // Functions

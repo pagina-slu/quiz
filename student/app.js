@@ -25,7 +25,7 @@ app.use(session({
 }));
 
 let connection;
-
+let classes = {};
 app.get('/', function (req, res) {
    connection = mysql.createConnection({
       host: 'localhost',
@@ -74,11 +74,11 @@ app.post('/login', function (req, res) {
 app.get('/category', function (req, res) {
    if (req.session.userid){
       let sql = "SELECT * from classes";
-   connection.query(sql, (error, results) => {
+      connection.query(sql, (error, results) => {
       if (error) {
          return console.error(error.message);
       }
-      let classes = {};
+      
       for (var i = 0; i < results.length; i++){
          classes[results[i].class_code] = results[i].class_description;
       }
@@ -91,10 +91,37 @@ app.get('/category', function (req, res) {
    
 })
 
-app.post("/quiz", function (req, res){
+app.post("/test/:code", function (req, res){
    if (req.session.userid){
- 
-      console.log(req.body.selected);
+      
+      var classCode = req.params.code;
+
+      let sql = "SELECT * FROM tests where class_code=?";
+      connection.query(sql, [classCode], (error, results) => {
+         if (error) {
+            return console.error(error.message);
+         }
+         res.render("test",{code: classCode, subject: classes[classCode].toString(), tests: results});
+
+      })
+   } else{
+      res.redirect("/");
+   }
+})
+
+app.post("/quiz/:code", function (req, res){
+   if (req.session.userid){
+      
+      var testId = req.params.code;
+
+      let sql = "SELECT * FROM questions where test_id=?";
+      connection.query(sql, [testId], (error, results) => {
+         if (error) {
+            return console.error(error.message);
+         }
+         res.render("quiz", {code: classCode, subject: classes[classCode].toString(), tests: results});
+
+      })
    } else{
       res.redirect("/");
    }

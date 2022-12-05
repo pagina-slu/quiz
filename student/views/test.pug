@@ -4,17 +4,17 @@ html
         meta(charset='UTF-8')
         meta(http-equiv='X-UA-Compatible' content='IE=edge')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
-        link(rel='stylesheet' href='style/style.css')
+        link(rel='stylesheet' href='../style/style.css')
         title p&agrave;gina quiz
         // Category selector
     body
         main#main
         #title-wrapper
-            span#title Select a subject
+            span#title=code+subject
         #category-wrapper
-            each value, key in classes
-                form(action='/test/'+key method='post')
-                    input(type='submit' class='category-button' name="selected" value=value)
+            each test in tests
+                form(action='/quiz/'+test.id method='post')
+                    input(type='submit' class='category-button' name="selected" value=test.test_name)
             
         // footer
         footer

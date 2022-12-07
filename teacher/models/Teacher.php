@@ -41,15 +41,16 @@ class Teacher
     {
         $query = "SELECT * FROM response_details WHERE response_id = '".$responseID."'";
         $result = $this->conn->query($query);
-        $response = array();
+        $responses = array();
 
         while ($row = $result->fetch_assoc()) {
-           $response['responseID'] = $row['response_id'];
-           $response['questionID'] = $row['question_id'];
-           $response['answer'] = $row['answer'];
-
+            $response = array();
+            $response['responseID'] = $row['response_id'];
+            $response['questionID'] = $row['question_id'];
+            $response['answer'] = $row['answer'];
+            array_push($responses, $response);
         }
-        return $response;
+        return $responses;
     }
 
     public function createNewClass($data)
@@ -189,21 +190,6 @@ class Teacher
         $row = $result->fetch_assoc();
         return $row['points'];
     }
-
-    // public function getResponseDetails()
-    // {
-    //     $query = "SELECT * FROM response_details";
-    //     $result = $this->conn->query($query);
-    //     $responses = array();
-    //     while ($row = $result->fetch_assoc()) {
-    //         $response = array();
-    //         $response['id'] = $row['response_id'];
-    //         $response['q_id'] = $row['question_id'];
-    //         $response['answer'] = $row['answer'];
-    //         array_push($responses, $response);
-    //     }
-    //     return $responses;
-    // }
 
     public function getAnswers($questionId)
     {

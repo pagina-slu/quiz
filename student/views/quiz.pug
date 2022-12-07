@@ -106,8 +106,7 @@ html
             // Iterates through all questions and returns the number of answered questions
             function countAnsweredQuestions() {
                 let answerWrapper = document.querySelectorAll(".input-wrapper");
-                let answerCount = 0; // Holds the answer of the user
-
+                let answerCount = 0; // Holds the number of answered questions
                 for (let index = 0; index < answerWrapper.length; index++) { // Get answers
                     let answer = "";
                     let type = answerWrapper[index].firstChild.classList;
@@ -139,14 +138,14 @@ html
             // Returns a div containing a multiple choice question
             function multipleChoice(data, index) {
                 let questionWrapper = document.createElement("div");
-                questionWrapper.id = 'question-wrapper';
+                questionWrapper.classList.add('question-wrapper');
                 let label = generateQuestionLabel(data.question, index);
                 let inputWrapper = document.createElement("div");
-                inputWrapper.id = ('input-wrapper');
+                inputWrapper.classList.add('input-wrapper');
 
                 for (let i = 0; i < data.question_choices.length; i++) {
                     let inputDiv = document.createElement("div");
-                    inputDiv.id = 'multiple-choice';
+                    inputDiv.classList.add('multiple-choice');
                     inputDiv.classList.add('input');
                     let radioButton = generateRadioButton(`q${index + 1}`, data.question_choices[i].choice);
                     inputDiv.appendChild(radioButton);
@@ -166,14 +165,14 @@ html
             // Returns a div containing an identification question
             function identification(data, index) {
                 let questionWrapper = document.createElement("div");
-                questionWrapper.id = 'question-wrapper';
+                questionWrapper.classList.add('question-wrapper');
 
                 let label = generateQuestionLabel(data.question, index);
                 let inputWrapper = document.createElement("div");
-                inputWrapper.id = ('input-wrapper');
+                inputWrapper.classList.add('input-wrapper');
 
                 let inputDiv = document.createElement("div");
-                inputDiv.id = 'identification';
+                inputDiv.classList.add('identification');
                 let input = document.createElement('input');
                 input.type = "text";
                 input.addEventListener("input", () => {
@@ -191,15 +190,15 @@ html
             // Returns a div containing a true or false question
             function trueOrFalse(data, index) {
                 let questionWrapper = document.createElement("div");
-                questionWrapper.id = 'question-wrapper';
+                questionWrapper.classList.add('question-wrapper');
 
                 let label = generateQuestionLabel(data.question, index);
                 let inputWrapper = document.createElement("div");
-                inputWrapper.id = ('input-wrapper');
+                inputWrapper.classList.add('input-wrapper');
                 const options = ["True", "False"];
                 for (let i = 0; i < options.length; i++) {
                     let inputDiv = document.createElement("div");
-                    inputDiv.id = 'true-false';
+                    inputDiv.classList.add('true-false');
                     inputDiv.classList.add('input');
                     let radioButton = generateRadioButton(`q${index + 1}`, options[i]);
                     inputDiv.appendChild(radioButton);
@@ -237,7 +236,7 @@ html
                 const circle = document.getElementById('progress-circle');
                 const bar = document.getElementById('value-bar');
                 const text = document.getElementById('progress-text');
-
+               
                 let deg = Math.round(360 / questions.length) * numOfAnswers;
                 if (deg <= 180) {
                     text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';

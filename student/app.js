@@ -62,10 +62,10 @@ app.post('/login', function (req, res) {
 
    function setUser(value) {
       req.session.userid = value;
-      console.log(req.session.userid);
+      // console.log(req.session.userid);
 
       if (req.session.userid) {
-         console.log("should send file");
+         // console.log("should send file");
          res.redirect('/category');
       }
    }
@@ -83,7 +83,7 @@ app.get('/category', function (req, res) {
          for (var i = 0; i < results.length; i++) {
             classes[results[i].class_code] = results[i].class_description;
          }
-         console.log(classes);
+         // console.log(classes);
          res.render("category", { classes: classes });
       });
    } else {
@@ -114,7 +114,7 @@ app.post("/quiz/:code", function (req, res) {
    if (req.session.userid) {
 
       var testId = req.params.code;
-      console.log("test id = " + testId);
+      // console.log("test id = " + testId);
       let sql = "SELECT * FROM questions where test_id=?";
       connection.query(sql, [testId], (error, results) => {
          if (error) {
@@ -125,8 +125,6 @@ app.post("/quiz/:code", function (req, res) {
             res.render("quiz", { questions: r });
          });
 
-        
-
       })
    } else {
       res.redirect("/");
@@ -136,18 +134,18 @@ app.post("/quiz/:code", function (req, res) {
       let sql = "SELECT * FROM question_choices WHERE question_id=?"
       let res = results;
 
-      return new Promise( (resolve) =>{
+      return new Promise( (resolve, reject) =>{
          res.forEach((question) => {
             if (question.question_type == 'multiple-choice') {
                connection.query(sql, [question.question_id],  (error, results) => {
                   if (error) {
-                     return console.error(error.message);
+                     reject (console.error(error.message));
                   }
-
+                  console.log("dapat nauuna tong query, pero nahuhuli: " + results);
                   question.question_choices = results;
-                  console.log("CHOICES: " + results);
+                  
                });
-               console.log(question.question_choices);
+               console.log("Dapat makuha muna to " + question.question_choices);
             }
          })
          resolve(res);

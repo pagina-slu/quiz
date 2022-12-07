@@ -1,9 +1,10 @@
-const jsStringify = require('js-stringify');
+// const jsStringify = require('js-stringify');
 const express = require('express');           //to get get post method request 
 const mysql = require('mysql');               //to connect to database
 const session = require('express-session');    //for session handling
 const bodyParser = require('body-parser');     //to get the body of html request
 const path = require('path');                     //to work with paths
+const { resolve } = require('path');
 // const cookieParser = require("cookie-parser");
 // const { clearScreenDown } = require('readline');
 
@@ -30,7 +31,7 @@ app.get('/', function (req, res) {
    connection = mysql.createConnection({
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: 'root',
       database: 'pagina'
    });
    connection.connect(async function (err) {
@@ -43,7 +44,7 @@ app.get('/', function (req, res) {
       }
       res.render("login");
    })
-   
+
 });
 
 app.post('/login', function (req, res) {
@@ -72,28 +73,28 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/category', function (req, res) {
-   if (req.session.userid){
+   if (req.session.userid) {
       let sql = "SELECT * from classes";
       connection.query(sql, (error, results) => {
-      if (error) {
-         return console.error(error.message);
-      }
-      
-      for (var i = 0; i < results.length; i++){
-         classes[results[i].class_code] = results[i].class_description;
-      }
-      console.log(classes);
-      res.render("category",{classes: classes});
-   });
-   } else{
+         if (error) {
+            return console.error(error.message);
+         }
+
+         for (var i = 0; i < results.length; i++) {
+            classes[results[i].class_code] = results[i].class_description;
+         }
+         console.log(classes);
+         res.render("category", { classes: classes });
+      });
+   } else {
       res.redirect("/");
    }
-   
+
 })
 
-app.post("/test/:code", function (req, res){
-   if (req.session.userid){
-      
+app.post("/test/:code", function (req, res) {
+   if (req.session.userid) {
+
       var classCode = req.params.code;
 
       let sql = "SELECT * FROM tests where class_code=?";
@@ -101,29 +102,56 @@ app.post("/test/:code", function (req, res){
          if (error) {
             return console.error(error.message);
          }
-         res.render("test",{code: classCode, subject: classes[classCode].toString(), tests: results});
+         res.render("test", { code: classCode, subject: classes[classCode].toString(), tests: results });
 
       })
-   } else{
+   } else {
       res.redirect("/");
    }
 })
 
-app.post("/quiz/:code", function (req, res){
-   if (req.session.userid){
-      
-      var testId = req.params.code;
+app.post("/quiz/:code", function (req, res) {
+   if (req.session.userid) {
 
+      var testId = req.params.code;
+      console.log("test id = " + testId);
       let sql = "SELECT * FROM questions where test_id=?";
       connection.query(sql, [testId], (error, results) => {
          if (error) {
             return console.error(error.message);
          }
-         res.render("quiz", {jsStringify: jsStringify, questions: results});
+         getQuestions(results).then(r =>{
+            console.log(r);
+            res.render("quiz", { questions: r });
+         });
+
+        
 
       })
-   } else{
+   } else {
       res.redirect("/");
+   }
+
+   function getQuestions(results) {
+      let sql = "SELECT * FROM question_choices WHERE question_id=?"
+      let res = results;
+
+      return new Promise( (resolve) =>{
+         res.forEach((question) => {
+            if (question.question_type == 'multiple-choice') {
+               connection.query(sql, [question.question_id],  (error, results) => {
+                  if (error) {
+                     return console.error(error.message);
+                  }
+
+                  question.question_choices = results;
+                  console.log("CHOICES: " + results);
+               });
+               console.log(question.question_choices);
+            }
+         })
+         resolve(res);
+      })
    }
 })
 

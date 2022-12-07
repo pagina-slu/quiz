@@ -13,7 +13,7 @@ html
             span#title=code+subject
         #category-wrapper
             each test in tests
-                form(action='/quiz/'+test.id method='post')
+                form(action='/quiz/'+test.test_id method='post')
                     input(type='submit' class='category-button' name="selected" value=test.test_name)
             
         // footer

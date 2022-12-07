@@ -1,5 +1,3 @@
-
-var questionsList= !(jsStringify(questions));
 console.log(questionsList);
 startQuiz();
 function startQuiz() {

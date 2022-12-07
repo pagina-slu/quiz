@@ -40,20 +40,20 @@ $(document).ready(async () => {
             viewButton.addEventListener('click', async () => {
                 let content = "";
                 let counter = 1;
-                let rDetails = await getResponseDetails(response.id);
-                console.log(rDetails);
+                let responseDetails = await getResponseDetails(response.id);
+                console.log(responseDetails);
                 // Adds all questions and answers to content letiable
-                response.sequence.forEach(seq => {
-                    /*
-                    let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], test.classDescription);
-                    content += `${counter}. ` +
-                        "Question: " + questions[currentTest.classDescription][seq].question +
-                        "<br> Type: " + questions[currentTest.classDescription][seq].type +
-                        `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[test.classDescription][seq].answer}</span>`}<br><br>`;
-                    counter++;
-                    */
-                });
-                setModalContent(currentTest.classDescription, content);
+                //response.sequence.forEach(seq => {
+                    
+                    // let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], test.classDescription);
+                    // content += `${counter}. ` +
+                    //     "Question: " + questions[currentTest.classDescription][seq].question +
+                    //     "<br> Type: " + questions[currentTest.classDescription][seq].type +
+                    //     `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[test.classDescription][seq].answer}</span>`}<br><br>`;
+                    // counter++;
+                    
+                //});
+                setModalContent(currentTest.testName, content);
                 openModal();
             });
 

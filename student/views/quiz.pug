@@ -10,6 +10,7 @@ html
         // Category selector
         main#main
             div#quiz-wrapper
+            div#submit-wrapper
             //- p=questions
         // Progress bar
         #progress-circle
@@ -96,7 +97,7 @@ html
                     answers.push(answer);
                 }
                 if (answeredAll) {
-                    saveLocally(currentName, idNum, currentCategory, answers, sequence);
+                    //- saveLocally(currentName, idNum, currentCategory, answers, questionsce);
                     alert("Your response has been submitted. Thank you for answering!")
                     resetQuiz();
                 }
@@ -143,13 +144,13 @@ html
                 let inputWrapper = document.createElement("div");
                 inputWrapper.id = ('input-wrapper');
 
-                for (let i = 0; i < data.options.length; i++) {
+                for (let i = 0; i < data.question_choices.length; i++) {
                     let inputDiv = document.createElement("div");
                     inputDiv.id = 'multiple-choice';
                     inputDiv.classList.add('input');
-                    let radioButton = generateRadioButton(`q${index + 1}`, data.options[i]);
+                    let radioButton = generateRadioButton(`q${index + 1}`, data.question_choices[i].choice);
                     inputDiv.appendChild(radioButton);
-                    inputDiv.appendChild(generateLabelForRadioButton(data.options[i]));
+                    inputDiv.appendChild(generateLabelForRadioButton(data.question_choices[i].choice));
                     inputDiv.addEventListener('click', () => {
                         radioButton.checked = true;
                         rotateProgressBar(countAnsweredQuestions());
@@ -237,13 +238,13 @@ html
                 const bar = document.getElementById('value-bar');
                 const text = document.getElementById('progress-text');
 
-                let deg = Math.round(360 / sequence.length) * numOfAnswers;
+                let deg = Math.round(360 / questions.length) * numOfAnswers;
                 if (deg <= 180) {
-                    text.innerHTML = Math.round(numOfAnswers / sequence.length * 100) + '%';
+                    text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';
                     circle.className = ' ';
                     bar.style.transform = 'rotate(' + deg + 'deg)';
                 } else {
-                    text.innerHTML = Math.round(numOfAnswers / sequence.length * 100) + '%';
+                    text.innerHTML = Math.round(numOfAnswers / questions.length * 100) + '%';
                     circle.className = 'over50';
                     bar.style.transform = 'rotate(' + deg + 'deg)';
                 }

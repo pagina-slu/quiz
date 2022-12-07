@@ -5,6 +5,7 @@ const session = require('express-session');    //for session handling
 const bodyParser = require('body-parser');     //to get the body of html request
 const path = require('path');                     //to work with paths
 const { resolve } = require('path');
+const { get } = require('http');
 // const cookieParser = require("cookie-parser");
 // const { clearScreenDown } = require('readline');
 
@@ -34,7 +35,7 @@ app.get('/', function (req, res) {
       password: 'root',
       database: 'pagina'
    });
-   connection.connect(async function (err) {
+   connection.connect(function (err) {
       if (err) {
          return console.error('error: ' + err.message);
       }
@@ -110,47 +111,134 @@ app.post("/test/:code", function (req, res) {
    }
 })
 
-app.post("/quiz/:code", function (req, res) {
+app.post("/quiz/:code", (req, res) => {
+   let results1;
    if (req.session.userid) {
-
       var testId = req.params.code;
       // console.log("test id = " + testId);
-      let sql = "SELECT * FROM questions where test_id=?";
-      connection.query(sql, [testId], (error, results) => {
-         if (error) {
-            return console.error(error.message);
-         }
-         getQuestions(results).then(r =>{
-            console.log(r);
-            res.render("quiz", { questions: r });
-         });
 
+      let sql = "SELECT * FROM questions where test_id=?";
+
+      connection.query(sql, [testId], (error, results) => {
+         if (error) { return console.error(error.message); }
+         putResults(results);
+
+         // const questions = await getQuestions(results);
+         // const r = await questions;
+         // renderQuiz(await r);
+
+         // questions.forEach((question) => {
+         //    if (question.question_type == 'multiple-choice') {
+         //       connection.query(sql, [question.question_id], (error, result) => {
+         //          if (error) {
+         //             return console.error(error.message);
+         //          }
+         //          console.log("dapat nauuna tong query, pero nahuhuli: " + result);
+         //          getQuestions(question, result);
+
+         //       });
+         //       console.log("Dapat makuha muna to " + question.question_choices);
+         //    }
+         // })   
       })
+      // console.log(results1);
+
+      // sql = "SELECT * FROM question_choices WHERE question_id=?";
+      // let questions = await getQuestions(results1);
+
    } else {
       res.redirect("/");
    }
+   function putResults(res) {
+      results1 = res;
+      getQuestions(results1);
+   }
+   // async function sample(result) {
+   //    let results = result;
+   //    let sql = "SELECT * FROM question_choices WHERE question_id=?";
+   //    // console.log(results[0]);
+   //    for (let i = 0; i < results.length; i++) {
+   //       console.log(results[i]);
+   //       if (results[i].question_type == 'multiple-choice') {
+   //          await connection.query(sql, [results[i].question_id], (error, result) => {
+   //             if (error) {
+   //                return console.error(error.message);
+   //             }
+   //             console.log("dapat nauuna tong query, pero nahuhuli: " + result);
+   //             results[i].question_choices = result;
+   //             // console.log(results[i]);
+   //             if (i == results.length) {
+   //                renderQuiz(results);
+   //                // console.log("render quiz:" + r);
+   //                // res.render("quiz", { questions: results });
+   //             }
+   //             return;
+
+   //          });
+   //          // console.log("Dapat makuha muna to " + results[i].question_choices);
+   //       }
+
+   //    }
+   // }
+   function renderQuiz(r) {
+      console.log(r);
+      res.render("quiz", { questions: r });
+
+   }
+   // function getQuestions(question, results) {
+   //    question.question_choices = results;
+   //    // console.log(r);
+   //    // renderQuiz(r);
+   // }
 
    function getQuestions(results) {
       let sql = "SELECT * FROM question_choices WHERE question_id=?"
-      let res = results;
+      let r = results;
+      // console.log(r);
+      r.forEach((question, key, arr) => {
+         if (question.question_type == 'multiple-choice') {
+            connection.query(sql, [question.question_id], (error, results) => {
+               if (error) {
+                  return console.error(error.message);
+               }
+               // console.log("dapat nauuna tong query, pero nahuhuli: " + results);
+               question.question_choices = results;
+               console.log("dapat nauuna tong query, pero nahuhuli: " + question.question_choices);
+               res.render("quiz", { questions: r});
+               // if (key == arr.length-1) {
+               //    console.log("Last callback call at index " + key + " with value " + question);
+               // }
 
-      return new Promise( (resolve, reject) =>{
-         res.forEach((question) => {
-            if (question.question_type == 'multiple-choice') {
-               connection.query(sql, [question.question_id],  (error, results) => {
-                  if (error) {
-                     reject (console.error(error.message));
-                  }
-                  console.log("dapat nauuna tong query, pero nahuhuli: " + results);
-                  question.question_choices = results;
-                  
-               });
-               console.log("Dapat makuha muna to " + question.question_choices);
-            }
-         })
-         resolve(res);
+            });
+            console.log("Dapat makuha muna to " + question.question_choices);
+         }
+
       })
+
    }
+
+   // function getQuestions(results) {
+   //    let sql = "SELECT * FROM question_choices WHERE question_id=?"
+   //    let r = results;
+
+   //    return new Promise( (resolve, reject) =>{
+   //       r.forEach((question) => {
+   //          if (question.question_type == 'multiple-choice') {
+   //             connection.query(sql, [question.question_id],  (error, results) => {
+   //                if (error) {
+   //                   reject (console.error(error.message));
+   //                }
+   //                console.log("dapat nauuna tong query, pero nahuhuli: " + results);
+   //                question.question_choices = results;
+
+   //             });
+   //             console.log("Dapat makuha muna to " + question.question_choices);
+   //          }
+   //       })
+
+   //       resolve(r);
+   //    })
+   // }
 })
 
 // // Sample query

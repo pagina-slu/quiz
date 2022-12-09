@@ -46,13 +46,15 @@ $(document).ready(async () => {
                 let responseDetails = await getResponseDetails(response.id);
                 console.log(responseDetails);
                 // Adds all questions and answers to content letiable
-                responses.forEach(res => {
+                responseDetails.forEach(res => {
                     
-                    let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], test.classDescription);
+                    let answerIsCorrect = checkAnswer(res.answer, questions[counter-1].answer);
                     content += `${counter}. ` +
                         "Question: " + questions[counter-1].question +
                         "<br> Type: " + questions[counter-1].type +
-                        `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[test.classDescription][seq].answer}</span>`}<br><br>`;
+                        `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + res.answer + `</span>
+                                ${answerIsCorrect ? "" : 
+                                `<br><span class="correct">Correct Answer(s): ${questions[counter-1].answer}</span>`}<br><br>`;
                     counter++;
                     
                 });
@@ -662,26 +664,41 @@ function getTotalNumberOfResponses() {
 }
 
 // Returns true if the answer is correct, and false if not
-function checkAnswer(studentAnswer, questionNumber, category) {
-    let currentQuestions = questions[category];
-    let currentQuestion = currentQuestions[questionNumber];
-    let correctAnswer = currentQuestion.answer;
-    let correct = false;
+// function checkAnswer(studentAnswer, questionNumber, category) {
+//     let currentQuestions = questions[category];
+//     let currentQuestion = currentQuestions[questionNumber];
+//     let correctAnswer = currentQuestion.answer;
+//     let correct = false;
 
+//     if (Array.isArray(correctAnswer) && correctAnswer.length > 1) {
+//         let stop = false;
+//         correctAnswer.forEach(answer => {
+//             answer = answer.toLowerCase();
+//             if (answer == studentAnswer.toLowerCase() && !stop) {
+//                 stop = true;
+//                 correct = true;
+//             }
+//         });
+//     }
+//     else if (correctAnswer.toLowerCase() == studentAnswer.toLowerCase()) {
+//         correct = true;
+//     }
+//     return correct;
+// }
+
+function checkAnswer(studentAnswer, correctAnswer) {
     if (Array.isArray(correctAnswer) && correctAnswer.length > 1) {
-        let stop = false;
         correctAnswer.forEach(answer => {
             answer = answer.toLowerCase();
-            if (answer == studentAnswer.toLowerCase() && !stop) {
-                stop = true;
-                correct = true;
+            if (answer == studentAnswer.toLowerCase()) {
+                return true;
             }
         });
     }
     else if (correctAnswer.toLowerCase() == studentAnswer.toLowerCase()) {
-        correct = true;
+        return true;
     }
-    return correct;
+    return false;
 }
 
 // Checks the number of correct answers

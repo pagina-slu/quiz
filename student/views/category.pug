@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet' href='style/style.css')
+        title p&agrave;gina quiz
+        // Category selector
+    body
+        main#main
+        #title-wrapper
+            span#title Select a subject
+        #category-wrapper
+            each value, key in classes
+                form(action='/test/'+key method='post')
+                    input(type='submit' class='category-button' name="selected" value=value)
+            
+        // footer
+        footer
+            p p&agrave;gina &copy; 2022

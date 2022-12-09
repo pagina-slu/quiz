@@ -39,9 +39,12 @@ $(document).ready(async () => {
             nameDiv.innerHTML = response.student_id + "<br>" + student.f_name +" "+student.l_name;
             let buttonWrapper = createDiv('button-wrapper');
             let viewButton = createButton('purple-button', 'View');
-            viewButton.addEventListener('click', () => {
+            
+            viewButton.addEventListener('click', async () => {
                 let content = "";
                 let counter = 1;
+                let responseDetails = await getResponseDetails(response.id);
+                console.log(responseDetails);
                 // Adds all questions and answers to content letiable
                 responses.forEach(res => {
                     

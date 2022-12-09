@@ -1,111 +1,5 @@
-var currentQuestions = "";                 // List of questions
-var sequence;                       // List of question order
-var numberOfQuestions = 5;        // Number of questions to show
-var currentName;
-var currentCategory;
-var idNum;
-
-// Runs after the page loads
-window.onload = function () {
-    generateCategorySelector();
-}
-
-// Functions
-
-// Generates the category selector in the landing page
-function generateCategorySelector(){
-    document.getElementById("login-wrapper").style.display = "block";
-    hideProgressBar();
-    let main = document.getElementById('main');
-    main.innerHTML = "";
-        main.innerHTML += `<div id="title-wrapper"></div>
-        <div id="category-wrapper"></div>
-        <div id="quiz-wrapper"></div>
-        <div id="submit-wrapper"></div>`;
-        document.getElementById('title-wrapper').innerHTML = '<span id="title">Choose a category</span>';
-
-        categories.forEach(category => {
-            // Create category buttons for each category in the JSON
-            let categoryButton = document.createElement("button");
-            categoryButton.classList = "category-button";
-            categoryButton.innerHTML = category.name;
-
-            categoryButton.onclick = () => {
-                document.getElementById('category-wrapper').remove();
-                document.getElementById('title').innerHTML = category.name;
-                currentCategory = category.name;
-                currentQuestions = questions[currentCategory];
-                numberOfQuestions = currentQuestions.length;
-                generateUserLogIn();
-            }
-            document.getElementById('category-wrapper').appendChild(categoryButton);
-        });
-}
-
-// Creates UI to get ID number and name of student
-function generateUserLogIn() {
-    document.getElementById("login-wrapper").style.display = "none";
-    let nameWrapper = document.createElement("div");
-    nameWrapper.setAttribute("id", "user-wrapper");
-    let referenceNode = document.getElementById("title-wrapper");
-    referenceNode.parentNode.insertBefore(nameWrapper, referenceNode.nextSibling);
-
-    let user = document.createElement("input");
-    user.setAttribute("id", "username");
-    user.setAttribute("type", "text");
-    user.setAttribute("name", "Enter your name");
-    user.setAttribute("placeholder", "Enter your name");
-
-    let idnum = document.createElement("input");
-    idnum.setAttribute("id", "idnum");
-    idnum.setAttribute("type", "number");
-    idnum.setAttribute("name", "Enter your ID number");
-    idnum.setAttribute("placeholder", "Enter your ID number");
-
-    let enter = document.createElement("button");
-    enter.setAttribute("id", "enter-button");
-    enter.setAttribute("disabled", "")
-    enter.innerHTML = "Start Quiz";
-
-    enter.disabled = true;
-    user.addEventListener('keyup', () => {
-        if(username.value && idnum.value){
-            enter.disabled = false;
-        }
-    });
-
-    idnum.addEventListener('keyup', () => {
-        if(username.value && idnum.value){
-            enter.disabled = false;
-        }
-    });
-
-    enter.addEventListener('click', () => {
-        currentName = username.value;
-        idNum = idnum.value;
-        let hasResponded = false;
-        // Check if student has response already
-        getResponses().forEach(response => {
-            if(response.idNumber == idNum && response.category == currentCategory) {
-                hasResponded = true;
-            }
-        });
-        // Display category picker
-        if (!hasResponded) {
-            document.getElementById('user-wrapper').remove();
-            startQuiz();
-        } else {
-            alert("You have already answered the quiz!");
-            resetQuiz();
-        }
-
-    })
-    nameWrapper.append(idnum);
-    nameWrapper.append(user);
-    nameWrapper.append(enter);
-}
-
-// Show the student all questions and start the quiz
+console.log(questionsList);
+startQuiz();
 function startQuiz() {
     showProgressBar();
     window.onbeforeunload = function () {
@@ -132,22 +26,6 @@ function startQuiz() {
     rotateProgressBar(0);
     showProgressBar();
     generateSubmitButton();
-}
-
-// Returns an array of random numbers from 0 to 'max'
-function generateNumberSequence(length, max) {
-    let numberSequence = [];
-    let newNum = Math.floor(Math.random() * max);
-    numberSequence.push(newNum);
-    let count = length - 1;
-    while (count > 0) {
-        newNum = Math.floor(Math.random() * max);
-        if (numberSequence.indexOf(newNum) == -1) {
-            numberSequence.push(newNum);
-            count--;
-        }
-    }
-    return numberSequence;
 }
 
 // Generate submit button and assign event listener
@@ -201,15 +79,6 @@ function submitQuiz() {
         alert("Your response has been submitted. Thank you for answering!")
         resetQuiz();
     }
-}
-
-function resetQuiz() {
-    currentQuestions = "";
-    sequence = [];
-    currentName = "";
-    currentCategory = "";
-    idNum="";
-    generateCategorySelector();
 }
 
 // Iterates through all questions and returns the number of answered questions
@@ -359,17 +228,4 @@ function showProgressBar() {
     circle.style.display = "";
 }
 
-function saveLocally(name, idNum, category, answers, sequence) {
-    let responses = getResponses();
-    let response = {
-        name: name,
-        idNumber: idNum,
-        category: category,
-        answers: answers,
-        sequence: sequence,
-        isChecked: false
-    }
-    responses.push(response);
-    storeResponses(responses);
-}
 

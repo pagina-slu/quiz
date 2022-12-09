@@ -1,11 +1,22 @@
-var currentQuestions = "";                 // List of questions
-var sequence;                       // List of question order
-var numberOfQuestions = 5;        // Number of questions to show
-var currentName;
-var currentCategory;
-var idNum;
+var buttons = document.getElementsByClassName("category-button");
+console.log(buttons);
+buttons.forEach(function(button) {
+    button.onclick = function() {
+        button.setAttribute("name","selected");
+    }
+});
 
-generateCategorySelector();
+
+
+
+// var currentQuestions = "";                 // List of questions
+// var sequence;                       // List of question order
+// var numberOfQuestions = 5;        // Number of questions to show
+// var currentName;
+// var currentCategory;
+// var idNum;
+
+//generateCategorySelector();
 
 
 // Functions
@@ -15,9 +26,9 @@ function generateCategorySelector() {
 
     categories.forEach(category => {
         // Create category buttons for each category in the JSON
-        let categoryButton = document.createElement("button");
-        categoryButton.classList = "category-button";
-        categoryButton.innerHTML = category.name;
+        // let categoryButton = document.createElement("button");
+        // categoryButton.classList = "category-button";
+        // categoryButton.innerHTML = category.name;
 
         categoryButton.onclick = () => {
             document.getElementById('category-wrapper').remove();
@@ -25,9 +36,7 @@ function generateCategorySelector() {
             currentCategory = category.name;
             currentQuestions = questions[currentCategory];
             numberOfQuestions = currentQuestions.length;
-            generateUserLogIn();
         }
-        document.getElementById('category-wrapper').appendChild(categoryButton);
     });
 }
 

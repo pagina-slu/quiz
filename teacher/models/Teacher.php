@@ -37,6 +37,22 @@ class Teacher
         }
     }
 
+    public function getResponseDetails($responseID)
+    {
+        $query = "SELECT * FROM response_details WHERE response_id = '".$responseID."'";
+        $result = $this->conn->query($query);
+        $responses = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $response = array();
+            $response['responseID'] = $row['response_id'];
+            $response['questionID'] = $row['question_id'];
+            $response['answer'] = $row['answer'];
+            array_push($responses, $response);
+        }
+        return $responses;
+    }
+
     public function createNewClass($data)
     {
         $query = $this->conn->prepare("INSERT INTO classes(class_code, class_description) VALUES (?, ?)");
@@ -187,21 +203,6 @@ class Teacher
         $result = $this->conn->query($query);
         $row = $result->fetch_assoc();
         return $row['points'];
-    }
-
-    public function getResponseDetails()
-    {
-        $query = "SELECT * FROM response_details";
-        $result = $this->conn->query($query);
-        $responses = array();
-        while ($row = $result->fetch_assoc()) {
-            $response = array();
-            $response['id'] = $row['response_id'];
-            $response['q_id'] = $row['question_id'];
-            $response['answer'] = $row['answer'];
-            array_push($responses, $response);
-        }
-        return $responses;
     }
 
     public function getAnswers($questionId)

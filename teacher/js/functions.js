@@ -37,6 +37,22 @@ async function getTests(classCode) {
     return tests;
 }
 
+async function getResponseDetails(responseID) {
+    let details = [];
+    await $.ajax(`processing/get_response_details.php?responseID=${responseID}`,
+        {
+            // url: `processing/get_response_details.php?responseID=${responseID}`,
+            // dataType: 'json',
+            // success: (t) => {
+            //     details = t;
+            // }
+            success: (q) => {
+                details = JSON.parse(q);
+            }
+        });
+    return details;
+}
+
 async function getClassDescription(classCode) {
     let classDescription = "";
     await $.ajax(

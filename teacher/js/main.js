@@ -2,10 +2,13 @@ $(document).ready(async () => {
     let currentTest = await getCurrentTest();
     console.log(currentTest);
     let totalPoints = await getTotalPoints(currentTest.testId);
+    let questions = await getQuestions(currentTest.testId);
+    console.log(questions);
     let mainDiv = document.getElementById('main');
     let questionsButton = document.getElementById('questions-button');
     let responsesButton = document.getElementById('responses-button');
     let schedulesButton = document.getElementById('schedules-button');
+    
 
     responsesButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
@@ -40,15 +43,15 @@ $(document).ready(async () => {
                 let content = "";
                 let counter = 1;
                 // Adds all questions and answers to content letiable
-                response.sequence.forEach(seq => {
-                    /*
+                responses.forEach(res => {
+                    
                     let answerIsCorrect = checkAnswer(response.answers[counter - 1], response.sequence[counter - 1], test.classDescription);
                     content += `${counter}. ` +
-                        "Question: " + questions[currentTest.classDescription][seq].question +
-                        "<br> Type: " + questions[currentTest.classDescription][seq].type +
+                        "Question: " + questions[counter-1].question +
+                        "<br> Type: " + questions[counter-1].type +
                         `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + response.answers[counter - 1] + `</span>${answerIsCorrect ? "" : `<br><span class="correct">Correct Answer(s): ${questions[test.classDescription][seq].answer}</span>`}<br><br>`;
                     counter++;
-                    */
+                    
                 });
                 setModalContent(currentTest.classDescription, content);
                 openModal();
@@ -120,7 +123,7 @@ $(document).ready(async () => {
         mainDiv.appendChild(container);
     });
 
-    questionsButton.addEventListener('click', async () => {
+    questionsButton.addEventListener('click', () => {
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
         let forms = [];
@@ -195,7 +198,6 @@ $(document).ready(async () => {
             })
         });
 
-        let questions = await getQuestions(currentTest.testId);
         questions.forEach(question => {
             let questionWrapper = createDiv('question-wrapper');
             let form = createQuestionForm(question, currentTest.testId);

@@ -183,6 +183,20 @@ class Teacher
         return $responses;
     }
 
+    public function getQuestionAnswers($questionID)
+    {
+        $query = "SELECT * FROM question_answers WHERE test_id = '" . $questionID . "'";
+        $result = $this->conn->query($query);
+        $answers = array();
+        while ($row = $result->fetch_assoc()) {
+            $answer = array();
+            $answer['question_id'] = $row['question_id'];
+            $answer['answer'] = $row['answer'];
+            array_push($responses, $response);
+        }
+        return $answers;
+    }
+
     public function getTotalPoints($testId)
     {
         $query = "SELECT SUM(points) AS points FROM questions where test_id ='" . $testId . "'";

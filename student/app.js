@@ -42,7 +42,7 @@ app.get('/', function (req, res) {
       }
       console.log('Connected to the MySQL server.');
       if (req.session.userid) {
-         res.redirect("category");
+         res.redirect("home");
       }
       res.render("login");
    })
@@ -68,13 +68,13 @@ app.post('/login', function (req, res) {
 
       if (req.session.userid) {
          // console.log("should send file");
-         res.redirect('/category');
+         res.redirect('/home');
       }
    }
 
 });
 
-app.get('/category', function (req, res) {
+app.get('/home', function (req, res) {
    if (req.session.userid) {
       let sql = "SELECT * from classes";
       connection.query(sql, (error, results) => {
@@ -86,7 +86,7 @@ app.get('/category', function (req, res) {
             classes[results[i].class_code] = results[i].class_description;
          }
          // console.log(classes);
-         res.render("category", { classes: classes });
+         res.render("home", { classes: classes });
       });
    } else {
       res.redirect("/");
@@ -159,6 +159,7 @@ app.post("/submit", (req, res) =>{
       let responseSQL = 'INSERT INTO `responses`(`response_id`, `test_id`, `student_id`, `is_checked`, `score`) VALUES (?,?,?,?,?)';
       let responseValues = [ responseId, req.session.testId, req.session.userid, false, 0];
       console.log(responseValues);
+
       connection.query(responseSQL, responseValues, (error, results) => {
          if (error) { return console.error(error.message); }
          console.log();
@@ -190,6 +191,7 @@ app.post("/submit", (req, res) =>{
       connection.query(detailsSQL, detailValues, (error, results) => {
          if (error) { return console.error(error.message); }
             console.log("Response saved");
+            res.render("submitted");
       })
    }
 

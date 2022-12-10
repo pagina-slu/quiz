@@ -41,9 +41,9 @@ html
             startQuiz();
             function startQuiz() {
                 showProgressBar();
-                window.onbeforeunload = function () {
-                    return "Your progress would be lost";
-                }
+                //- window.onbeforeunload = function () {
+                //-     return "Your progress would be lost";
+                //- }
 
                 let quizWrapper = document.getElementById("quiz-wrapper");
                 for (let i = 0; i < questions.length; i++) {

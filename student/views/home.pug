@@ -9,13 +9,13 @@ html
         // Category selector
     body
         main#main
-        #title-wrapper
-            span#title Select a subject
-        #category-wrapper
-            each value, key in classes
-                form(action='/test/'+key method='post')
-                    input(type='submit' class='category-button' name="selected" value=value)
-            
+            #title-wrapper
+                span#title Select a subject
+            #category-wrapper
+                each value, key in classes
+                    form(action='/test/'+key method='post')
+                        input(type='submit' class='category-button' name="selected" value=value)
+                
         // footer
         footer
             p p&agrave;gina &copy; 2022

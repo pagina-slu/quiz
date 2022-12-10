@@ -28,6 +28,7 @@ app.use(session({
 
 let connection;
 let classes = {};
+
 app.get('/', function (req, res) {
    connection = mysql.createConnection({
       host: 'localhost',
@@ -63,7 +64,7 @@ app.post('/login', function (req, res) {
 
    function setUser(value) {
       req.session.userid = value;
-      // console.log(req.session.userid);
+      console.log("User Connected: " + req.session.userid);
 
       if (req.session.userid) {
          // console.log("should send file");
@@ -114,7 +115,7 @@ app.post("/test/:code", function (req, res) {
 app.post("/quiz/:code", (req, res) => {
    if (req.session.userid) {
       var testId = req.params.code;
-
+      req.session.testId = testId;
       let sql = "SELECT * FROM questions where test_id=?";
 
       connection.query(sql, [testId], (error, results) => {
@@ -141,6 +142,7 @@ app.post("/quiz/:code", (req, res) => {
                question.question_choices = results;
                queryCounter ++;
                if(queryCounter == multipleChoiceCounter){
+                  req.session.questions = r;
                   res.render("quiz", { questions: r});
                }
             });
@@ -149,6 +151,49 @@ app.post("/quiz/:code", (req, res) => {
    }
 })
 
+app.post("/submit", (req, res) =>{
+   if (req.session.userid) {
+      let timestamp = Date.now();
+      let responseId = req.session.userid + req.session.testId + timestamp;
+      console.log("response ID: " + typeof responseId);
+      let responseSQL = 'INSERT INTO `responses`(`response_id`, `test_id`, `student_id`, `is_checked`, `score`) VALUES (?,?,?,?,?)';
+      let responseValues = [ responseId, req.session.testId, req.session.userid, false, 0];
+      console.log(responseValues);
+      connection.query(responseSQL, responseValues, (error, results) => {
+         if (error) { return console.error(error.message); }
+         console.log();
+         insertResponseDetails(responseId);
+      })
+      let i = 0;
+      console.log(eval("req.body.q"+i));
+      console.log(req.body.q1);
+   } else {
+      res.redirect("/");
+   }
+
+
+
+
+   function insertResponseDetails(responseId){
+      let detailsSQL = 'INSERT INTO response_details(response_id, question_id, answer) VALUES ?';
+      let detailValues = [[]];
+      for(var i = 0; i< req.session.questions.length; i++){
+         let response = [];
+         response.push(responseId);
+         response.push(req.session.questions[i].question_id);
+         response.push(eval("req.body.q"+i));
+         console.log("response: " + response);
+         detailValues[0].push(response);
+         // req.body.q0
+      }
+
+      connection.query(detailsSQL, detailValues, (error, results) => {
+         if (error) { return console.error(error.message); }
+            console.log("Response saved");
+      })
+   }
+
+})
 // // Sample query
 // let sql = `SELECT * FROM accounts`;
 

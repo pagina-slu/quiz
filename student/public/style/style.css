@@ -262,6 +262,7 @@ input::-webkit-inner-spin-button {
 }
 
 #submit-button{
+  margin: 2rem;
   border-color: transparent;
   border-radius: 10px;
   cursor: pointer;

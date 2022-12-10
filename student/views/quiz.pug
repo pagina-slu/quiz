@@ -9,8 +9,12 @@ html
     body
         // Category selector
         main#main
-            div#quiz-wrapper
-            div#submit-wrapper
+            form(action='/submit' method='post')
+                div#quiz-wrapper
+                input(type='submit' id='submit-button' value="Submit")
+            //- div#submit-wrapper
+                
+            
             //- p=questions
         // Progress bar
         #progress-circle
@@ -23,6 +27,16 @@ html
             p p&agrave;gina &copy; 2022
         //- script(src='../js/quiz.js')
         script.
+               // Generate submit button and assign event listener
+            //- function generateSubmitButton() {
+            //-     let submitWrapper = document.getElementById("submit-wrapper");
+            //-     let submitButton = document.createElement("button");
+            //-     submitButton.setAttribute("id", "submit-button");
+            //-     submitButton.innerHTML = "Submit";
+            //-     submitButton.addEventListener("click", submitQuiz);
+            //-     submitWrapper.appendChild(submitButton);
+            //- }
+
             let questions= !{JSON.stringify(questions)};
             startQuiz();
             function startQuiz() {
@@ -47,19 +61,9 @@ html
                 }
                 rotateProgressBar(0);
                 showProgressBar();
-                generateSubmitButton();
             }
 
-            // Generate submit button and assign event listener
-            function generateSubmitButton() {
-                let submitWrapper = document.getElementById("submit-wrapper");
-                let submitButton = document.createElement("button");
-                submitButton.setAttribute("id", "submit-button");
-                submitButton.innerHTML = "Submit";
-                submitButton.addEventListener("click", submitQuiz);
-                submitWrapper.appendChild(submitButton);
-            }
-
+     
             // Stores response locally if all questions are answered
             function submitQuiz() {
                 let answerWrapper = document.querySelectorAll(".input-wrapper");
@@ -76,8 +80,8 @@ html
                         }
 
                     } else if (answerWrapper[index].firstChild.classList.contains("multiple-choice")) {
-                        if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                            answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
+                        if (answerWrapper[index].querySelector("input[name='q" + (index) + "']:checked")) {
+                            answer = answerWrapper[index].querySelector("input[name='q" + (index) + "']:checked").value;
                         }
                         else {
                             answeredAll = false;
@@ -85,8 +89,8 @@ html
                             break;
                         }
                     } else if (answerWrapper[index].firstChild.classList.contains("true-false")) {
-                        if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
-                            answer = answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked").value;
+                        if (answerWrapper[index].querySelector("input[name='q" + (index) + "']:checked")) {
+                            answer = answerWrapper[index].querySelector("input[name='q" + (index) + "']:checked").value;
                         }
                         else {
                             answeredAll = false;
@@ -97,6 +101,7 @@ html
                     answers.push(answer);
                 }
                 if (answeredAll) {
+
                     //- saveLocally(currentName, idNum, currentCategory, answers, questionsce);
                     alert("Your response has been submitted. Thank you for answering!")
                     resetQuiz();
@@ -116,11 +121,11 @@ html
                             answerCount++;
                         }
                     } else if (type.contains("multiple-choice")) {
-                        if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                        if (answerWrapper[index].querySelector("input[name='q" + (index) + "']:checked")) {
                             answerCount++;
                         }
                     } else if (type.contains("true-false")) {
-                        if (answerWrapper[index].querySelector("input[name='q" + (index + 1) + "']:checked")) {
+                        if (answerWrapper[index].querySelector("input[name='q" + (index) + "']:checked")) {
                             answerCount++;
                         }
                     }
@@ -147,7 +152,7 @@ html
                     let inputDiv = document.createElement("div");
                     inputDiv.classList.add('multiple-choice');
                     inputDiv.classList.add('input');
-                    let radioButton = generateRadioButton(`q${index + 1}`, data.question_choices[i].choice);
+                    let radioButton = generateRadioButton(`q${index}`, data.question_choices[i].choice);
                     inputDiv.appendChild(radioButton);
                     inputDiv.appendChild(generateLabelForRadioButton(data.question_choices[i].choice));
                     inputDiv.addEventListener('click', () => {
@@ -175,6 +180,7 @@ html
                 inputDiv.classList.add('identification');
                 let input = document.createElement('input');
                 input.type = "text";
+                input.name = "q"+index;
                 input.addEventListener("input", () => {
                     rotateProgressBar(countAnsweredQuestions());
                 });
@@ -200,7 +206,7 @@ html
                     let inputDiv = document.createElement("div");
                     inputDiv.classList.add('true-false');
                     inputDiv.classList.add('input');
-                    let radioButton = generateRadioButton(`q${index + 1}`, options[i]);
+                    let radioButton = generateRadioButton(`q${index}`, options[i]);
                     inputDiv.appendChild(radioButton);
                     inputDiv.appendChild(generateLabelForRadioButton(options[i]));
                     inputDiv.addEventListener('click', () => {

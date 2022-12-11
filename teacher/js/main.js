@@ -128,7 +128,8 @@ $(document).ready(async () => {
         mainDiv.appendChild(container);
     });
 
-    questionsButton.addEventListener('click', () => {
+    questionsButton.addEventListener('click', async () => {
+        questions = await getQuestions(currentTest.testId);
         removeAllChildNodes(mainDiv);
         let container = createDiv('container');
         let forms = [];
@@ -185,13 +186,15 @@ $(document).ready(async () => {
                     if (willDelete) {
                         deleteQuestion(questionId);
                     } else {
+                        console.log(form.serialize());
                         // Update question
                         $.ajax({
                             type: 'POST',
                             url: 'processing/update_question.php',
                             data: form.serialize(),
                             dataType: 'text',
-                            success: () => {
+                            success: (r) => {
+                                //console.log(r);
                                 console.log("Updated question.");
                             }
                         });

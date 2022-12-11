@@ -4,7 +4,7 @@ html
         meta(charset='UTF-8')
         meta(http-equiv='X-UA-Compatible' content='IE=edge')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
-        link(rel='stylesheet' href='style/loginstyle.css')
+        link(rel='stylesheet' href='style/style.css')
         title p&agrave;gina quiz
     body
         #login-wrapper
@@ -17,6 +17,8 @@ html
                     .input
                         label(for='upass') Password:
                         input#upass.password(type='password' name='upass')
+                    if message
+                        p #{message}
                     input#login-btn(type='submit' value='Log in')
         // footer
         footer

@@ -4,6 +4,7 @@ const mysql = require('mysql');               //to connect to database
 const session = require('express-session');    //for session handling
 const bodyParser = require('body-parser');     //to get the body of html request
 const path = require('path');                     //to work with paths
+
 const { resolve } = require('path');
 const { get } = require('http');
 // const cookieParser = require("cookie-parser");
@@ -26,55 +27,68 @@ app.use(session({
    resave: false
 }));
 
-let connection;
+let connection = mysql.createConnection({
+   host: 'localhost',
+   user: 'root',
+   password: 'root',
+   database: 'pagina'
+});
+connection.connect(function (err) {
+   if (err) {
+      return console.error('error: ' + err.message);
+   }
+   console.log('Connected to the MySQL server.');
+});
 let classes = {};
 
 app.get('/', function (req, res) {
-   connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: 'root',
-      database: 'pagina'
-   });
-   connection.connect(function (err) {
-      if (err) {
-         return console.error('error: ' + err.message);
-      }
-      console.log('Connected to the MySQL server.');
-      if (req.session.userid) {
-         res.redirect("home");
-      }
+   if (req.session.userid) {
+      res.redirect("/home");
+   } else {
       res.render("login");
-   })
-
+   }
 });
 
-app.post('/login', function (req, res) {
-   var username = req.body.uname;
-   var password = req.body.upass;
-   console.log("Username; " + username);
-   let sql = `SELECT username FROM accounts WHERE username = ? AND password = ?`;
 
-   connection.query(sql, [username, password], (error, results) => {
-      if (error) {
-         return console.error(error.message);
-      }
-      setUser(results[0].username);
-   });
+app.post('/login', function (req, res) {
+   try {
+      let username = req.body.uname;
+      let password = req.body.upass;
+      let sql = `SELECT username FROM accounts WHERE username = ? AND password = ?`;
+
+      connection.query(sql, [username, password], (error, results) => {
+         if (error) {
+            return console.error(error.message);
+         }
+         try {
+            setUser(results[0].username);
+         } catch (e) {
+            res.render('login', {message: "Invalid Credentials"});
+         }
+      });
+   } catch (err) {
+      res.redirect('/');
+   }
+
 
    function setUser(value) {
-      req.session.userid = value;
-      console.log("User Connected: " + req.session.userid);
+      if (value && value.length > 0) {
+         req.session.userid = value;
+         console.log("User Connected: " + req.session.userid);
+         // req.flash('success', 'Data added successfully!')
 
-      if (req.session.userid) {
-         // console.log("should send file");
-         res.redirect('/home');
+         if (req.session.userid) {
+            // console.log("should send file");
+            res.redirect('/home');
+         }
+      } else {
+         res.redirect('/');
       }
    }
 
 });
 
-app.get("/logout", (req,res)=>{
+app.get("/logout", (req, res) => {
    req.session.destroy();
    res.redirect("/");
 })
@@ -92,19 +106,19 @@ app.get('/home', function (req, res) {
          }
          // console.log(classes);
          getStudentName();
-         
+
       });
    } else {
       res.redirect("/");
    }
 
-   function getStudentName(){
+   function getStudentName() {
       let sql = "SELECT * from students WHERE student_id = ?";
       connection.query(sql, [req.session.userid], (error, results) => {
          if (error) {
             return console.error(error.message);
          }
-         res.render("home", { classes: classes, username: results[0].first_name});
+         res.render("home", { classes: classes, username: results[0].first_name });
       })
    }
 })
@@ -126,13 +140,13 @@ app.post("/test/:code", function (req, res) {
       res.redirect("/");
    }
 
-   function getStudentName(r){
+   function getStudentName(r) {
       let sql = "SELECT * from students WHERE student_id = ?";
       connection.query(sql, [req.session.userid], (error, results) => {
          if (error) {
             return console.error(error.message);
          }
-         res.render("test", { username: results[0].first_name, code: classCode, subject: classes[classCode].toString(), tests: r});
+         res.render("test", { username: results[0].first_name, code: classCode, subject: classes[classCode].toString(), tests: r });
       })
    }
 })
@@ -145,7 +159,7 @@ app.post("/quiz/:code", (req, res) => {
 
       connection.query(sql, [testId], (error, results) => {
          if (error) { return console.error(error.message); }
-         getQuestions(results); 
+         getQuestions(results);
       })
 
    } else {
@@ -159,16 +173,16 @@ app.post("/quiz/:code", (req, res) => {
       let queryCounter = 0;
       r.forEach((question) => {
          if (question.question_type == 'multiple-choice') {
-            multipleChoiceCounter ++;
+            multipleChoiceCounter++;
             connection.query(sql, [question.question_id], (error, results) => {
                if (error) {
                   return console.error(error.message);
                }
                question.question_choices = results;
-               queryCounter ++;
-               if(queryCounter == multipleChoiceCounter){
+               queryCounter++;
+               if (queryCounter == multipleChoiceCounter) {
                   req.session.questions = r;
-                  res.render("quiz", { questions: r});
+                  res.render("quiz", { questions: r });
                }
             });
          }
@@ -176,13 +190,13 @@ app.post("/quiz/:code", (req, res) => {
    }
 })
 
-app.post("/submit", (req, res) =>{
+app.post("/submit", (req, res) => {
    if (req.session.userid) {
       let timestamp = Date.now();
       let responseId = req.session.userid + req.session.testId + timestamp;
       console.log("response ID: " + typeof responseId);
       let responseSQL = 'INSERT INTO `responses`(`response_id`, `test_id`, `student_id`, `is_checked`, `score`) VALUES (?,?,?,?,?)';
-      let responseValues = [ responseId, req.session.testId, req.session.userid, false, 0];
+      let responseValues = [responseId, req.session.testId, req.session.userid, false, 0];
       console.log(responseValues);
 
       connection.query(responseSQL, responseValues, (error, results) => {
@@ -191,20 +205,20 @@ app.post("/submit", (req, res) =>{
          insertResponseDetails(responseId);
       })
       let i = 0;
-      console.log(eval("req.body.q"+i));
+      console.log(eval("req.body.q" + i));
       console.log(req.body.q1);
    } else {
       res.redirect("/");
    }
 
-   function insertResponseDetails(responseId){
+   function insertResponseDetails(responseId) {
       let detailsSQL = 'INSERT INTO response_details(response_id, question_id, answer) VALUES ?';
       let detailValues = [[]];
-      for(var i = 0; i< req.session.questions.length; i++){
+      for (var i = 0; i < req.session.questions.length; i++) {
          let response = [];
          response.push(responseId);
          response.push(req.session.questions[i].question_id);
-         response.push(eval("req.body.q"+i));
+         response.push(eval("req.body.q" + i));
          console.log("response: " + response);
          detailValues[0].push(response);
          // req.body.q0
@@ -212,8 +226,8 @@ app.post("/submit", (req, res) =>{
 
       connection.query(detailsSQL, detailValues, (error, results) => {
          if (error) { return console.error(error.message); }
-            console.log("Response saved");
-            res.render("submitted");
+         console.log("Response saved");
+         res.render("submitted");
       })
    }
 

@@ -156,20 +156,30 @@ app.post("/test/:code", function (req, res) {
 
 app.post("/quiz/:code", (req, res) => {
    if (req.session.userid) {
-      var testId = req.params.code;
-      req.session.testId = testId;
-      let sql = "SELECT * FROM questions LEFT JOIN tests ON questions.test_id = tests.test_id WHERE questions.test_id=?;";
-
-      connection.query(sql, [testId], (error, results) => {
+      req.session.testId = req.params.code;
+      let sql = "SELECT * FROM responses WHERE test_id = ? and student_id = ?"
+      connection.query(sql, [req.session.testId, req.session.userid], (error, results) => {
          if (error) { return console.error(error.message); }
-         testStack.push(results[0].test_name);
-         getQuestions(results);
+         if(results<1){
+            takeQuiz();
+         } else{
+            res.redirect("/home");
+         }
       })
+
+      
 
    } else {
       res.redirect("/");
    }
-
+   function takeQuiz(){
+      let sql = "SELECT * FROM questions LEFT JOIN tests ON questions.test_id = tests.test_id WHERE questions.test_id=?;";
+      connection.query(sql, [req.session.testId], (error, results) => {
+         if (error) { return console.error(error.message); }
+         testStack.push(results[0].test_name);
+         getQuestions(results);
+      })
+   }
    function getQuestions(results) {
       let sql = "SELECT * FROM question_choices WHERE question_id=?"
       let r = results;

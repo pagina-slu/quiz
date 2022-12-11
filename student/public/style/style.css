@@ -77,7 +77,14 @@ main {
 #enter-button[disabled]:hover {
   cursor: not-allowed;
 }
-
+#header-wrapper{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
 
 #title-wrapper {
   align-items: center;
@@ -87,7 +94,7 @@ main {
   height: 10rem;
   justify-content: center;
   margin-bottom: 2rem;
-  margin-top: 15rem;
+  margin-top: 5rem;
   padding: 1.5rem;
   text-align: left;  
   width: 100%;
@@ -379,3 +386,40 @@ footer p {
   cursor: default;
   font-size: 1.4rem;
 }
+
+.notification{
+  background-color: #555;
+  border-style: solid;
+  border-color: #000000;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.logout-button {
+  background-color: #555;
+  color: white;
+  text-decoration: none;
+  padding: 13px 20px;
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+}
+.notification:hover, .logout-button:hover{
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+
+

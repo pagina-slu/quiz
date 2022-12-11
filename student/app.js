@@ -74,6 +74,11 @@ app.post('/login', function (req, res) {
 
 });
 
+app.get("/logout", (req,res)=>{
+   req.session.destroy();
+   res.redirect("/");
+})
+
 app.get('/home', function (req, res) {
    if (req.session.userid) {
       let sql = "SELECT * from classes";
@@ -86,13 +91,24 @@ app.get('/home', function (req, res) {
             classes[results[i].class_code] = results[i].class_description;
          }
          // console.log(classes);
-         res.render("home", { classes: classes });
+         getStudentName();
+         
       });
    } else {
       res.redirect("/");
    }
 
+   function getStudentName(){
+      let sql = "SELECT * from students WHERE student_id = ?";
+      connection.query(sql, [req.session.userid], (error, results) => {
+         if (error) {
+            return console.error(error.message);
+         }
+         res.render("home", { classes: classes, username: results[0].first_name});
+      })
+   }
 })
+
 
 app.post("/test/:code", function (req, res) {
    if (req.session.userid) {
@@ -104,11 +120,20 @@ app.post("/test/:code", function (req, res) {
          if (error) {
             return console.error(error.message);
          }
-         res.render("test", { code: classCode, subject: classes[classCode].toString(), tests: results });
-
+         getStudentName(results);
       })
    } else {
       res.redirect("/");
+   }
+
+   function getStudentName(r){
+      let sql = "SELECT * from students WHERE student_id = ?";
+      connection.query(sql, [req.session.userid], (error, results) => {
+         if (error) {
+            return console.error(error.message);
+         }
+         res.render("test", { username: results[0].first_name, code: classCode, subject: classes[classCode].toString(), tests: r});
+      })
    }
 })
 
@@ -171,9 +196,6 @@ app.post("/submit", (req, res) =>{
    } else {
       res.redirect("/");
    }
-
-
-
 
    function insertResponseDetails(responseId){
       let detailsSQL = 'INSERT INTO response_details(response_id, question_id, answer) VALUES ?';

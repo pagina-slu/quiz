@@ -9,6 +9,13 @@ html
         // Category selector
     body
         main#main
+            #header-wrapper
+                h1 Hi, #{username}
+                div.notification
+                    span Inbox
+                    span.badge 3
+                form(action='/logout' method='get')
+                    input(type='submit' class='logout-button' value="logout")
             #title-wrapper
                 span#title=code+subject
             #category-wrapper

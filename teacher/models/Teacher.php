@@ -292,10 +292,11 @@ class Teacher
             
             // Add choices
             foreach($question['choices'] as &$choice) {
-                $addQuery = "INSERT INTO question_choices(question_id, choice) VALUES ( ". $questionId . ", " . $choice . ")";
-                $this->conn->query($addQuery);
+                $addQuery = $this->conn->prepare("INSERT INTO question_choices(question_id, choice) VALUES ( ?, ?)");
+                $addQuery->bind_param("is", $questionId, $choice);
+                $addQuery->execute();
             }
-        } else if ($currentQuestionType != "multiple-choice" && $question['question-type'] != "multiple-choice") {
+        } else if ($currentQuestionType != "multiple-choice" && $question['question-type'] == "multiple-choice") {
             // Add choices
             foreach($question['choices'] as &$choice) {
                 $addQuery = "INSERT INTO question_choices(question_id, choice) VALUES ( ". $questionId . ", " . $choice . ")";

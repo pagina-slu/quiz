@@ -17,7 +17,7 @@ html
                 form(action='/logout' method='get')
                     input(type='submit' class='logout-button' value="logout")
             #title-wrapper
-                span#title Select a subject
+                span#title Classrooms
             #category-wrapper
                 each value, key in classes
                     form(action='/test/'+key method='post')

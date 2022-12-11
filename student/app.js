@@ -20,6 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const oneDay = 1000 * 60 * 60 * 24;
+
+let classes = {};       //hold the list of classes
+let testStack =[];              //hold the value of current test
 app.use(session({
    secret: "thisismysecrctekey",
    saveUninitialized: true,
@@ -39,7 +42,7 @@ connection.connect(function (err) {
    }
    console.log('Connected to the MySQL server.');
 });
-let classes = {};
+
 
 app.get('/', function (req, res) {
    if (req.session.userid) {
@@ -128,7 +131,7 @@ app.post("/test/:code", function (req, res) {
    if (req.session.userid) {
 
       var classCode = req.params.code;
-
+      testStack.push(classes[classCode].toString());
       let sql = "SELECT * FROM tests where class_code=?";
       connection.query(sql, [classCode], (error, results) => {
          if (error) {
@@ -155,10 +158,11 @@ app.post("/quiz/:code", (req, res) => {
    if (req.session.userid) {
       var testId = req.params.code;
       req.session.testId = testId;
-      let sql = "SELECT * FROM questions where test_id=?";
+      let sql = "SELECT * FROM questions LEFT JOIN tests ON questions.test_id = tests.test_id WHERE questions.test_id=?;";
 
       connection.query(sql, [testId], (error, results) => {
          if (error) { return console.error(error.message); }
+         testStack.push(results[0].test_name);
          getQuestions(results);
       })
 
@@ -182,7 +186,7 @@ app.post("/quiz/:code", (req, res) => {
                queryCounter++;
                if (queryCounter == multipleChoiceCounter) {
                   req.session.questions = r;
-                  res.render("quiz", { questions: r });
+                  res.render("quiz", { questions: r , subject: testStack[0], test: testStack[1]});
                }
             });
          }
@@ -192,6 +196,7 @@ app.post("/quiz/:code", (req, res) => {
 
 app.post("/submit", (req, res) => {
    if (req.session.userid) {
+      testStack = [];
       let timestamp = Date.now();
       let responseId = req.session.userid + req.session.testId + timestamp;
       console.log("response ID: " + typeof responseId);

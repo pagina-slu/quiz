@@ -9,6 +9,9 @@ html
     body
         // Category selector
         main#main
+            #title-wrapper
+                span#title #{subject}
+                p #{test}
             form(action='/submit' method='post')
                 div#quiz-wrapper
                 input(type='submit' id='submit-button' value="Submit")

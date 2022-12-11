@@ -205,6 +205,7 @@ main {
   background-color:#86c232;
   color: white;
   display: flex;
+  flex-direction: column;
   height: 10rem;
   justify-content: center;
   margin-bottom: 2rem;
@@ -212,6 +213,9 @@ main {
   padding: 1.5rem;
   text-align: left;  
   width: 100%;
+}
+#title-wrapper p{
+  font-size: 2rem;
 }
 
 #title {

@@ -388,6 +388,7 @@ function createQuestionForm(question, testId) {
         form.appendChild(columnWrapper);
     } else if (questionType.value == 'identification') {
         answers = document.createElement('input');
+        answers.setAttribute('type', 'text');
         answers.setAttribute('name', 'answer');
         answers.value = question.answer[0];
 

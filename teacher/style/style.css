@@ -257,6 +257,25 @@ form .wrapper {
   flex-direction: column;
 }
 
+form input[type=text], form input[name="answer"], form input[type="number"] {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+}
+
+form input[type=text]:focus {
+  border-color: #86c232;
+}
+
+form input[type=number] {
+  width: 75px;
+}
+
+form select {
+  padding: 0.5rem 1rem;
+}
+
 .row {
   flex-direction: row !important;
 }
@@ -272,4 +291,10 @@ form .wrapper {
 .delete-button {
   cursor: pointer;
   width: 25px;
+}
+
+@media (max-width: 1200px) {
+  main {
+    width: 80%;
+  }
 }

@@ -192,7 +192,7 @@ class Teacher
             $answer = array();
             $answer['question_id'] = $row['question_id'];
             $answer['answer'] = $row['answer'];
-            array_push($responses, $response);
+            array_push($answers, $answer);
         }
         return $answers;
     }
@@ -230,7 +230,7 @@ class Teacher
 
     public function getAllStudents(){
         $query = "SELECT * FROM students";
-        $result = $conn->query($query);
+        $result = $this->conn->query($query);
         $students = array();
         while ($row = $result->fetch_assoc()){
             $student = array();

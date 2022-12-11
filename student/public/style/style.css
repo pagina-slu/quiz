@@ -270,7 +270,21 @@ h1 {
   padding: 3rem 0 3rem 3rem;
 }
 
+.label-wrapper{
+  display: flex;
+  width: 100%;
+}
+
+.points{
+  /* display: block; */
+  font-size: 1.2rem;
+  color:#86c232;
+  width: 10%;
+  /* color: white; */
+}
+
 .question {
+  width: 90%;
   font-family: 'Helvetica Neue', sans-serif; 
   font-size: 2rem;
 
@@ -543,5 +557,4 @@ footer p {
   background: red;
   color: white;
 }
-
 

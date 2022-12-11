@@ -66,6 +66,124 @@ html
                 showProgressBar();
             }
 
+
+            function generateQuestionLabel(data, index) {
+                let labelWrapper = document.createElement("div");
+                labelWrapper.classList.add('label-wrapper');
+
+                let label = document.createElement("div");
+                label.className = "question";
+                label.innerHTML = `${index + 1}. ${data.question}`;
+
+                let points = document.createElement("div");
+                points.className = 'points';
+                points.innerHTML = `${data.points} pts`;
+
+                console.log(data.points);
+
+                labelWrapper.appendChild(label);
+                labelWrapper.appendChild(points);
+                return labelWrapper;
+                
+            }
+
+            // Returns a div containing a multiple choice question
+            function multipleChoice(data, index) {
+                let questionWrapper = document.createElement("div");
+                questionWrapper.classList.add('question-wrapper');
+                let label = generateQuestionLabel(data, index);
+                let inputWrapper = document.createElement("div");
+                inputWrapper.classList.add('input-wrapper');
+
+                for (let i = 0; i < data.question_choices.length; i++) {
+                    let inputDiv = document.createElement("div");
+                    inputDiv.classList.add('multiple-choice');
+                    inputDiv.classList.add('input');
+                    let radioButton = generateRadioButton(`q${index}`, data.question_choices[i].choice);
+                    inputDiv.appendChild(radioButton);
+                    inputDiv.appendChild(generateLabelForRadioButton(data.question_choices[i].choice));
+                    inputDiv.addEventListener('click', () => {
+                        radioButton.checked = true;
+                        rotateProgressBar(countAnsweredQuestions());
+                    })
+                    inputWrapper.appendChild(inputDiv);
+                }
+
+                questionWrapper.appendChild(label);
+                questionWrapper.appendChild(inputWrapper);
+                return questionWrapper;
+            }
+
+            // Returns a div containing an identification question
+            function identification(data, index) {
+                let questionWrapper = document.createElement("div");
+                questionWrapper.classList.add('question-wrapper');
+                let label = generateQuestionLabel(data, index);
+                let inputWrapper = document.createElement("div");
+                inputWrapper.classList.add('input-wrapper');
+                let inputDiv = document.createElement("div");
+                inputDiv.classList.add('identification');
+                let input = document.createElement('input');
+                input.type = "text";
+                input.name = "q"+index;
+                input.addEventListener("input", () => {
+                    rotateProgressBar(countAnsweredQuestions());
+                });
+
+                inputDiv.appendChild(input);
+                inputWrapper.appendChild(inputDiv);
+
+                questionWrapper.appendChild(label);
+                questionWrapper.appendChild(inputWrapper);
+                return questionWrapper;
+            }
+
+            // Returns a div containing a true or false question
+            function trueOrFalse(data, index) {
+                let questionWrapper = document.createElement("div");
+                questionWrapper.classList.add('question-wrapper');
+
+                let label = generateQuestionLabel(data, index);
+                let inputWrapper = document.createElement("div");
+                inputWrapper.classList.add('input-wrapper');
+                const options = ["True", "False"];
+                for (let i = 0; i < options.length; i++) {
+                    let inputDiv = document.createElement("div");
+                    inputDiv.classList.add('true-false');
+                    inputDiv.classList.add('input');
+                    let radioButton = generateRadioButton(`q${index}`, options[i]);
+                    inputDiv.appendChild(radioButton);
+                    inputDiv.appendChild(generateLabelForRadioButton(options[i]));
+                    inputDiv.addEventListener('click', () => {
+                        radioButton.checked = true;
+                        rotateProgressBar(countAnsweredQuestions());
+                    })
+                    inputWrapper.appendChild(inputDiv);
+                }
+
+                questionWrapper.appendChild(label);
+                questionWrapper.appendChild(inputWrapper);
+                return questionWrapper;
+            }
+
+            function generateLabelForRadioButton(value) {
+                let label = document.createElement("label");
+                label.innerHTML = value;
+                return label;
+            }
+
+            function generateRadioButton(name, value) {
+                let input = document.createElement("input");
+                input.type = "radio";
+                input.name = name;
+                input.value = value;
+                input.addEventListener("click", () => {
+                    rotateProgressBar(countAnsweredQuestions());
+                });
+                return input;
+            }
+
+            
      
             // Stores response locally if all questions are answered
             function submitQuiz() {
@@ -135,112 +253,6 @@ html
                 }
                 return answerCount;
             }
-
-            function generateQuestionLabel(question, index) {
-                let label = document.createElement("label");
-                label.className = "question";
-                label.innerHTML = `${index + 1}. ${question}`;
-                return label;
-            }
-
-            // Returns a div containing a multiple choice question
-            function multipleChoice(data, index) {
-                let questionWrapper = document.createElement("div");
-                questionWrapper.classList.add('question-wrapper');
-                let label = generateQuestionLabel(data.question, index);
-                let inputWrapper = document.createElement("div");
-                inputWrapper.classList.add('input-wrapper');
-
-                for (let i = 0; i < data.question_choices.length; i++) {
-                    let inputDiv = document.createElement("div");
-                    inputDiv.classList.add('multiple-choice');
-                    inputDiv.classList.add('input');
-                    let radioButton = generateRadioButton(`q${index}`, data.question_choices[i].choice);
-                    inputDiv.appendChild(radioButton);
-                    inputDiv.appendChild(generateLabelForRadioButton(data.question_choices[i].choice));
-                    inputDiv.addEventListener('click', () => {
-                        radioButton.checked = true;
-                        rotateProgressBar(countAnsweredQuestions());
-                    })
-                    inputWrapper.appendChild(inputDiv);
-                }
-
-                questionWrapper.appendChild(label);
-                questionWrapper.appendChild(inputWrapper);
-                return questionWrapper;
-            }
-
-            // Returns a div containing an identification question
-            function identification(data, index) {
-                let questionWrapper = document.createElement("div");
-                questionWrapper.classList.add('question-wrapper');
-
-                let label = generateQuestionLabel(data.question, index);
-                let inputWrapper = document.createElement("div");
-                inputWrapper.classList.add('input-wrapper');
-
-                let inputDiv = document.createElement("div");
-                inputDiv.classList.add('identification');
-                let input = document.createElement('input');
-                input.type = "text";
-                input.name = "q"+index;
-                input.addEventListener("input", () => {
-                    rotateProgressBar(countAnsweredQuestions());
-                });
-
-                inputDiv.appendChild(input);
-                inputWrapper.appendChild(inputDiv);
-
-                questionWrapper.appendChild(label);
-                questionWrapper.appendChild(inputWrapper);
-                return questionWrapper;
-            }
-
-            // Returns a div containing a true or false question
-            function trueOrFalse(data, index) {
-                let questionWrapper = document.createElement("div");
-                questionWrapper.classList.add('question-wrapper');
-
-                let label = generateQuestionLabel(data.question, index);
-                let inputWrapper = document.createElement("div");
-                inputWrapper.classList.add('input-wrapper');
-                const options = ["True", "False"];
-                for (let i = 0; i < options.length; i++) {
-                    let inputDiv = document.createElement("div");
-                    inputDiv.classList.add('true-false');
-                    inputDiv.classList.add('input');
-                    let radioButton = generateRadioButton(`q${index}`, options[i]);
-                    inputDiv.appendChild(radioButton);
-                    inputDiv.appendChild(generateLabelForRadioButton(options[i]));
-                    inputDiv.addEventListener('click', () => {
-                        radioButton.checked = true;
-                        rotateProgressBar(countAnsweredQuestions());
-                    })
-                    inputWrapper.appendChild(inputDiv);
-                }
-
-                questionWrapper.appendChild(label);
-                questionWrapper.appendChild(inputWrapper);
-                return questionWrapper;
-            }
-
-            function generateLabelForRadioButton(value) {
-                let label = document.createElement("label");
-                label.innerHTML = value;
-                return label;
-            }
-
-            function generateRadioButton(name, value) {
-                let input = document.createElement("input");
-                input.type = "radio";
-                input.name = name;
-                input.value = value;
-                input.addEventListener("click", () => {
-                    rotateProgressBar(countAnsweredQuestions());
-                });
-                return input;
-            }
-
             function rotateProgressBar(numOfAnswers) {
                 const circle = document.getElementById('progress-circle');
                 const bar = document.getElementById('value-bar');

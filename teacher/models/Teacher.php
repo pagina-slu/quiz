@@ -269,23 +269,49 @@ class Teacher
     // Update
     public function updateQuestion($question)
     {
-        $query = "SELECT question_type FROM questions WHERE question_id = " . $question['question-id'] . " LIMIT 1";
+        $questionId = $question['question-id'];
+        $query = "SELECT question_type FROM questions WHERE question_id = " . $questionId . " LIMIT 1";
         $result = $this->conn->query($query);
-        $questionType = "";
+        $currentQuestionType = "";
         while ($row = $result->fetch_assoc()) {
-            $questionType = $row['question_type'];
+            $currentQuestionType = $row['question_type'];
         }
         $query = $this->conn->prepare("UPDATE questions SET question = ?, question_type = ?, points = ? WHERE question_id = ?");
-        $query->bind_param("ssii", $question['question'], $question['question-type'], $question['points'], $question['question-id']);
+        $query->bind_param("ssii", $question['question'], $question['question-type'], $question['points'], $questionId);
         $query->execute();
-        if ($questionType == "multiple-choice" && $question['question-type'] != "multiple-choice") {
+
+        // Manipulate choices
+        if ($currentQuestionType == "multiple-choice" && $question['question-type'] != "multiple-choice") {
             // Remove choices
-            $query = "DELETE FROM question_choices WHERE question_id = " . $question['question-id'];
+            $query = "DELETE FROM question_choices WHERE question_id = " . $questionId;
             $this->conn->query($query);
-        } else if ($questionType == "multiple-choice" && $question['question-type'] == "multiple-choice") {
-            // Update choices
-        } else if ($questionType != "multiple-choice" && $question['question-type'] != "multiple-choice") {
+        } else if ($currentQuestionType == "multiple-choice" && $question['question-type'] == "multiple-choice") {
+            // Remove choices
+            $query = "DELETE FROM question_choices WHERE question_id = " . $questionId;
+            $this->conn->query($query);
+            
             // Add choices
+            foreach($question['choices'] as &$choice) {
+                $addQuery = "INSERT INTO question_choices(question_id, choice) VALUES ( ". $questionId . ", " . $choice . ")";
+                $this->conn->query($addQuery);
+            }
+        } else if ($currentQuestionType != "multiple-choice" && $question['question-type'] != "multiple-choice") {
+            // Add choices
+            foreach($question['choices'] as &$choice) {
+                $addQuery = "INSERT INTO question_choices(question_id, choice) VALUES ( ". $questionId . ", " . $choice . ")";
+                $this->conn->query($addQuery);
+            }
+        }
+
+        // Remove all answers
+        $query = "DELETE FROM question_answers WHERE question_id = " . $questionId;
+        $result = $this->conn->query($query);
+
+        // Add new answers
+        foreach($question['answer'] as &$answer) {
+            $query = $this->conn->prepare("INSERT INTO question_answers(question_id, answer) VALUES (?, ?)");
+            $query->bind_param("is", $questionId, $answer);
+            $query->execute();
         }
     }
 

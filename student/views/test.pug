@@ -23,7 +23,7 @@ html
                 form(action='/logout' method='get')
                     input(type='submit' class='logout-button' value="logout")
             #title-wrapper
-                span#title=code+subject
+                span#title #{code} - #{subject}
             #category-wrapper
                 each test in tests
                     form(action='/quiz/'+test.test_id method='post')

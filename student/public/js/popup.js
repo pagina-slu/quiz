@@ -5,22 +5,21 @@ function addStatusMessage(type, message, lifespan = 3000) {
     divElement.className = "status-message " + type + "-message";
 
     let iElement = document.createElement("i");
-    iElement.className = "fa";
     switch (type) {
         case "info":
-            iElement.className += " fa-info-circle";
+            iElement.className = "info-circle";
             break;
 
         case "success":
-            iElement.className += " fa-check";
+            iElement.className = "check";
             break;
 
         case "warning":
-            iElement.className += " fa-warning";
+            iElement.className = "warning";
             break;
 
         case "error":
-            iElement.className += " fa-times-circle";
+            iElement.className = "times-circle";
             break;
     }
 
@@ -30,8 +29,6 @@ function addStatusMessage(type, message, lifespan = 3000) {
     divElement.appendChild(text);
     statusMessagesContainer.prepend(divElement);
 
-    // $(divElement).fadeOut(0);
-    fadeIn(divElement);
 
     setTimeout(removeStatusMessage, lifespan, divElement);
 }
@@ -40,11 +37,7 @@ function removeStatusMessage(divElement) {
     fadeout(divElement);
 }
 
-function fadeIn(divElement){
-    divElement.style.visibility = "visible";
-    divElement.style.opacity= "1";
-    divElement.style.transition= "opacity 2s linear";
-}
+
 function fadeout(divElement){
     divElement.style.visibility = "hidden";
     divElement.style.opacity= "0";

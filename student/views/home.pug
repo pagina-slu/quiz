@@ -8,11 +8,11 @@ html
         title p&agrave;gina quiz
         // Category selector
     body
-        if message
+        if message[0]
             #status-messages-container
             script(src='../js/popup.js')
             script. 
-                let message = !{JSON.stringify(questions)}
+                let message = !{JSON.stringify(message)};
                 addStatusMessage(message[0], message[1]);
         main#main
             #header-wrapper
@@ -23,7 +23,7 @@ html
                 form(action='/logout' method='get')
                     input(type='submit' class='logout-button' value="logout")
             #title-wrapper
-                span#title Classrooms
+                span#title My Classrooms
             #category-wrapper
                 each value, key in classes
                     form(action='/test/'+key method='post')

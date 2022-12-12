@@ -43,18 +43,18 @@ body {
   width: 30%;
 }
 
-#login h1{
-  color: #111; 
-  font-family: 'Helvetica Neue', sans-serif; 
-  font-size: 3rem; 
-  font-weight: bold; 
-  letter-spacing: -1px; 
-  line-height: 1; 
+#login h1 {
+  color: #111;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
   text-align: center;
   margin-bottom: 4rem;
 }
 
-#login p{
+#login p {
   color: red;
   margin: 1rem;
   animation: shake 0.5s;
@@ -62,17 +62,49 @@ body {
 }
 
 @keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
 }
 
 #login form {
@@ -191,7 +223,8 @@ main {
 #enter-button[disabled]:hover {
   cursor: not-allowed;
 }
-#header-wrapper{
+
+#header-wrapper {
   display: flex;
   width: 100%;
   justify-content: flex-end;
@@ -202,7 +235,7 @@ main {
 
 #title-wrapper {
   align-items: center;
-  background-color:#86c232;
+  background-color: #86c232;
   color: white;
   display: flex;
   flex-direction: column;
@@ -211,17 +244,18 @@ main {
   margin-bottom: 2rem;
   margin-top: 5rem;
   padding: 1.5rem;
-  text-align: left;  
+  text-align: left;
   width: 100%;
 }
-#title-wrapper p{
+
+#title-wrapper p {
   font-size: 2rem;
 }
 
 #title {
   font-size: 3.4rem;
   font-weight: bold;
-  
+
 }
 
 #category-wrapper {
@@ -231,7 +265,8 @@ main {
   justify-content: center;
 }
 
-.category-button, #start-button {
+.category-button,
+#start-button {
   border: none;
   border-radius: 10px;
   font-size: 2.5rem;
@@ -243,7 +278,8 @@ main {
   /* Pagandahin pa */
 }
 
-.category-button:hover, #start-button:hover {
+.category-button:hover,
+#start-button:hover {
   background-color: rgb(126, 26, 151);
   border: none;
   color: white;
@@ -270,22 +306,22 @@ h1 {
   padding: 3rem 0 3rem 3rem;
 }
 
-.label-wrapper{
+.label-wrapper {
   display: flex;
   width: 100%;
 }
 
-.points{
+.points {
   /* display: block; */
   font-size: 1.2rem;
-  color:#86c232;
+  color: #86c232;
   width: 10%;
   /* color: white; */
 }
 
 .question {
   width: 90%;
-  font-family: 'Helvetica Neue', sans-serif; 
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 2rem;
 
 }
@@ -296,7 +332,9 @@ h1 {
   max-width: 100%;
 }
 
-.input-wrapper .input, .multiple-choice, .true-false{
+.input-wrapper .input,
+.multiple-choice,
+.true-false {
   align-items: center;
   border: 1px solid transparent;
   cursor: pointer;
@@ -374,11 +412,12 @@ input::-webkit-inner-spin-button {
   color: white;
 } */
 
-.identification{
+.identification {
   margin-left: 2rem;
   width: 85%;
 }
-.input-wrapper .identification input[type="text"]{
+
+.input-wrapper .identification input[type="text"] {
   background-color: transparent;
   border-color: white;
   border-style: solid;
@@ -397,14 +436,14 @@ input::-webkit-inner-spin-button {
   outline: none;
 }
 
-#submit-wrapper{
+#submit-wrapper {
   display: flex;
   justify-content: center;
   margin: 2rem;
   margin-bottom: 5rem;
 }
 
-#submit-button{
+#submit-button {
   margin: 2rem;
   border-color: transparent;
   border-radius: 10px;
@@ -414,7 +453,7 @@ input::-webkit-inner-spin-button {
   width: 15rem;
 }
 
-#submit-button:hover{
+#submit-button:hover {
   background-color: rgb(126, 26, 151);
   border-color: transparent;
   color: aliceblue;
@@ -426,7 +465,7 @@ input::-webkit-inner-spin-button {
   background-color: #c9c9c9;
   border-radius: 50%;
   bottom: 10px;
-  filter:drop-shadow(5px 2px 5px rgba(0, 0, 0, 0.514));
+  filter: drop-shadow(5px 2px 5px rgba(0, 0, 0, 0.514));
   font-size: 20px;
   height: 8em;
   line-height: 8em;
@@ -453,7 +492,7 @@ input::-webkit-inner-spin-button {
 }
 
 #progress-circle span {
-  color: #3cbe00;
+  color: rgb(126, 26, 151);
   cursor: default;
   display: block;
   line-height: 8em;
@@ -478,7 +517,7 @@ input::-webkit-inner-spin-button {
 }
 
 #value-bar {
-  border: 0.95em solid #3cbe00;
+  border: 0.95em solid rgb(126, 26, 151);
   border-radius: 50%;
   box-sizing: border-box;
   clip: rect(0, 3.5em, 8em, 0);
@@ -491,7 +530,7 @@ input::-webkit-inner-spin-button {
 
 /* Progress bar filling the whole right half for values above 50% */
 #progress-circle.over50 .first50-bar {
-  background-color: #3cbe00;
+  background-color: rgb(126, 26, 151);
   border-radius: 50%;
   clip: rect(0, 8em, 8em, 3.5em);
   height: 8em;
@@ -523,7 +562,7 @@ footer p {
   font-size: 1.4rem;
 }
 
-.notification{
+.notification {
   background-color: #555;
   border-style: solid;
   border-color: #000000;
@@ -544,7 +583,9 @@ footer p {
   display: inline-block;
   border-radius: 10px;
 }
-.notification:hover, .logout-button:hover{
+
+.notification:hover,
+.logout-button:hover {
   background: red;
 }
 
@@ -560,12 +601,24 @@ footer p {
 
 
 #status-messages-container {
+  font-family: "Poppins", sans-serif;
   z-index: 999;
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  /* float: top; */
+  top: 0;
   right: 0;
+  animation: float-in 3s ease-out;
+  
 }
 
+@keyframes float-in {
+  0%   { 
+  transform: translateY(0%); 		
+  }
+  100% { 
+  transform: translateY(100%); 
+  }
+}
 .status-message {
   padding: 0.5em;
   padding-left: 1em;
@@ -574,7 +627,31 @@ footer p {
   border-radius: 0.5em;
   pointer-events: none;
   margin: 1em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
+
+
+.info-circle{
+  content: url("../res/images/info.png");
+  width: 20px;
+  border-radius: 20%;
+}
+.check{
+  content: url("../res/images/check.png");
+  width: 20px;
+}
+.warning{
+  content: url("../res/images/warning.png");
+  width: 20px;
+}
+.times-circle{
+  content: url("../res/images/cross.png");
+  width: 20px;
+}
+
+
 
 .info-message {
   background-color: #AFCBE1;
@@ -595,30 +672,3 @@ footer p {
   background-color: #E1AFAF;
   color: #790909;
 }
-
-
-
-/* Only for CodePen */
-  body {
-    font-family: "Poppins", sans-serif;
-    min-height: 100vh;
-    background-color: #1d1e22;
-  }
-
-  .addMessageInput{
-    cursor: pointer;
-    padding: 0.5em;
-    padding-left: 1em;
-    padding-right: 1em;
-    border: 0.2em solid #007EEC;
-    background: #1d1e22;
-    color: white;
-    border-radius: 2em;
-    margin: 1em;
-    margin-bottom: 0.5em;
-  }
-
-  .addMessageInput:hover{
-    background: #007EEC;
-    color: #1d1e22;
-  }

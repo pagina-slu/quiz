@@ -9,7 +9,7 @@ const { resolve } = require('path');
 const { get } = require('http');
 // const cookieParser = require("cookie-parser");
 // const { clearScreenDown } = require('readline');
-let m;
+let m = [];
 const app = express();
 app.listen(process.env.PORT || "8000");
 app.use(express.json());
@@ -122,6 +122,7 @@ app.get('/home', function (req, res) {
             return console.error(error.message);
          }
          res.render("home", { classes: classes, username: results[0].first_name, message: m });
+         m = [];
       })
    }
 })
@@ -163,7 +164,7 @@ app.post("/quiz/:testId", (req, res) => {
          if(results<1){
             getTestName();
          } else{
-            m = ['error','You have already taken the quiz'];
+            m = ['error','You have already taken this quiz.'];
             res.redirect("/home");
          }
       })
@@ -214,6 +215,23 @@ app.post("/quiz/:testId", (req, res) => {
 app.post("/submit", (req, res) => {
    if (req.session.userid) {
       testStack = [];
+      let sql = "SELECT * FROM responses WHERE test_id = ? and student_id = ?"
+      connection.query(sql, [req.session.testId, req.session.userid], (error, results) => {
+         if (error) { return console.error(error.message); }
+         if(results<1){
+            submitQuiz();
+         } else{
+            m = ['warning','You have already submitted this quiz.'];
+            res.redirect("/home");
+         }
+      })
+
+      
+   } else {
+      res.redirect("/");
+   }
+
+   function submitQuiz(){
       let timestamp = Date.now();
       let responseId = req.session.userid + req.session.testId + timestamp;
       console.log("response ID: " + typeof responseId);
@@ -227,12 +245,8 @@ app.post("/submit", (req, res) => {
          insertResponseDetails(responseId);
       })
       let i = 0;
-      console.log(eval("req.body.q" + i));
-      console.log(req.body.q1);
-   } else {
-      res.redirect("/");
-   }
 
+   }
    function insertResponseDetails(responseId) {
       let detailsSQL = 'INSERT INTO response_details(response_id, question_id, answer) VALUES ?';
       let detailValues = [[]];
@@ -250,6 +264,7 @@ app.post("/submit", (req, res) => {
          if (error) { return console.error(error.message); }
          console.log("Response saved");
          res.render("submitted");
+         m = ['success','Nice, One down'];
       })
    }
 

@@ -9,6 +9,12 @@ html
         // Category selector
     body
         main#main
+            if message
+                #status-messages-container
+                script(src='../js/popup.js')
+                script. 
+                    let message = !{JSON.stringify(questions)}
+                    addStatusMessage(message[0], message[1]);
             #header-wrapper
                 h1 Hi, #{username}
                 div.notification

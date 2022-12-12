@@ -12,13 +12,9 @@ html
             #title-wrapper
                 span#title #{subject}
                 p #{test}
-            form(action='/submit' method='post')
+            form(action='/submit' method='post' onsubmit ="return validate(this);")
                 div#quiz-wrapper
                 input(type='submit' id='submit-button' value="Submit")
-            //- div#submit-wrapper
-                
-            
-            //- p=questions
         // Progress bar
         #progress-circle
             span#progress-text 0%
@@ -28,21 +24,14 @@ html
         // footer
         footer
             p p&agrave;gina &copy; 2022
-        //- script(src='../js/quiz.js')
-        script.
-               // Generate submit button and assign event listener
-            //- function generateSubmitButton() {
-            //-     let submitWrapper = document.getElementById("submit-wrapper");
-            //-     let submitButton = document.createElement("button");
-            //-     submitButton.setAttribute("id", "submit-button");
-            //-     submitButton.innerHTML = "Submit";
-            //-     submitButton.addEventListener("click", submitQuiz);
-            //-     submitWrapper.appendChild(submitButton);
-            //- }
 
+        
+        script.
             let questions= !{JSON.stringify(questions)};
             startQuiz();
+            
             function startQuiz() {
+                console.log(countAnsweredQuestions());
                 showProgressBar();
                 //- window.onbeforeunload = function () {
                 //-     return "Your progress would be lost";
@@ -66,6 +55,15 @@ html
                 showProgressBar();
             }
 
+            function validate(form) {
+                if(countAnsweredQuestions() != questions.length) {
+                    alert('Please answer all the questions');
+                    return false;
+                }
+                else {
+                    return confirm('You can not retake the quiz once submitted. Are you sure you want to submit?');
+                }
+            }
 
             function generateQuestionLabel(data, index) {
                 let labelWrapper = document.createElement("div");
@@ -78,8 +76,6 @@ html
                 let points = document.createElement("div");
                 points.className = 'points';
                 points.innerHTML = `${data.points} pts`;
-
-                console.log(data.points);
 
                 labelWrapper.appendChild(label);
                 labelWrapper.appendChild(points);
@@ -279,5 +275,7 @@ html
                 const circle = document.getElementById('progress-circle');
                 circle.style.display = "";
             }
+
+        
 
 

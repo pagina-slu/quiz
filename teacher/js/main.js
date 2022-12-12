@@ -8,7 +8,7 @@ $(document).ready(async () => {
     let questionsButton = document.getElementById('questions-button');
     let responsesButton = document.getElementById('responses-button');
     let schedulesButton = document.getElementById('schedules-button');
-    
+
 
     responsesButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
@@ -36,10 +36,10 @@ $(document).ready(async () => {
                 greenButton.classList.add('clicked');
                 greenButton.textContent = "Mark As Unchecked";
             }
-            nameDiv.innerHTML = response.student_id + "<br>" + student.f_name +" "+student.l_name;
+            nameDiv.innerHTML = response.student_id + "<br>" + student.f_name + " " + student.l_name;
             let buttonWrapper = createDiv('button-wrapper');
             let viewButton = createButton('purple-button', 'View');
-            
+
             viewButton.addEventListener('click', async () => {
                 let content = "";
                 let counter = 1;
@@ -47,16 +47,16 @@ $(document).ready(async () => {
                 console.log(responseDetails);
                 // Adds all questions and answers to content letiable
                 responseDetails.forEach(res => {
-                    
-                    let answerIsCorrect = checkAnswer(res.answer, questions[counter-1].answer);
+
+                    let answerIsCorrect = checkAnswer(res.answer, questions[counter - 1].answer);
                     content += `${counter}. ` +
-                        "Question: " + questions[counter-1].question +
-                        "<br> Type: " + questions[counter-1].type +
+                        "Question: " + questions[counter - 1].question +
+                        "<br> Type: " + questions[counter - 1].type +
                         `<br> <span class=${answerIsCorrect ? "correct" : "wrong"} >Answer: ` + res.answer + `</span>
-                                ${answerIsCorrect ? "" : 
-                                `<br><span class="correct">Correct Answer(s): ${questions[counter-1].answer}</span>`}<br><br>`;
+                                ${answerIsCorrect ? "" :
+                            `<br><span class="correct">Correct Answer(s): ${questions[counter - 1].answer}</span>`}<br><br>`;
                     counter++;
-                    
+
                 });
                 setModalContent(currentTest.classDescription, content);
                 openModal();
@@ -301,19 +301,54 @@ function createQuestionForm(question, testId) {
     form.appendChild(createHiddenInput('questionId', question.id));
     form.appendChild(createHiddenInput('testId', parseInt(testId)));
 
+    let pointsLabel = createLabel('points', 'Points: ');
+    let pointsInput = document.createElement('input');
+    pointsInput.setAttribute('type', 'number');
+    pointsInput.setAttribute('name', 'points');
+    if (question.points) {
+        pointsInput.value = question.points;
+    } else {
+        pointsInput.value = 1;
+    }
+
+    let deleteButton = document.createElement('img');
+    deleteButton.src = 'images/delete.svg';
+    deleteButton.classList.add('delete-button');
+    deleteButton.addEventListener('click', () => {
+        form.parentElement.style.display = 'none';
+        willDelete.value = true;
+    });
+
+    // Append points
     let rowWrapper = createDiv('wrapper');
     rowWrapper.classList.add('row');
+    rowWrapper.style.justifyContent = 'space-between';
     let columnWrapper = createDiv('wrapper');
-    columnWrapper.appendChild(questionLabel);
-    columnWrapper.appendChild(questionInput);
-    columnWrapper.style.flex = 0.8;
+    columnWrapper.append(pointsLabel);
+    columnWrapper.append(pointsInput);
     rowWrapper.appendChild(columnWrapper);
+
+    // Append question type picker
     columnWrapper = createDiv('wrapper');
-    columnWrapper.appendChild(questionTypeLabel);
-    columnWrapper.appendChild(questionType);
-    columnWrapper.style.flex = 0.20;
+    columnWrapper.append(questionTypeLabel);
+    columnWrapper.append(questionType);
+
+    rowWrapper.appendChild(columnWrapper);
+
+    // Append delete button
+    columnWrapper = createDiv('wrapper');
+    columnWrapper.append(deleteButton);
+    rowWrapper.append(deleteButton);
+    form.appendChild(rowWrapper);
+
+    rowWrapper = createDiv('wrapper');
+    rowWrapper.classList.add('row');
+    columnWrapper.append(questionLabel);
+    columnWrapper.append(questionInput);
+    columnWrapper.style.flex = 1;
     rowWrapper.appendChild(columnWrapper);
     form.appendChild(rowWrapper);
+
     let answerLabel = createLabel('answer', 'Answer');
     let answers = document.createElement('select');
     let answersDiv = createDiv('answers-div');
@@ -479,37 +514,6 @@ function createQuestionForm(question, testId) {
             form.insertBefore(columnWrapper, lastRow);
         }
     });
-
-    let lastRow = createDiv('wrapper');
-    lastRow.classList.add('row');
-    lastRow.style.justifyContent = 'space-between';
-    rowWrapper = createDiv('wrapper');
-    rowWrapper.classList.add('row');
-    let pointsInput = document.createElement('input');
-    pointsInput.setAttribute('type', 'number');
-    pointsInput.setAttribute('name', 'points');
-    if (question.points) {
-        pointsInput.value = question.points;
-    } else {
-        pointsInput.value = 1;
-    }
-
-    let pointsLabel = createLabel('points', pointsInput.value == 1 ? 'point' : 'points');
-    rowWrapper.appendChild(pointsInput);
-    rowWrapper.appendChild(pointsLabel);
-    lastRow.appendChild(rowWrapper);
-
-    let deleteButton = document.createElement('img');
-    deleteButton.src = 'images/delete.svg';
-    deleteButton.classList.add('delete-button');
-    deleteButton.addEventListener('click', () => {
-        form.parentElement.style.display = 'none';
-        willDelete.value = true;
-    });
-
-    lastRow.append(deleteButton);
-    form.appendChild(lastRow);
-
 
     return form;
 }

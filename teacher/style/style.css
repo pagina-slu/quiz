@@ -244,10 +244,15 @@ main > div {
 
 
 form {
+  font-family: "OpenSans";
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
   width: 100%;
+}
+
+form label {
+  font-weight: bold;
   font-size: 1.6rem;
 }
 
@@ -258,6 +263,7 @@ form .wrapper {
 }
 
 form input[type=text], form input[name="answer"], form input[type="number"] {
+  font-size: 1.6rem;
   padding: 0.5rem 1rem;
   border: none;
   border-bottom: 2px solid black;
@@ -269,10 +275,13 @@ form input[type=text]:focus {
 }
 
 form input[type=number] {
+  font-size: 1.6rem;
   width: 75px;
 }
 
 form select {
+  font-size: 1.6rem;
+  border-radius: 5px;
   padding: 0.5rem 1rem;
 }
 

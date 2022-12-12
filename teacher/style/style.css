@@ -276,14 +276,14 @@ form input[type=text]:focus {
   border-color: #86c232;
 }
 
-form input[name="choices[]"] {
+form input[name="choices[]"], form input[name="answer[]"] {
   border: 2px solid #86c232;
   background-color: #CDF29A;
   border-radius: 5px;
   width: unset;
 }
 
-.choices-div {
+.choices-div, .answers-div {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -292,7 +292,7 @@ form input[name="choices[]"] {
   gap: 2rem;
 }
 
-.add-choice-button {
+.add-choice-button, .add-answer-button {
   margin-top: unset;
   border: 2px solid #86c232;
   border-radius: 5px;

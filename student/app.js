@@ -9,7 +9,7 @@ const { resolve } = require('path');
 const { get } = require('http');
 // const cookieParser = require("cookie-parser");
 // const { clearScreenDown } = require('readline');
-
+let m = [];
 const app = express();
 app.listen(process.env.PORT || "8000");
 app.use(express.json());
@@ -121,7 +121,8 @@ app.get('/home', function (req, res) {
          if (error) {
             return console.error(error.message);
          }
-         res.render("home", { classes: classes, username: results[0].first_name });
+         res.render("home", { classes: classes, username: results[0].first_name, message: m });
+         m = [];
       })
    }
 })
@@ -154,26 +155,32 @@ app.post("/test/:code", function (req, res) {
    }
 })
 
-app.post("/quiz/:code", (req, res) => {
+app.post("/quiz/:testId", (req, res) => {
    if (req.session.userid) {
-      req.session.testId = req.params.code;
+      req.session.testId = req.params.testId;
       let sql = "SELECT * FROM responses WHERE test_id = ? and student_id = ?"
       connection.query(sql, [req.session.testId, req.session.userid], (error, results) => {
          if (error) { return console.error(error.message); }
          if(results<1){
-            takeQuiz();
+            getTestName();
          } else{
+            m = ['error','You have already taken this quiz.'];
             res.redirect("/home");
          }
       })
-
-      
-
    } else {
       res.redirect("/");
    }
+   function getTestName(){
+      let sql = "SELECT * FROM `tests` WHERE test_id = ?;";
+      connection.query(sql, [req.session.testId], (error, results) => {
+         if (error) { return console.error(error.message); }
+         testStack.push(results[0].test_name);
+         takeQuiz();
+      })
+   }
    function takeQuiz(){
-      let sql = "SELECT * FROM questions LEFT JOIN tests ON questions.test_id = tests.test_id WHERE questions.test_id=?;";
+      let sql = "SELECT * FROM questions WHERE test_id=?;";
       connection.query(sql, [req.session.testId], (error, results) => {
          if (error) { return console.error(error.message); }
          testStack.push(results[0].test_name);
@@ -185,6 +192,7 @@ app.post("/quiz/:code", (req, res) => {
       let r = results;
       let multipleChoiceCounter = 0;
       let queryCounter = 0;
+      
       r.forEach((question) => {
          if (question.question_type == 'multiple-choice') {
             multipleChoiceCounter++;
@@ -207,6 +215,23 @@ app.post("/quiz/:code", (req, res) => {
 app.post("/submit", (req, res) => {
    if (req.session.userid) {
       testStack = [];
+      let sql = "SELECT * FROM responses WHERE test_id = ? and student_id = ?"
+      connection.query(sql, [req.session.testId, req.session.userid], (error, results) => {
+         if (error) { return console.error(error.message); }
+         if(results<1){
+            submitQuiz();
+         } else{
+            m = ['warning','You have already submitted this quiz.'];
+            res.redirect("/home");
+         }
+      })
+
+      
+   } else {
+      res.redirect("/");
+   }
+
+   function submitQuiz(){
       let timestamp = Date.now();
       let responseId = req.session.userid + req.session.testId + timestamp;
       console.log("response ID: " + typeof responseId);
@@ -220,12 +245,8 @@ app.post("/submit", (req, res) => {
          insertResponseDetails(responseId);
       })
       let i = 0;
-      console.log(eval("req.body.q" + i));
-      console.log(req.body.q1);
-   } else {
-      res.redirect("/");
-   }
 
+   }
    function insertResponseDetails(responseId) {
       let detailsSQL = 'INSERT INTO response_details(response_id, question_id, answer) VALUES ?';
       let detailValues = [[]];
@@ -243,6 +264,7 @@ app.post("/submit", (req, res) => {
          if (error) { return console.error(error.message); }
          console.log("Response saved");
          res.render("submitted");
+         m = ['success','Nice, One down'];
       })
    }
 

@@ -9,6 +9,12 @@ html
         // Category selector
     body
         main#main
+            if message
+                #status-messages-container
+                script(src='../js/popup.js')
+                script. 
+                    let message = !{JSON.stringify(questions)}
+                    addStatusMessage(message[0], message[1]);
             #header-wrapper
                 h1 Hi, #{username}
                 div.notification
@@ -17,7 +23,7 @@ html
                 form(action='/logout' method='get')
                     input(type='submit' class='logout-button' value="logout")
             #title-wrapper
-                span#title=code+subject
+                span#title #{code} - #{subject}
             #category-wrapper
                 each test in tests
                     form(action='/quiz/'+test.test_id method='post')

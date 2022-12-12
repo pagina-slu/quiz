@@ -248,6 +248,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 3rem;
   width: 100%;
 }
 
@@ -259,10 +260,11 @@ form label {
 form .wrapper {
   display: flex;
   column-gap: 1rem;
+  row-gap: 1rem;
   flex-direction: column;
 }
 
-form input[type=text], form input[name="answer"], form input[type="number"] {
+form input[type=text], form input[name="answer"]{
   font-size: 1.6rem;
   padding: 0.5rem 1rem;
   border: none;
@@ -274,13 +276,47 @@ form input[type=text]:focus {
   border-color: #86c232;
 }
 
+form input[name="choices[]"] {
+  border: 2px solid #86c232;
+  background-color: #CDF29A;
+  border-radius: 5px;
+  width: unset;
+}
+
+.choices-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.add-choice-button {
+  margin-top: unset;
+  border: 2px solid #86c232;
+  border-radius: 5px;
+  background-color: transparent;
+  text-align: center;
+  width: unset;
+  color: black;
+}
+
+.add-choice-button:hover {
+  background-color: #CDF29A;
+}
+
 form input[type=number] {
   font-size: 1.6rem;
+  padding: 0.5rem 1rem;
   width: 75px;
+  border: 2px solid black;
+  border-radius: 5px;
 }
 
 form select {
   font-size: 1.6rem;
+  border: 2px solid black;
   border-radius: 5px;
   padding: 0.5rem 1rem;
 }

@@ -325,4 +325,9 @@ class Teacher
         $query = "DELETE FROM questions WHERE question_id = " . $questionId;
         $this->conn->query($query);
     }
+
+    public function deleteSchedule($scheduleId) {
+        $query = "DELETE FROM schedules WHERE schedule_id = " . $scheduleId;
+        $this->conn->query($query);
+    }
 }

@@ -10,4 +10,4 @@ $data['points'] = $_POST['points'];
 if (isset($_POST['answer'])) $data['answer'] = $_POST['answer'];
 if (isset($_POST['choices'])) $data['choices'] = $_POST['choices'];
 
-$teacher->createNewQuestion($data);
+echo json_encode($teacher->createNewQuestion($data));

@@ -178,6 +178,7 @@ $(document).ready(async () => {
                         data: form.serialize(),
                         dataType: 'text',
                         success: (r) => {
+                            console.log(r);
                             console.log("Added new question.");
                         }
                     });
@@ -194,7 +195,7 @@ $(document).ready(async () => {
                             data: form.serialize(),
                             dataType: 'text',
                             success: (r) => {
-                                //console.log(r);
+                                console.log(r);
                                 console.log("Updated question.");
                             }
                         });
@@ -235,6 +236,36 @@ $(document).ready(async () => {
             scheduleDetails.classList.add('schedule-details');
             scheduleDetails.textContent = `${schedule.open_date} to ${schedule.close_date}`;
             scheduleWrapper.appendChild(scheduleDetails);
+
+            let deleteButton = document.createElement('img');
+            deleteButton.src = 'images/delete.svg';
+            deleteButton.classList.add('delete-button');
+            deleteButton.addEventListener('click', () => {
+                let wrapper = createDiv('wrapper');
+                wrapper.style.display = 'flex';
+                wrapper.style.gap = '2rem';
+                let yesButton = createButton('modal-button', 'Yes');
+                yesButton.addEventListener('click', async () => {
+                    await $.ajax(`processing/delete_schedule.php?scheduleId=${schedule.id}`,
+                    {
+                        success: () => {
+                            console.log("Deleted schedule.");
+                            closeModal();
+                        }
+                    });
+                });
+
+                let noButton = createButton('modal-button', 'No');
+                noButton.addEventListener('click', () => {
+                    closeModal();
+                });
+                wrapper.appendChild(yesButton);
+                wrapper.appendChild(noButton);
+                setModalContent('Are you sure?', wrapper);
+                openModal();
+            });
+            scheduleWrapper.appendChild(deleteButton);
+
             container.appendChild(scheduleWrapper);
         });
         let addScheduleButton = createButton('add-schedule-button', 'Add new schedule');
@@ -324,14 +355,14 @@ function createQuestionForm(question, testId) {
     rowWrapper.classList.add('row');
     rowWrapper.style.justifyContent = 'space-between';
     let columnWrapper = createDiv('wrapper');
-    columnWrapper.append(pointsLabel);
-    columnWrapper.append(pointsInput);
+    columnWrapper.append(questionTypeLabel);
+    columnWrapper.append(questionType);
     rowWrapper.appendChild(columnWrapper);
 
     // Append question type picker
     columnWrapper = createDiv('wrapper');
-    columnWrapper.append(questionTypeLabel);
-    columnWrapper.append(questionType);
+    columnWrapper.append(pointsLabel);
+    columnWrapper.append(pointsInput);
 
     rowWrapper.appendChild(columnWrapper);
 
@@ -349,16 +380,16 @@ function createQuestionForm(question, testId) {
     rowWrapper.appendChild(columnWrapper);
     form.appendChild(rowWrapper);
 
+    let wrapper = createDiv('wrapper');
     let answerLabel = createLabel('answer', 'Answer');
     let answers = document.createElement('select');
     let answersDiv = createDiv('answers-div');
     let choicesLabel = createLabel('choices', 'Choices');
     let choicesDiv = createDiv('choices-div');
     choicesDiv.id = 'choices-div';
-    choicesDiv.appendChild(choicesLabel);
     if (questionType.value == 'multiple-choice') {
         let choices = [];
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < question.choices.length; i++) {
             let choice = document.createElement('input');
             choice.setAttribute('type', 'text');
             choice.setAttribute('name', 'choices[]');
@@ -366,9 +397,36 @@ function createQuestionForm(question, testId) {
             choices.push(choice);
             choicesDiv.appendChild(choice);
         }
+        columnWrapper = createDiv('wrapper');
+        columnWrapper.style.width = '100%';
+        columnWrapper.style.alignItems = 'center';
+        let addChoiceButton = createButton('add-choice-button', '+');
+        addChoiceButton.setAttribute('type', 'button');
+        addChoiceButton.addEventListener('click', () => {
+            let choice = document.createElement('input');
+            choice.setAttribute('type', 'text');
+            choice.setAttribute('name', 'choices[]');
+            choice.addEventListener('input', () => {
+                removeAllChildNodes(answers);
+                let values = [];
+                choices.forEach(ci => {
+                    values.push(ci.value);
+                });
+                values.forEach(choice => {
+                    let c = document.createElement('option');
+                    c.value = choice;
+                    c.textContent = choice;
+                    answers.appendChild(c);
+                });
+            });
+            choices.push(choice);
+            choicesDiv.insertBefore(choice, addChoiceButton.parentElement);
+        });
+        columnWrapper.appendChild(addChoiceButton);
+        choicesDiv.appendChild(columnWrapper);
 
         answers = document.createElement('select');
-        answers.setAttribute('name', 'answer');
+        answers.setAttribute('name', 'answer[]');
         choices.forEach(choiceInput => {
             removeAllChildNodes(answers);
             let values = [];
@@ -400,14 +458,15 @@ function createQuestionForm(question, testId) {
         answersDiv.appendChild(answerLabel);
         answersDiv.appendChild(answers);
         columnWrapper = createDiv('wrapper');
+        columnWrapper.appendChild(choicesLabel);
         columnWrapper.appendChild(choicesDiv);
-        form.appendChild(columnWrapper);
+        wrapper.appendChild(columnWrapper);
         columnWrapper = createDiv('wrapper');
         columnWrapper.appendChild(answersDiv);
-        form.appendChild(columnWrapper);
+        wrapper.appendChild(columnWrapper);
     } else if (questionType.value == 'true-or-false') {
         answers = document.createElement('select');
-        answers.setAttribute('name', 'answer');
+        answers.setAttribute('name', 'answer[]');
         ['True', 'False'].forEach(choice => {
             let c = document.createElement('option');
             c.value = choice;
@@ -420,30 +479,62 @@ function createQuestionForm(question, testId) {
         answersDiv.appendChild(answers);
         columnWrapper = createDiv('wrapper');
         columnWrapper.appendChild(answersDiv);
-        form.appendChild(columnWrapper);
+        wrapper.appendChild(columnWrapper);
     } else if (questionType.value == 'identification') {
-        answers = document.createElement('input');
-        answers.setAttribute('type', 'text');
-        answers.setAttribute('name', 'answer');
-        answers.value = question.answer[0];
+        answersDiv = createDiv('answers-div');
+        answersDiv.id = 'answers-div';
 
+        let answerLabel = createLabel('answer', 'Answer/s');
         answersDiv.appendChild(answerLabel);
-        answersDiv.appendChild(answers);
+        question.answer.forEach(_answer => {
+            let answer = document.createElement('input');
+            answer.setAttribute('name', 'answer[]');
+            answer.setAttribute('type', 'text');
+            answer.value = _answer;
+            answersDiv.appendChild(answer);
+        });
+
+        let addAnswerButton = createButton('add-answer-button', '+');
+        addAnswerButton.setAttribute('type', 'button');
+        addAnswerButton.addEventListener('click', () => {
+            let answer = document.createElement('input');
+            answer.setAttribute('name', 'answer[]');
+            answer.setAttribute('type', 'text');
+            answersDiv.insertBefore(answer, addAnswerButton.parentElement);
+        });
+        columnWrapper = createDiv('wrapper');
+        columnWrapper.style.width = '100%';
+        columnWrapper.style.alignItems = 'center';
+        columnWrapper.appendChild(addAnswerButton);
+        answersDiv.appendChild(columnWrapper);
         columnWrapper = createDiv('wrapper');
         columnWrapper.appendChild(answersDiv);
-        form.appendChild(columnWrapper);
+
+        wrapper.appendChild(columnWrapper);
     }
+    form.appendChild(wrapper);
 
     questionType.addEventListener('change', () => {
-        answersDiv.remove();
-        choicesDiv.remove();
+        wrapper.remove();
+        wrapper = createDiv('wrapper');
+        // answersDiv.remove();
+        // choicesDiv.remove();
         if (questionType.value == 'multiple-choice') {
             choicesLabel = createLabel('choices', 'Choices');
             choicesDiv = createDiv('choices-div');
             choicesDiv.id = 'choices-div';
             choicesDiv.appendChild(choicesLabel);
             let choices = [];
-            for (let i = 0; i < 4; i++) {
+            if (question.choices) {
+                question.choices.forEach(_choice => {
+                    let choice = document.createElement('input');
+                    choice.setAttribute('type', 'text');
+                    choice.setAttribute('name', 'choices[]');
+                    choice.value = _choice;
+                    choices.push(choice);
+                    choicesDiv.appendChild(choice);
+                })
+            } else {
                 let choice = document.createElement('input');
                 choice.setAttribute('type', 'text');
                 choice.setAttribute('name', 'choices[]');
@@ -451,9 +542,37 @@ function createQuestionForm(question, testId) {
                 choicesDiv.appendChild(choice);
             }
 
+            columnWrapper = createDiv('wrapper');
+            columnWrapper.style.width = '100%';
+            columnWrapper.style.alignItems = 'center';
+            let addChoiceButton = createButton('add-choice-button', '+');
+            addChoiceButton.setAttribute('type', 'button');
+            addChoiceButton.addEventListener('click', () => {
+                let choice = document.createElement('input');
+                choice.setAttribute('type', 'text');
+                choice.setAttribute('name', 'choices[]');
+                choices.push(choice);
+                choice.addEventListener('input', () => {
+                    removeAllChildNodes(answers);
+                    let values = [];
+                    choices.forEach(ci => {
+                        values.push(ci.value);
+                    });
+                    values.forEach(choice => {
+                        let c = document.createElement('option');
+                        c.value = choice;
+                        c.textContent = choice;
+                        answers.appendChild(c);
+                    });
+                });
+                choicesDiv.insertBefore(choice, addChoiceButton.parentElement);
+            });
+            columnWrapper.appendChild(addChoiceButton);
+            choicesDiv.appendChild(columnWrapper);
+
             let answerLabel = createLabel('answer', 'Answer');
             let answers = document.createElement('select');
-            answers.setAttribute('name', 'answer');
+            answers.setAttribute('name', 'answer[]');
 
             choices.forEach(choiceInput => {
                 choiceInput.addEventListener('input', () => {
@@ -473,18 +592,18 @@ function createQuestionForm(question, testId) {
 
             answersDiv = createDiv('answers-div');
             answersDiv.id = 'answers-div';
-            answersDiv.appendChild(answerLabel);
             answersDiv.appendChild(answers);
             columnWrapper = createDiv('wrapper');
             columnWrapper.appendChild(choicesDiv);
-            form.insertBefore(columnWrapper, lastRow);
+            wrapper.appendChild(columnWrapper);
             columnWrapper = createDiv('wrapper');
+            columnWrapper.appendChild(answerLabel);
             columnWrapper.appendChild(answersDiv);
-            form.insertBefore(columnWrapper, lastRow);
+            wrapper.appendChild(columnWrapper);
         } else if (questionType.value == 'true-or-false') {
             let answerLabel = createLabel('answer', 'Answer');
             let answers = document.createElement('select');
-            answers.setAttribute('name', 'answer');
+            answers.setAttribute('name', 'answer[]');
             ['True', 'False'].forEach(choice => {
                 let c = document.createElement('option');
                 c.value = choice;
@@ -494,25 +613,46 @@ function createQuestionForm(question, testId) {
 
             answersDiv = createDiv('answers-div');
             answersDiv.id = 'answers-div';
-            answersDiv.appendChild(answerLabel);
             answersDiv.appendChild(answers);
             columnWrapper = createDiv('wrapper');
+            columnWrapper.appendChild(answerLabel);
             columnWrapper.appendChild(answersDiv);
-            form.insertBefore(columnWrapper, lastRow);
+            wrapper.appendChild(columnWrapper);
         } else if (questionType.value == 'identification') {
-            let answerLabel = createLabel('answer', 'Answer');
-            let answers = document.createElement('input');
-            answers.setAttribute('name', 'answer');
-            answers.value = question.answer[0];
-
             answersDiv = createDiv('answers-div');
             answersDiv.id = 'answers-div';
-            answersDiv.appendChild(answerLabel);
-            answersDiv.appendChild(answers);
+
+            let answerLabel = createLabel('answer', 'Answer/s');
+            // answersDiv.appendChild(answerLabel);
+            question.answer.forEach(answer => {
+                let answers = document.createElement('input');
+                answers.setAttribute('name', 'answer[]');
+                answers.setAttribute('type', 'text');
+                answers.value = answer;
+                answersDiv.appendChild(answers);
+            });
+
+            let addAnswerButton = createButton('add-answer-button', '+');
+            addAnswerButton.setAttribute('type', 'button');
+            addAnswerButton.addEventListener('click', () => {
+                let answer = document.createElement('input');
+                answer.setAttribute('name', 'answer[]');
+                answer.setAttribute('type', 'text');
+                answersDiv.insertBefore(answer, addAnswerButton.parentElement);
+            });
             columnWrapper = createDiv('wrapper');
+            columnWrapper.style.width = '100%';
+            columnWrapper.style.alignItems = 'center';
+            columnWrapper.appendChild(addAnswerButton);
+            answersDiv.appendChild(columnWrapper);
+            columnWrapper = createDiv('wrapper');
+            columnWrapper.appendChild(answerLabel);
             columnWrapper.appendChild(answersDiv);
-            form.insertBefore(columnWrapper, lastRow);
+
+            wrapper.appendChild(columnWrapper);
         }
+
+        form.appendChild(wrapper);
     });
 
     return form;

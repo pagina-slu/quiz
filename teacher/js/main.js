@@ -31,7 +31,7 @@ $(document).ready(async () => {
             scoreDiv.innerHTML = `<sup>${response.score}</sup>/<sub>${totalPoints}</sub>`;
 
             let greenButton = createButton('green-button', 'Grade response');
-            if (response.isChecked == true) { // Adds classname 'clicked' to span and button if already checked
+            if (response.is_checked == true) { // Adds classname 'clicked' to span and button if already checked
                 nameDiv.classList.add('clicked');
                 greenButton.classList.add('clicked');
                 greenButton.textContent = "Remove grade";
@@ -47,7 +47,6 @@ $(document).ready(async () => {
                 console.log(responseDetails);
                 // Adds all questions and answers to content letiable
                 responseDetails.forEach(res => {
-
                     let answerIsCorrect = checkAnswer(res.answer, questions[counter - 1].answer);
                     console.log(answerIsCorrect);
                     content += `${counter}. ` +
@@ -63,13 +62,22 @@ $(document).ready(async () => {
                 openModal();
             });
 
-            greenButton.addEventListener('click', () => {
+            greenButton.addEventListener('click', async () => {
+                console.log(response);
                 if (greenButton.className == 'green-button') {
                     greenButton.textContent = "Mark As Unchecked";
-                    response.isChecked = true;
+                    await $.ajax(`processing/check_response.php?responseId=${response.id}`,
+                    {
+                        success: (r) => {
+                            console.log(r);
+                            scoreDiv.innerHTML = `<sup>${r}</sup>/<sub>${totalPoints}</sub>`;
+                        }
+                    });
+                    response.is_checked = true;
                 } else {
                     greenButton.textContent = "Mark As Checked";
-                    response.isChecked = false;
+                    await $.ajax(`processing/uncheck_response.php?responseId=${response.id}`);
+                    response.is_checked = false;
                 }
                 nameDiv.classList.toggle('clicked');
                 greenButton.classList.toggle('clicked');
@@ -815,16 +823,6 @@ function getCorrectAnswersCount(category, questionNumber) {
     return count;
 }
 
-// Returns an array of scores, accessible through a given id number
-// function calculateScores(category) {
-//     let scores = [];
-//     let responses = getResponsesForCategory(category);
-//     responses.forEach(response => {
-//         scores[response.student_id] = checkAnswers(response.answers, response.sequence, category);
-//     });
-//     return scores;
-// }
-
 function getHighestScore(scores) {
     let counter = Object.values(scores)
     return Math.max.apply(null, counter);
@@ -858,7 +856,6 @@ function checkAnswer(studentAnswer, correctAnswer) {
             console.log(answer);
             answer = answer.toLowerCase();
             if (answer == studentAnswer.toLowerCase()) {
-                console.log("tama!!!");
                 isCorrect = true;
             }
         });
@@ -867,13 +864,4 @@ function checkAnswer(studentAnswer, correctAnswer) {
         isCorrect = true;
     }
     return isCorrect;
-}
-
-// Checks the number of correct answers
-function checkAnswers(answers, category) {
-    let counter = 0;
-    for (let i = 0; i < answers.length; i++) {
-        if (checkAnswer(answers[i], category)) counter++;
-    }
-    return counter;
 }

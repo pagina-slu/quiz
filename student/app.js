@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const oneDay = 1000 * 60 * 60 * 24;
 
 let classes = {};       //hold the list of classes
-let testStack =[];              //hold the value of current test
+let testStack = [];              //hold the value of current test
 app.use(session({
    secret: "thisismysecrctekey",
    saveUninitialized: true,
@@ -57,7 +57,7 @@ app.post('/login', function (req, res) {
    try {
       let username = req.body.uname;
       let password = req.body.upass;
-      let sql = `SELECT username FROM accounts WHERE username = ? AND password = ?`;
+      let sql = `SELECT username FROM accounts WHERE username = ? AND password = ? AND is_logged_in = false`;
 
       connection.query(sql, [username, password], (error, results) => {
          if (error) {
@@ -66,7 +66,7 @@ app.post('/login', function (req, res) {
          try {
             setUser(results[0].username);
          } catch (e) {
-            res.render('login', {message: "Invalid Credentials"});
+            checkStatus(username);
          }
       });
    } catch (err) {
@@ -78,22 +78,58 @@ app.post('/login', function (req, res) {
       if (value && value.length > 0) {
          req.session.userid = value;
          console.log("User Connected: " + req.session.userid);
-         // req.flash('success', 'Data added successfully!')
-
-         if (req.session.userid) {
-            // console.log("should send file");
-            res.redirect('/home');
-         }
+         setActive();
       } else {
          res.redirect('/');
       }
    }
 
+   function setActive() {
+      let sql = `UPDATE accounts SET is_logged_in = true WHERE username = ?;`;
+
+      connection.query(sql, [req.session.userid], (error) => {
+         if (error) {
+            return console.error(error.message);
+         }
+         if (req.session.userid) {
+            res.redirect('/home');
+         }
+      })
+   }
+
+   function checkStatus(username){
+      let sql = `SELECT * FROM accounts WHERE username = ?;`;
+
+      connection.query(sql, [username], (error, results) => {
+         if (error) {
+            return console.error(error.message);
+         }
+         if(!results[0]){
+            res.render('login', { message: "Invalid Credentials" });
+         } else if(results[0] && !(results[0].is_logged_in)){
+            res.render('login', { message: "Incorrect username or password" });
+         } else if (results[0].is_logged_in){
+            res.render('login', { message: "The user is already logged in" });
+         } 
+      })
+   }
+
 });
 
 app.get("/logout", (req, res) => {
-   req.session.destroy();
+   let sql = `UPDATE accounts SET is_logged_in = false WHERE username = ?;`;
+   connection.query(sql, [req.session.userid], (error) => {
+      if (error) {
+         return console.error(error.message);
+      }
+      destorySession();
+   })
+
+   function destorySession(){
+      req.session.destroy();
    res.redirect("/");
+   }
+   
 })
 
 app.get('/home', function (req, res) {
@@ -161,17 +197,17 @@ app.post("/quiz/:testId", (req, res) => {
       let sql = "SELECT * FROM responses WHERE test_id = ? and student_id = ?"
       connection.query(sql, [req.session.testId, req.session.userid], (error, results) => {
          if (error) { return console.error(error.message); }
-         if(results<1){
+         if (results < 1) {
             getTestName();
-         } else{
-            m = ['error','You have already taken this quiz.'];
+         } else {
+            m = ['error', 'You have already taken this quiz.'];
             res.redirect("/home");
          }
       })
    } else {
       res.redirect("/");
    }
-   function getTestName(){
+   function getTestName() {
       let sql = "SELECT * FROM `tests` WHERE test_id = ?;";
       connection.query(sql, [req.session.testId], (error, results) => {
          if (error) { return console.error(error.message); }
@@ -179,7 +215,7 @@ app.post("/quiz/:testId", (req, res) => {
          takeQuiz();
       })
    }
-   function takeQuiz(){
+   function takeQuiz() {
       let sql = "SELECT * FROM questions WHERE test_id=?;";
       connection.query(sql, [req.session.testId], (error, results) => {
          if (error) { return console.error(error.message); }
@@ -192,7 +228,7 @@ app.post("/quiz/:testId", (req, res) => {
       let r = results;
       let multipleChoiceCounter = 0;
       let queryCounter = 0;
-      
+
       r.forEach((question) => {
          if (question.question_type == 'multiple-choice') {
             multipleChoiceCounter++;
@@ -204,7 +240,7 @@ app.post("/quiz/:testId", (req, res) => {
                queryCounter++;
                if (queryCounter == multipleChoiceCounter) {
                   req.session.questions = r;
-                  res.render("quiz", { questions: r , subject: testStack[0], test: testStack[1]});
+                  res.render("quiz", { questions: r, subject: testStack[0], test: testStack[1] });
                }
             });
          }
@@ -218,20 +254,20 @@ app.post("/submit", (req, res) => {
       let sql = "SELECT * FROM responses WHERE test_id = ? and student_id = ?"
       connection.query(sql, [req.session.testId, req.session.userid], (error, results) => {
          if (error) { return console.error(error.message); }
-         if(results<1){
+         if (results < 1) {
             submitQuiz();
-         } else{
-            m = ['warning','You have already submitted this quiz.'];
+         } else {
+            m = ['warning', 'You have already submitted this quiz.'];
             res.redirect("/home");
          }
       })
 
-      
+
    } else {
       res.redirect("/");
    }
 
-   function submitQuiz(){
+   function submitQuiz() {
       let timestamp = Date.now();
       let responseId = req.session.userid + req.session.testId + timestamp;
       console.log("response ID: " + typeof responseId);
@@ -264,7 +300,7 @@ app.post("/submit", (req, res) => {
          if (error) { return console.error(error.message); }
          console.log("Response saved");
          res.render("submitted");
-         m = ['success','Nice, One down'];
+         m = ['success', 'Nice, One down'];
       })
    }
 

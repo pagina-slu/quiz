@@ -25,5 +25,5 @@ if (!isset($_SESSION)) {
 
             ?></span>
     </div>
-    <a id="logout-button"><button>Logout</button></a>
+    <a id="logout-button" style="display: none;"><button>Logout</button></a>
 </header>

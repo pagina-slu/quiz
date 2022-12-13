@@ -30,11 +30,11 @@ $(document).ready(async () => {
             let scoreDiv = createDiv('score-div'); // Stores student score
             scoreDiv.innerHTML = `<sup>${response.score}</sup>/<sub>${totalPoints}</sub>`;
 
-            let greenButton = createButton('green-button', 'Mark As Checked');
+            let greenButton = createButton('green-button', 'Grade response');
             if (response.isChecked == true) { // Adds classname 'clicked' to span and button if already checked
                 nameDiv.classList.add('clicked');
                 greenButton.classList.add('clicked');
-                greenButton.textContent = "Mark As Unchecked";
+                greenButton.textContent = "Remove grade";
             }
             nameDiv.innerHTML = response.student_id + "<br>" + student.f_name + " " + student.l_name;
             let buttonWrapper = createDiv('button-wrapper');
@@ -49,6 +49,7 @@ $(document).ready(async () => {
                 responseDetails.forEach(res => {
 
                     let answerIsCorrect = checkAnswer(res.answer, questions[counter - 1].answer);
+                    console.log(answerIsCorrect);
                     content += `${counter}. ` +
                         "Question: " + questions[counter - 1].question +
                         "<br> Type: " + questions[counter - 1].type +
@@ -101,6 +102,7 @@ $(document).ready(async () => {
             searchicon.src = "res/images/searchicon.png";
             searchBar.appendChild(searchicon);
             searchBar.appendChild(search);
+            searchBar.style.display = 'none';
             search.addEventListener('keyup', () => {
                 let responseWrappers = document.querySelectorAll('.response-wrapper');
                 let searchkey = document.getElementById('search-bar').value.toLowerCase();
@@ -209,6 +211,12 @@ $(document).ready(async () => {
 
         questions.forEach(question => {
             let questionWrapper = createDiv('question-wrapper');
+            questionWrapper.draggable = true;
+            questionWrapper.addEventListener('dragstart', handleDragStart);
+            questionWrapper.addEventListener('dragover', handleDragOver);
+            questionWrapper.addEventListener('dragend', handleDragEnd);
+            questionWrapper.addEventListener('drop', handleDrop);
+            questionWrapper.addEventListener('drop', handleDrop);
             let form = createQuestionForm(question, currentTest.testId);
             forms.push(form);
             questionWrapper.appendChild(form);
@@ -247,12 +255,12 @@ $(document).ready(async () => {
                 let yesButton = createButton('modal-button', 'Yes');
                 yesButton.addEventListener('click', async () => {
                     await $.ajax(`processing/delete_schedule.php?scheduleId=${schedule.id}`,
-                    {
-                        success: () => {
-                            console.log("Deleted schedule.");
-                            closeModal();
-                        }
-                    });
+                        {
+                            success: () => {
+                                console.log("Deleted schedule.");
+                                closeModal();
+                            }
+                        });
                 });
 
                 let noButton = createButton('modal-button', 'No');
@@ -298,6 +306,36 @@ BUTTONS.forEach(button => {
 });
 
 // Functions
+function handleDragStart(e) {
+    this.style.opacity = '0.4';
+
+    dragSrcEl = this;
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    return false;
+}
+
+function handleDragEnd(e) {
+    this.style.opacity = '1';
+}
+
+function handleDrop(e) {
+    e.stopPropagation();
+
+    if (dragSrcEl !== this) {
+        console.log(dragSrcEl);
+        dragSrcEl = this.innerHTML;
+        this.innerHTML = e.dataTransfer.target;
+    }
+
+    return false;
+}
+
 function createBlankQuestion() {
     let question = [];
     question.question = '';
@@ -811,49 +849,31 @@ function getTotalNumberOfResponses() {
     return getResponses().length;
 }
 
-// Returns true if the answer is correct, and false if not
-// function checkAnswer(studentAnswer, questionNumber, category) {
-//     let currentQuestions = questions[category];
-//     let currentQuestion = currentQuestions[questionNumber];
-//     let correctAnswer = currentQuestion.answer;
-//     let correct = false;
-
-//     if (Array.isArray(correctAnswer) && correctAnswer.length > 1) {
-//         let stop = false;
-//         correctAnswer.forEach(answer => {
-//             answer = answer.toLowerCase();
-//             if (answer == studentAnswer.toLowerCase() && !stop) {
-//                 stop = true;
-//                 correct = true;
-//             }
-//         });
-//     }
-//     else if (correctAnswer.toLowerCase() == studentAnswer.toLowerCase()) {
-//         correct = true;
-//     }
-//     return correct;
-// }
-
 function checkAnswer(studentAnswer, correctAnswer) {
-    if (Array.isArray(correctAnswer) && correctAnswer.length > 1) {
+    console.log(correctAnswer);
+    console.log(studentAnswer);
+    let isCorrect = false;
+    if (Array.isArray(correctAnswer)) {
         correctAnswer.forEach(answer => {
+            console.log(answer);
             answer = answer.toLowerCase();
             if (answer == studentAnswer.toLowerCase()) {
-                return true;
+                console.log("tama!!!");
+                isCorrect = true;
             }
         });
     }
     else if (correctAnswer.toLowerCase() == studentAnswer.toLowerCase()) {
-        return true;
+        isCorrect = true;
     }
-    return false;
+    return isCorrect;
 }
 
 // Checks the number of correct answers
-function checkAnswers(answers, sequence, category) {
+function checkAnswers(answers, category) {
     let counter = 0;
-    for (let i = 0; i < sequence.length; i++) {
-        if (checkAnswer(answers[i], sequence[i], category)) counter++;
+    for (let i = 0; i < answers.length; i++) {
+        if (checkAnswer(answers[i], category)) counter++;
     }
     return counter;
 }

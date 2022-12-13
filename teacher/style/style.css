@@ -54,7 +54,10 @@ main > div {
   padding: 2rem;
 }
 
-.response-wrapper, .test-wrapper, .question-wrapper, .schedule-wrapper {
+.response-wrapper,
+.test-wrapper,
+.question-wrapper,
+.schedule-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -64,7 +67,8 @@ main > div {
   justify-content: center;
 }
 
-.test-name, .category-name {
+.test-name,
+.category-name {
   display: inline-block;
 }
 
@@ -82,7 +86,8 @@ main > div {
 }
 
 .name-div,
-.score-div, .schedule-details {
+.score-div,
+.schedule-details {
   background-color: rgb(190, 190, 190);
   border-radius: 10px;
   color: black;
@@ -117,7 +122,8 @@ main > div {
   color: white;
 }
 
-.answers-div, .choices-div {
+.answers-div,
+.choices-div {
   display: flex;
   flex-direction: column;
 }
@@ -164,7 +170,8 @@ main > div {
   overflow: auto;
 }
 
-.category-button, .class-button {
+.category-button,
+.class-button {
   background: white;
   border-bottom: 0.5rem solid transparent;
   border-radius: 5px;
@@ -173,13 +180,15 @@ main > div {
   padding: 2rem 2rem 1.5rem 2rem;
 }
 
-.category-button:hover, .class-button:hover {
+.category-button:hover,
+.class-button:hover {
   background: white;
   border-bottom: 0.5rem solid #86c232;
   color: black;
 }
 
-.category-button.selected, .class-button.selected {
+.category-button.selected,
+.class-button.selected {
   background-color: #86c232;
   color: white;
   outline: none;
@@ -193,25 +202,29 @@ main > div {
   color: #c23232;
 }
 
-.add-question-button, .save-changes-button, .add-schedule-button {
+.add-question-button,
+.save-changes-button,
+.add-schedule-button {
   background: rgb(190, 190, 190);
   border-radius: 5px;
   color: black;
 }
 
-.add-question-button:hover, .save-changes-button:hover, .add-schedule-button:hover {
+.add-question-button:hover,
+.save-changes-button:hover,
+.add-schedule-button:hover {
   background: #86c232;
 }
 
-.clear-category{
-  background: rgb(219, 17, 17);;
+.clear-category {
+  background: rgb(219, 17, 17);
 }
 
 .clear-category:hover {
   background: rgb(134, 8, 8);
 }
 
-.purple-button:hover{
+.purple-button:hover {
   background: rgb(126, 26, 151);
 }
 
@@ -255,7 +268,6 @@ main > div {
   align-items: center;
 }
 
-
 form {
   font-family: "OpenSans";
   display: flex;
@@ -277,7 +289,8 @@ form .wrapper {
   flex-direction: column;
 }
 
-form input[type=text], form input[name="answer"]{
+form input[type="text"],
+form input[name="answer"] {
   font-size: 1.6rem;
   padding: 0.5rem 1rem;
   border: none;
@@ -285,18 +298,20 @@ form input[type=text], form input[name="answer"]{
   outline: none;
 }
 
-form input[type=text]:focus {
+form input[type="text"]:focus {
   border-color: #86c232;
 }
 
-form input[name="choices[]"], form input[name="answer[]"] {
+form input[name="choices[]"],
+form input[name="answer[]"] {
   border: 2px solid #86c232;
-  background-color: #CDF29A;
+  background-color: #cdf29a;
   border-radius: 5px;
   width: unset;
 }
 
-.choices-div, .answers-div {
+.choices-div,
+.answers-div {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -305,7 +320,8 @@ form input[name="choices[]"], form input[name="answer[]"] {
   gap: 2rem;
 }
 
-.add-choice-button, .add-answer-button {
+.add-choice-button,
+.add-answer-button {
   margin-top: unset;
   border: 2px solid #86c232;
   border-radius: 5px;
@@ -316,10 +332,10 @@ form input[name="choices[]"], form input[name="answer[]"] {
 }
 
 .add-choice-button:hover {
-  background-color: #CDF29A;
+  background-color: #cdf29a;
 }
 
-form input[type=number] {
+form input[type="number"] {
   font-size: 1.6rem;
   padding: 0.5rem 1rem;
   width: 75px;

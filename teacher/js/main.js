@@ -67,17 +67,22 @@ $(document).ready(async () => {
                 if (greenButton.className == 'green-button') {
                     greenButton.textContent = "Mark As Unchecked";
                     await $.ajax(`processing/check_response.php?responseId=${response.id}`,
-                    {
-                        success: (r) => {
-                            console.log(r);
-                            scoreDiv.innerHTML = `<sup>${r}</sup>/<sub>${totalPoints}</sub>`;
-                        }
-                    });
-                    response.is_checked = true;
+                        {
+                            success: (r) => {
+                                console.log(r);
+                                scoreDiv.innerHTML = `<sup>${r}</sup>/<sub>${totalPoints}</sub>`;
+                                response.is_checked = true;
+                            }
+                        });
                 } else {
                     greenButton.textContent = "Mark As Checked";
-                    await $.ajax(`processing/uncheck_response.php?responseId=${response.id}`);
-                    response.is_checked = false;
+                    await $.ajax(`processing/uncheck_response.php?responseId=${response.id}`, {
+                        success: (r) => {
+                            console.log(r);
+                            scoreDiv.innerHTML = `<sup>${r}</sup>/<sub>${0}</sub>`;
+                            response.is_checked = false;
+                        }
+                    });
                 }
                 nameDiv.classList.toggle('clicked');
                 greenButton.classList.toggle('clicked');

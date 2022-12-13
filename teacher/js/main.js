@@ -1,6 +1,8 @@
 $(document).ready(async () => {
     let currentTest = await getCurrentTest();
     console.log(currentTest);
+    let currentClass = await getCurrentClass();
+    console.log(currentClass);
     let totalPoints = await getTotalPoints(currentTest.testId);
     let questions = await getQuestions(currentTest.testId);
     console.log(questions);
@@ -58,7 +60,7 @@ $(document).ready(async () => {
                     counter++;
 
                 });
-                setModalContent(currentTest.classDescription, content);
+                setModalContent(currentClass.classDescription, content);
                 openModal();
             });
 
@@ -86,7 +88,6 @@ $(document).ready(async () => {
                 }
                 nameDiv.classList.toggle('clicked');
                 greenButton.classList.toggle('clicked');
-                storeResponses(responses);
             });
 
             buttonWrapper.appendChild(viewButton);
@@ -130,10 +131,10 @@ $(document).ready(async () => {
             );
             container.insertBefore(searchBar, container.firstChild);
             // Button to clear responses for the specified category
-            let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Category');
+            let clearCategoryResponsesButton = createButton('clear-category', 'Clear Responses For This Test');
             clearCategoryResponsesButton.addEventListener('click', () => {
-                if (confirm("Are you sure you want to clear responses for this category?")) {
-                    clearCategoryResponses(test.classDescription);
+                if (confirm("Are you sure you want to clear responses for this test?")) {
+                    clearCategoryResponses(currentTest.testId);
                     responsesButton.click();
                 }
             });
@@ -816,20 +817,13 @@ function clearSelectedButtons() {
     });
 }
 
-function clearCategoryResponses(category) {
-    let responses = getResponses();
-    let toRemove = [];
-    for (let i = 0; i < responses.length; i++) {
-        let response = responses[i];
-        if (response.category == category) {
-            toRemove.push(i);
+async function clearCategoryResponses(testId) {
+    await $.ajax(`processing/delete_responses.php?testId=${testId}`,
+    {
+        success: () => {
+            console.log("Deleted responses.");
         }
-    }
-    toRemove.forEach(num => {
-        delete responses[num];
-    })
-    responses = removeNullValues(responses);
-    storeResponses(responses);
+    });
 }
 
 function removeNullValues(array) {

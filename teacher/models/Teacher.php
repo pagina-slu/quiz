@@ -379,4 +379,22 @@ class Teacher
         $query = "DELETE FROM schedules WHERE schedule_id = " . $scheduleId;
         $this->conn->query($query);
     }
+
+    public function deleteResponses($testId)
+    {
+        $query = "SELECT response_id FROM responses WHERE test_id = " . $testId;
+        $result = $this->conn->query($query);
+        $responseIds = array();
+        while ($row = $result->fetch_assoc()) {
+            array_push($responseIds, $row['response_id']);
+        }
+
+        foreach ($responseIds as &$responseId) {
+            $query = "DELETE FROM response_details WHERE response_id = " . $responseId;
+            $this->conn->query($query);
+        }
+
+        $query = "DELETE FROM responses WHERE test_id = " . $testId;
+        $this->conn->query($query);
+    }
 }

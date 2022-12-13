@@ -33,7 +33,7 @@ app.use(session({
 let connection = mysql.createConnection({
    host: 'localhost',
    user: 'root',
-   password: 'root',
+   password: '',
    database: 'pagina'
 });
 connection.connect(function (err) {

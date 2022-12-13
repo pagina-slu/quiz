@@ -341,15 +341,12 @@ class Teacher
     public function checkResponse($responseId)
     {
         $responseDetails = $this->getResponseDetails($responseId);
-        // $response['responseID'] = $row['response_id'];
-        // $response['questionID'] = $row['question_id'];
-        // $response['answer'] = $row['answer'];
         $score = 0;
         foreach ($responseDetails as &$response) {
             $question = $this->getQuestion($response['questionID']);
             foreach ($question['answer'] as &$answer) {
                 if ($response['answer'] == $answer) {
-                    $score = $score + 1;
+                    $score = $score + $question['points'];
                     break;
                 }
             }

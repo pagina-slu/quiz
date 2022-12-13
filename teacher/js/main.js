@@ -151,7 +151,6 @@ $(document).ready(async () => {
 
         let addQuestionButton = createButton('add-question-button', 'Add new question');
         addQuestionButton.addEventListener('click', () => {
-            console.log(currentTest);
             let questionWrapper = createDiv('question-wrapper');
             let form = createQuestionForm(createBlankQuestion(), currentTest.testId);
             forms.push(form);
@@ -217,6 +216,16 @@ $(document).ready(async () => {
             })
         });
 
+        let viewSummaryButton = createButton('questions-summary-button', 'View summary');
+        viewSummaryButton.addEventListener('click', () => {
+            let identificationCount = questions.filter(question => question.type == 'identification').length;
+            let trueOrFalseCount = questions.filter(question => question.type == 'true-or-false').length;
+            let multipleChoiceCount = questions.filter(question => question.type == 'multiple-choice').length
+            let content = `Total number of questions: ${questions.length}<br><br>Number of identification questions: ${identificationCount}<br>Number of true or false questions: ${trueOrFalseCount}<br>Number of multiple choice questions: ${multipleChoiceCount}<br>`;
+            setModalContent(currentTest.testName, content);
+            openModal();
+        });
+
         questions.forEach(question => {
             let questionWrapper = createDiv('question-wrapper');
             questionWrapper.draggable = true;
@@ -233,6 +242,7 @@ $(document).ready(async () => {
 
         mainDiv.appendChild(addQuestionButton);
         mainDiv.appendChild(saveChangesButton);
+        mainDiv.appendChild(viewSummaryButton);
         mainDiv.appendChild(container);
     });
 

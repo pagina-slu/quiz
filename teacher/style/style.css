@@ -205,7 +205,8 @@ main > div {
 .add-question-button,
 .save-changes-button,
 .add-schedule-button,
-.questions-summary-button {
+.questions-summary-button,
+.responses-summary-button {
   background: rgb(190, 190, 190);
   border-radius: 5px;
   color: black;
@@ -214,7 +215,8 @@ main > div {
 .add-question-button:hover,
 .save-changes-button:hover,
 .add-schedule-button:hover,
-.questions-summary-button:hover {
+.questions-summary-button:hover,
+.responses-summary-button:hover {
   background: #86c232;
 }
 

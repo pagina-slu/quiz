@@ -140,6 +140,13 @@ $(document).ready(async () => {
             container.appendChild(clearCategoryResponsesButton);
         }
 
+        let viewSummaryButton = createButton('responses-summary-button', 'View summary');
+        viewSummaryButton.addEventListener('click', () => {
+            let content = `Total number of responses: ${responses.length}`;
+            setModalContent(currentTest.testName, content);
+            openModal();
+        });
+        mainDiv.appendChild(viewSummaryButton);
         mainDiv.appendChild(container);
     });
 
@@ -165,60 +172,74 @@ $(document).ready(async () => {
 
         let saveChangesButton = createButton('save-changes-button', 'Save changes');
         saveChangesButton.addEventListener('click', () => {
-            console.log(forms);
-            forms.forEach(form => {
-                // Convert to jQuery object for serialize function
-                form = $(form);
-                let formArray = form.serializeArray();
-                let isNew = false;
-                let willDelete = false;
-                let questionId = null;
-                // Check if current form contains a new question or not
-                formArray.forEach(data => {
-                    if (data.name == 'questionId') {
-                        isNew = data.value == 'null' || data.value == 'undefined';
-                        questionId = parseInt(data.value);
-                    }
-                    if (data.name == 'delete') {
-                        willDelete = data.value == 'true';
-                    }
-                });
-
-                if (isNew) {
-                    // Add new question to database
-                    $.ajax({
-                        type: 'POST',
-                        url: 'processing/new_question.php',
-                        data: form.serialize(),
-                        dataType: 'text',
-                        success: (r) => {
-                            console.log(r);
-                            console.log("Added new question.");
+            let wrapper = createDiv('wrapper');
+            wrapper.style.display = 'flex';
+            wrapper.style.gap = '2rem';
+            let yesButton = createButton('modal-button', 'Yes');
+            yesButton.addEventListener('click', () => {
+                console.log(forms);
+                forms.forEach(form => {
+                    // Convert to jQuery object for serialize function
+                    form = $(form);
+                    let formArray = form.serializeArray();
+                    let isNew = false;
+                    let willDelete = false;
+                    let questionId = null;
+                    // Check if current form contains a new question or not
+                    formArray.forEach(data => {
+                        if (data.name == 'questionId') {
+                            isNew = data.value == 'null' || data.value == 'undefined';
+                            questionId = parseInt(data.value);
+                        }
+                        if (data.name == 'delete') {
+                            willDelete = data.value == 'true';
                         }
                     });
-                } else {
-                    // Delete question
-                    if (willDelete) {
-                        deleteQuestion(questionId);
-                    } else {
-                        console.log(form.serialize());
-                        // Update question
+
+                    if (isNew) {
+                        // Add new question to database
                         $.ajax({
                             type: 'POST',
-                            url: 'processing/update_question.php',
+                            url: 'processing/new_question.php',
                             data: form.serialize(),
                             dataType: 'text',
                             success: (r) => {
                                 console.log(r);
-                                console.log("Updated question.");
+                                console.log("Added new question.");
                             }
                         });
+                    } else {
+                        // Delete question
+                        if (willDelete) {
+                            deleteQuestion(questionId);
+                        } else {
+                            console.log(form.serialize());
+                            // Update question
+                            $.ajax({
+                                type: 'POST',
+                                url: 'processing/update_question.php',
+                                data: form.serialize(),
+                                dataType: 'text',
+                                success: (r) => {
+                                    console.log(r);
+                                    console.log("Updated question.");
+                                }
+                            });
+                        }
                     }
+                });
 
-                }
+                closeModal();
+            });
 
-                console.log(JSON.stringify(form.serialize()));
-            })
+            let noButton = createButton('modal-button', 'No');
+            noButton.addEventListener('click', () => {
+                closeModal();
+            });
+            wrapper.appendChild(yesButton);
+            wrapper.appendChild(noButton);
+            setModalContent('Are you sure?', wrapper);
+            openModal();
         });
 
         let viewSummaryButton = createButton('questions-summary-button', 'View summary');

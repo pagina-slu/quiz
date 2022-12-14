@@ -17,9 +17,8 @@ html
         main#main
             #header-wrapper
                 h1 Hi, #{username}
-                div.notification
-                    span Inbox
-                    span.badge 3
+                form(action='/home' method='get')
+                    input(type='submit' class='logout-button' value="Home")
                 form(action='/logout' method='get')
                     input(type='submit' class='logout-button' value="logout")
             #title-wrapper

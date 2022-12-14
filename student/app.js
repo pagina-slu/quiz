@@ -19,14 +19,14 @@ app.use(express.static(path.join(__dirname, 'public')))
 // app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const oneDay = 1000 * 60 * 60 * 24;
+// const oneDay = 1000 * 60 * 60 * 24;
 
 let classes = {};       //hold the list of classes
 let testStack = [];              //hold the value of current test
 app.use(session({
    secret: "thisismysecrctekey",
    saveUninitialized: true,
-   cookie: { maxAge: oneDay },
+   // cookie: { maxAge: oneDay },
    resave: false
 }));
 
@@ -166,8 +166,8 @@ app.get('/home', function (req, res) {
 
 app.post("/test/:code", function (req, res) {
    if (req.session.userid) {
-
       var classCode = req.params.code;
+      req.session.classCode = classCode;
       testStack.push(classes[classCode].toString());
       let sql = "SELECT * FROM tests where class_code=?";
       connection.query(sql, [classCode], (error, results) => {
@@ -186,7 +186,8 @@ app.post("/test/:code", function (req, res) {
          if (error) {
             return console.error(error.message);
          }
-         res.render("test", { username: results[0].first_name, code: classCode, subject: classes[classCode].toString(), tests: r });
+         res.render("test", { username: results[0].first_name, code: classCode, subject: classes[classCode].toString(), tests: r, message:m});
+         m=[];
       })
    }
 })
@@ -198,20 +199,51 @@ app.post("/quiz/:testId", (req, res) => {
       connection.query(sql, [req.session.testId, req.session.userid], (error, results) => {
          if (error) { return console.error(error.message); }
          if (results < 1) {
-            try{
-               getTestName();
-            } catch(e){
-               m = ['error', 'There was an error while acessing the questions'];
-               res.redirect("/home");
-            }
-            
+            checkSchedule();
          } else {
             m = ['error', 'You have already taken this quiz.'];
-            res.redirect("/home");
+            res.redirect(307, `/test/`+req.session.classCode);
+            // res.redirect("/home");
          }
       })
    } else {
       res.redirect("/");
+   }
+   function checkSchedule(){
+      let sql = "SELECT * FROM `schedules` WHERE test_id = ?;";
+      connection.query(sql, [req.session.testId], (error, results) => {
+         if (error) { return console.error(error.message); }
+         
+         try{
+            if(results[0].open_date || results[0].close_date){
+               let openDate = new Date(results[0].open_date);
+               let closeDate = results[0].close_date;
+               let timeNow = new Date();
+               if(timeNow > openDate && timeNow < closeDate){
+                  try{
+                     getTestName();
+                  } catch(e){
+                     m = ['error', 'There was an error while acessing the questions'];
+                     res.redirect(307, `/test/`+req.session.classCode);
+                     // res.redirect("/home");
+                  }
+               } else{
+                  m = ['warning', 'This quiz is not available'];
+                  res.redirect(307, `/test/`+req.session.classCode);
+                  // res.redirect("/home");
+               }
+            }
+            
+         } catch(e){
+            try{
+               getTestName();
+            } catch(e){
+               m = ['error', 'There was an error while acessing the questions'];
+               res.redirect(307, `/test/`+req.session.classCode);
+               // res.redirect("/home");
+            }
+         }
+      })
    }
    function getTestName() {
       let sql = "SELECT * FROM `tests` WHERE test_id = ?;";
@@ -222,7 +254,8 @@ app.post("/quiz/:testId", (req, res) => {
             takeQuiz();
          } catch(e){
             m = ['error', 'There was an error while acessing the questions'];
-            res.redirect("/home");
+            res.redirect(307, `/test/`+req.session.classCode);
+            // res.redirect("/home");
          }
          
       })
@@ -236,7 +269,8 @@ app.post("/quiz/:testId", (req, res) => {
             getQuestions(results);
          } catch(e){
             m = ['error', 'There was an error while acessing the questions'];
-            res.redirect("/home");
+            res.redirect(307, `/test/`+req.session.classCode);
+            // res.redirect("/home");
          }
       })
    }
@@ -258,7 +292,7 @@ app.post("/quiz/:testId", (req, res) => {
                queryCounter++;
                if (queryCounter == multipleChoiceCounter) {
                   req.session.questions = r;
-                  res.render("quiz", { questions: r, subject: testStack[0], test: testStack[1] });
+                  res.render("quiz", { questions: r, subject: testStack[0], test: testStack[1], message:m});
                }
             });
          }
@@ -309,7 +343,7 @@ app.post("/submit", (req, res) => {
          response.push(responseId);
          response.push(req.session.questions[i].question_id);
          response.push(eval("req.body.q" + i));
-         console.log("response: " + response);
+         // console.log("response: " + response);
          detailValues[0].push(response);
          // req.body.q0
       }

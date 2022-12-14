@@ -8,13 +8,13 @@ html
         title p&agrave;gina quiz
         // Category selector
     body
+        if message[0]
+            #status-messages-container
+            script(src='../js/popup.js')
+            script. 
+                let message = !{JSON.stringify(message)};
+                addStatusMessage(message[0], message[1]);
         main#main
-            if message
-                #status-messages-container
-                script(src='../js/popup.js')
-                script. 
-                    let message = !{JSON.stringify(questions)}
-                    addStatusMessage(message[0], message[1]);
             #header-wrapper
                 h1 Hi, #{username}
                 div.notification

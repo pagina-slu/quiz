@@ -40,7 +40,7 @@ body {
   text-align: center;
   top: 50%;
   transform: translate(-50%, -90%);
-  width: 30%;
+  width: 40%;
 }
 
 #login h1 {
@@ -620,7 +620,7 @@ footer p {
   position: absolute;
   /* float: top; */
   top: 0;
-  right: 0;
+  right: 1rem;
   animation: float-in 3s ease-out;
   
 }

@@ -142,7 +142,7 @@ $(document).ready(async () => {
 
         let viewSummaryButton = createButton('responses-summary-button', 'View summary');
         viewSummaryButton.addEventListener('click', async () => {
-            let content = `Total number of responses: ${responses.length}<br>Highest Score: ${await getHighestScore(currentTest.testId)}<br>Average Score: ${await getAverageScore(currentTest.testId)}<br><br>`;
+            let content = `Total number of responses: ${responses.length}<br>Highest Score: ${await getHighestScore(currentTest.testId)}<br>Average Score: ${await getAverageScore(currentTest.testId)}<br><br>Correct answers per question:<br>`;
             console.log(questions);
             let counter = 1;
             questions.forEach(async question => {

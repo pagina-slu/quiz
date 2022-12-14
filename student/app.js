@@ -1,32 +1,23 @@
-// const jsStringify = require('js-stringify');
 const express = require('express');           //to get get post method request 
 const mysql = require('mysql');               //to connect to database
 const session = require('express-session');    //for session handling
 const bodyParser = require('body-parser');     //to get the body of html request
 const path = require('path');                     //to work with paths
 
-const { resolve } = require('path');
-const { get } = require('http');
-// const cookieParser = require("cookie-parser");
-// const { clearScreenDown } = require('readline');
-let m = [];
 const app = express();
 app.listen(process.env.PORT || "8000");
 app.use(express.json());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, 'public')))
-// app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// const oneDay = 1000 * 60 * 60 * 24;
-
-let classes = {};       //hold the list of classes
+let m = [];                       //store messages
+let classes = {};                //hold the list of classes
 let testStack = [];              //hold the value of current test
 app.use(session({
    secret: "thisismysecrctekey",
    saveUninitialized: true,
-   // cookie: { maxAge: oneDay },
    resave: false
 }));
 
@@ -143,7 +134,6 @@ app.get('/home', function (req, res) {
          for (var i = 0; i < results.length; i++) {
             classes[results[i].class_code] = results[i].class_description;
          }
-         // console.log(classes);
          getStudentName();
 
       });
@@ -203,7 +193,6 @@ app.post("/quiz/:testId", (req, res) => {
          } else {
             m = ['error', 'You have already taken this quiz.'];
             res.redirect(307, `/test/`+req.session.classCode);
-            // res.redirect("/home");
          }
       })
    } else {
@@ -225,12 +214,10 @@ app.post("/quiz/:testId", (req, res) => {
                   } catch(e){
                      m = ['error', 'There was an error while acessing the questions'];
                      res.redirect(307, `/test/`+req.session.classCode);
-                     // res.redirect("/home");
                   }
                } else{
                   m = ['warning', 'This quiz is not available'];
                   res.redirect(307, `/test/`+req.session.classCode);
-                  // res.redirect("/home");
                }
             }
             
@@ -240,7 +227,6 @@ app.post("/quiz/:testId", (req, res) => {
             } catch(e){
                m = ['error', 'There was an error while acessing the questions'];
                res.redirect(307, `/test/`+req.session.classCode);
-               // res.redirect("/home");
             }
          }
       })
@@ -255,7 +241,6 @@ app.post("/quiz/:testId", (req, res) => {
          } catch(e){
             m = ['error', 'There was an error while acessing the questions'];
             res.redirect(307, `/test/`+req.session.classCode);
-            // res.redirect("/home");
          }
          
       })
@@ -270,7 +255,6 @@ app.post("/quiz/:testId", (req, res) => {
          } catch(e){
             m = ['error', 'There was an error while acessing the questions'];
             res.redirect(307, `/test/`+req.session.classCode);
-            // res.redirect("/home");
          }
       })
    }
@@ -322,14 +306,10 @@ app.post("/submit", (req, res) => {
    function submitQuiz() {
       let timestamp = Date.now();
       let responseId = req.session.userid + req.session.testId + timestamp;
-      console.log("response ID: " + typeof responseId);
       let responseSQL = 'INSERT INTO `responses`(`response_id`, `test_id`, `student_id`, `is_checked`, `score`) VALUES (?,?,?,?,?)';
       let responseValues = [responseId, req.session.testId, req.session.userid, false, 0];
-      console.log(responseValues);
-
       connection.query(responseSQL, responseValues, (error, results) => {
          if (error) { return console.error(error.message); }
-         console.log();
          insertResponseDetails(responseId);
       })
       let i = 0;
@@ -343,9 +323,7 @@ app.post("/submit", (req, res) => {
          response.push(responseId);
          response.push(req.session.questions[i].question_id);
          response.push(eval("req.body.q" + i));
-         // console.log("response: " + response);
          detailValues[0].push(response);
-         // req.body.q0
       }
 
       connection.query(detailsSQL, detailValues, (error, results) => {
@@ -357,17 +335,3 @@ app.post("/submit", (req, res) => {
    }
 
 })
-// // Sample query
-// let sql = `SELECT * FROM accounts`;
-
-// connection.query(sql, (error, results, fields) => {
-//   if (error) {
-//     return console.error(error.message);
-//   }
-//   console.log(results);
-// });
-
-// connection.end();
-
-
-

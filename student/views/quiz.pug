@@ -33,10 +33,6 @@ html
             function startQuiz() {
                 console.log(countAnsweredQuestions());
                 showProgressBar();
-                //- window.onbeforeunload = function () {
-                //-     return "Your progress would be lost";
-                //- }
-
                 let quizWrapper = document.getElementById("quiz-wrapper");
                 for (let i = 0; i < questions.length; i++) {
                     switch (questions[i].question_type) {
@@ -219,7 +215,6 @@ html
                 }
                 if (answeredAll) {
 
-                    //- saveLocally(currentName, idNum, currentCategory, answers, questionsce);
                     alert("Your response has been submitted. Thank you for answering!")
                     resetQuiz();
                 }

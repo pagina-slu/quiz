@@ -5,6 +5,8 @@ $(document).ready(async () => {
     console.log(currentClass);
     let totalPoints = await getTotalPoints(currentTest.testId);
     let questions = await getQuestions(currentTest.testId);
+    let questionSequence;
+    let questionForms = [];
     console.log(questions);
     let mainDiv = document.getElementById('main');
     let questionsButton = document.getElementById('questions-button');
@@ -260,10 +262,10 @@ $(document).ready(async () => {
             questionWrapper.addEventListener('dragover', handleDragOver);
             questionWrapper.addEventListener('dragend', handleDragEnd);
             questionWrapper.addEventListener('drop', handleDrop);
-            questionWrapper.addEventListener('drop', handleDrop);
             let form = createQuestionForm(question, currentTest.testId);
             forms.push(form);
             questionWrapper.appendChild(form);
+            questionForms.push(questionWrapper);
             container.appendChild(questionWrapper);
         });
 
@@ -371,11 +373,11 @@ function handleDragEnd(e) {
 
 function handleDrop(e) {
     e.stopPropagation();
-
     if (dragSrcEl !== this) {
         console.log(dragSrcEl);
+        console.log(e);
         dragSrcEl = this.innerHTML;
-        this.innerHTML = e.dataTransfer.target;
+        this.innerHTML = e.dataTransfer.getData('text/html');
     }
 
     return false;

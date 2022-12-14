@@ -5,14 +5,11 @@ $(document).ready(async () => {
     console.log(currentClass);
     let totalPoints = await getTotalPoints(currentTest.testId);
     let questions = await getQuestions(currentTest.testId);
-    let questionSequence;
-    let questionForms = [];
     console.log(questions);
     let mainDiv = document.getElementById('main');
     let questionsButton = document.getElementById('questions-button');
     let responsesButton = document.getElementById('responses-button');
     let schedulesButton = document.getElementById('schedules-button');
-
 
     responsesButton.addEventListener('click', async () => {
         removeAllChildNodes(mainDiv);
@@ -144,10 +141,19 @@ $(document).ready(async () => {
         }
 
         let viewSummaryButton = createButton('responses-summary-button', 'View summary');
-        viewSummaryButton.addEventListener('click', () => {
-            let content = `Total number of responses: ${responses.length}`;
-            setModalContent(currentTest.testName, content);
-            openModal();
+        viewSummaryButton.addEventListener('click', async () => {
+            let content = `Total number of responses: ${responses.length}<br>Highest Score: ${await getHighestScore(currentTest.testId)}<br>Average Score: ${await getAverageScore(currentTest.testId)}<br><br>Correct answers per question:<br>`;
+            console.log(questions);
+            let counter = 1;
+            questions.forEach(async question => {
+                console.log(question);
+                let correctAnswers = await getCorrectAnswersCount(question.id);
+                content += `Question ${counter}: ${correctAnswers}/${responses.length}, ${(correctAnswers / responses.length) * 100}%<br>`;
+                counter++;
+                console.log(content);
+                setModalContent(currentTest.testName, content);
+                openModal();
+            });
         });
         mainDiv.appendChild(viewSummaryButton);
         mainDiv.appendChild(container);
@@ -257,7 +263,7 @@ $(document).ready(async () => {
 
         questions.forEach(question => {
             let questionWrapper = createDiv('question-wrapper');
-            questionWrapper.draggable = true;
+            questionWrapper.draggable = false;
             questionWrapper.addEventListener('dragstart', handleDragStart);
             questionWrapper.addEventListener('dragover', handleDragOver);
             questionWrapper.addEventListener('dragend', handleDragEnd);
@@ -265,7 +271,6 @@ $(document).ready(async () => {
             let form = createQuestionForm(question, currentTest.testId);
             forms.push(form);
             questionWrapper.appendChild(form);
-            questionForms.push(questionWrapper);
             container.appendChild(questionWrapper);
         });
 
@@ -435,11 +440,32 @@ function createQuestionForm(question, testId) {
         willDelete.value = true;
     });
 
-    // Append points
+    let upButton = document.createElement('img');
+    upButton.src = 'images/up.svg';
+    upButton.classList.add('up-button');
+    upButton.addEventListener('click', () => {
+
+    });
+
+    let downButton = document.createElement('img');
+    downButton.src = 'images/down.svg';
+    downButton.classList.add('down-button');
+    downButton.addEventListener('click', () => {
+        // Get position in array
+    });
     let rowWrapper = createDiv('wrapper');
     rowWrapper.classList.add('row');
-    rowWrapper.style.justifyContent = 'space-between';
     let columnWrapper = createDiv('wrapper');
+    columnWrapper.classList.add('row');
+    columnWrapper.append(upButton);
+    columnWrapper.append(downButton);
+    rowWrapper.appendChild(columnWrapper);
+    form.appendChild(rowWrapper);
+    // Append points
+    rowWrapper = createDiv('wrapper');
+    rowWrapper.classList.add('row');
+    rowWrapper.style.justifyContent = 'space-between';
+    columnWrapper = createDiv('wrapper');
     columnWrapper.append(questionTypeLabel);
     columnWrapper.append(questionType);
     rowWrapper.appendChild(columnWrapper);
@@ -821,11 +847,11 @@ function clearSelectedButtons() {
 
 async function clearCategoryResponses(testId) {
     await $.ajax(`processing/delete_responses.php?testId=${testId}`,
-    {
-        success: () => {
-            console.log("Deleted responses.");
-        }
-    });
+        {
+            success: () => {
+                console.log("Deleted responses.");
+            }
+        });
 }
 
 function removeNullValues(array) {
@@ -833,50 +859,37 @@ function removeNullValues(array) {
 }
 
 // Return the number of correct answers for a question
-function getCorrectAnswersCount(category, questionNumber) {
-    let question = questions[category][questionNumber];
-    let count = 0;
-    let responses = getResponsesForCategory(category);
-    responses.forEach(response => {
-        let sequence = response.sequence;
-        let index = 0;
-        // Get index of answer based on sequence
-        let hasAnswer = false; // To avoid errors when question is not yet answered
-        sequence.every(s => {
-            if (s == questionNumber) {
-                hasAnswer = true;
-                return false;
+async function getCorrectAnswersCount(questionId) {
+    let count = await $.ajax(`processing/get_correct_answers_count.php?questionId=${questionId}`,
+        {
+            success: (r) => {
+                console.log(r);
+                return r;
             }
-            index++;
-            return true;
         });
-        if (hasAnswer && checkAnswer(response.answers[index], questionNumber, category)) count++;
-    });
     return count;
 }
 
-function getHighestScore(scores) {
-    let counter = Object.values(scores)
-    return Math.max.apply(null, counter);
+async function getHighestScore(testId) {
+    let highestScore = await $.ajax(`processing/get_highest_score.php?testId=${testId}`,
+        {
+            success: (score) => {
+                return score;
+            }
+        });
+
+    return parseInt(highestScore.replace(/^"(.+(?="$))"$/, '$1'));
 }
 
-function getAverageScore(scores) {
-    let counter = Object.values(scores);
-    let sum = 0;
-    counter.forEach((num) => {
-        sum += num
-    });
-    let average = sum / Object.keys(scores).length;
-    return average.toFixed(2);
-}
+async function getAverageScore(testId) {
+    let averageScore = await $.ajax(`processing/get_average_score.php?testId=${testId}`,
+        {
+            success: (score) => {
+                return score;
+            }
+        });
 
-function getNumberOfResponses(category) {
-    let responses = getResponsesForCategory(category);
-    return responses.length;
-}
-
-function getTotalNumberOfResponses() {
-    return getResponses().length;
+    return parseInt(averageScore.replace(/^"(.+(?="$))"$/, '$1'));
 }
 
 function checkAnswer(studentAnswer, correctAnswer) {

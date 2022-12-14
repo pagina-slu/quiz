@@ -20,7 +20,7 @@ class Teacher
     public function createNewQuestion($data)
     {
         $query = $this->conn->prepare("INSERT INTO questions(test_id, question, question_type, points) VALUES(?, ?, ?, ?)");
-        $query->bind_param("issi", $data['test-id'], $data['question'], $data['question-type'], $data['points']);
+        $query->bind_param("issi", $data['test-id'], trim($data['question']), $data['question-type'], $data['points']);
         $query->execute();
         $last_id = $this->conn->insert_id;
         if (isset($data['choices'])) {
@@ -288,6 +288,24 @@ class Teacher
         return $schedules;
     }
 
+    public function getHighestScore($testId) {
+        $query = "SELECT MAX(score) AS max_score FROM responses WHERE test_id = " . $testId;
+        $result = $this->conn->query($query);
+        $row = $result->fetch_assoc();
+
+        return $row['max_score'];
+    }
+
+    public function getAverageScore($testId) {
+        $query = "SELECT AVG(score) AS average_score FROM responses WHERE test_id = " . $testId;
+        $result = $this->conn->query($query);
+        $row = $result->fetch_assoc();
+
+        return $row['average_score'];
+    }
+
+
+
     // Update
     public function updateQuestion($question)
     {
@@ -345,7 +363,8 @@ class Teacher
         foreach ($responseDetails as &$response) {
             $question = $this->getQuestion($response['questionID']);
             foreach ($question['answer'] as &$answer) {
-                if ($response['answer'] == $answer) {
+                
+                if (strtolower(trim($response['answer'])) == strtolower(trim($answer))) {
                     $score = $score + $question['points'];
                     break;
                 }
@@ -355,6 +374,22 @@ class Teacher
         $query = "UPDATE responses SET is_checked = true, score = " . $score . " WHERE response_id = " . $responseId;
         $this->conn->query($query);
         return $score;
+    }
+
+    public function getCorrectAnswersCount($questionId) {
+        $count = 0;
+        $query = "SELECT * FROM response_details WHERE question_id = " . $questionId;
+        $result = $this->conn->query($query);
+        while ($row = $result->fetch_assoc()) {
+            $question = $this->getQuestion($row['question_id']);
+            foreach ($question['answer'] as &$answer) {
+                if (strtolower(trim($row['answer'])) == strtolower(trim($answer))) {
+                    $count = $count + 1;
+                    break;
+                }
+            }
+        }
+        return $count;
     }
 
     public function uncheckResponse($responseId)

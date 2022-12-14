@@ -1,6 +1,6 @@
 @font-face {
   font-family: "OpenSans";
-  src: url("../../res/fonts/OpenSans.ttf");
+  src: url("../res/fonts/OpenSans.ttf");
 }
 
 /* Reset */
@@ -228,4 +228,38 @@ form button:hover {
 .column {
   display: flex;
   flex-direction: column !important;
+}
+
+.settings-button:hover+.dropdown {
+  display: block;
+}
+
+.dropdown:hover {
+  display: block;
+}
+
+.dropdown
+
+.settings-button {
+  position: relative;
+}
+
+.dropdown {
+  background-color: white;
+  margin: 1rem;
+  padding: 1em 0;
+  position: absolute; /*WITH RESPECT TO PARENT*/
+  display: none;
+  border-radius: 0.8rem;
+  font-size: 1.3rem;
+  width: 100%;
+  z-index: 6000;
+}
+
+.dropdown li {
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+.dropdown li + li {
+  margin-top: 1rem;
 }

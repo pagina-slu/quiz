@@ -33,7 +33,7 @@ app.use(session({
 let connection = mysql.createConnection({
    host: 'localhost',
    user: 'root',
-   password: '',
+   password: 'root',
    database: 'pagina'
 });
 connection.connect(function (err) {
@@ -198,7 +198,13 @@ app.post("/quiz/:testId", (req, res) => {
       connection.query(sql, [req.session.testId, req.session.userid], (error, results) => {
          if (error) { return console.error(error.message); }
          if (results < 1) {
-            getTestName();
+            try{
+               getTestName();
+            } catch(e){
+               m = ['error', 'There was an error while acessing the questions'];
+               res.redirect("/home");
+            }
+            
          } else {
             m = ['error', 'You have already taken this quiz.'];
             res.redirect("/home");
@@ -211,18 +217,30 @@ app.post("/quiz/:testId", (req, res) => {
       let sql = "SELECT * FROM `tests` WHERE test_id = ?;";
       connection.query(sql, [req.session.testId], (error, results) => {
          if (error) { return console.error(error.message); }
-         testStack.push(results[0].test_name);
-         takeQuiz();
+         try{
+            testStack.push(results[0].test_name);
+            takeQuiz();
+         } catch(e){
+            m = ['error', 'There was an error while acessing the questions'];
+            res.redirect("/home");
+         }
+         
       })
    }
    function takeQuiz() {
       let sql = "SELECT * FROM questions WHERE test_id=?;";
       connection.query(sql, [req.session.testId], (error, results) => {
          if (error) { return console.error(error.message); }
-         testStack.push(results[0].test_name);
-         getQuestions(results);
+         try{
+            testStack.push(results[0].test_name);
+            getQuestions(results);
+         } catch(e){
+            m = ['error', 'There was an error while acessing the questions'];
+            res.redirect("/home");
+         }
       })
    }
+
    function getQuestions(results) {
       let sql = "SELECT * FROM question_choices WHERE question_id=?"
       let r = results;

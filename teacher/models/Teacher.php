@@ -356,6 +356,12 @@ class Teacher
         }
     }
 
+    public function updateSchedule($data) {
+        $query = $this->conn->prepare("UPDATE schedules SET open_date = ?, close_date = ? WHERE test_id = ?");
+        $query->bind_param("ssi", $data['open-date'], $data['close-date'], $data['test-id']);
+        $query->execute();
+    }
+
     public function checkResponse($responseId)
     {
         $responseDetails = $this->getResponseDetails($responseId);

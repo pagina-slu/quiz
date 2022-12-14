@@ -38,20 +38,23 @@ body {
   padding: 5rem;
   position: fixed;
   text-align: center;
-  top: 50%;
+  top: 60%;
   transform: translate(-50%, -90%);
-  width: 30%;
+  width: 40%;
 }
 
 #login h1 {
   color: #111;
   font-family: 'Helvetica Neue', sans-serif;
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 4rem;
+  font-weight: bolder;
   letter-spacing: -1px;
   line-height: 1;
   text-align: center;
   margin-bottom: 4rem;
+  border: #000000;
+  border-style: dashed;
+  padding: 1rem;
 }
 
 #login p {
@@ -129,6 +132,7 @@ body {
 
 #login .input {
   text-align: left;
+  width: 60%;
 }
 
 #login .input.focus label {
@@ -139,7 +143,7 @@ body {
 }
 
 #login input {
-  font-size: 1.4rem;
+  font-size: 2rem;
   height: 3.5rem;
   position: relative;
   width: 100%;
@@ -165,6 +169,13 @@ body {
   transition: 0.2s;
 }
 
+#login #login-btn{
+  width: 80%;
+  font-size: 2.1rem;
+  font-weight: bold;
+  /* padding: 0.5rem; */
+}
+
 #login-btn:hover {
   background-color: #61892f;
 }
@@ -178,7 +189,8 @@ main {
   display: flex;
   flex-direction: column;
   padding-bottom: 5rem;
-  width: 80vw;
+  width: 70vw;
+  align-items: center;
 }
 
 #user-wrapper {
@@ -200,6 +212,11 @@ main {
   width: 40rem;
 }
 
+form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 #enter-button {
   background-color: white;
   border-radius: 1rem;
@@ -239,24 +256,28 @@ main {
   color: white;
   display: flex;
   flex-direction: column;
-  height: 10rem;
+  /* height: 10rem; */
   justify-content: center;
   margin-bottom: 2rem;
   margin-top: 5rem;
-  padding: 1.5rem;
+  padding: 2rem;
   text-align: left;
-  width: 100%;
+  width: 100vw;
+  border-radius: 10px;
 }
 
 #title-wrapper p {
-  font-size: 2rem;
+  margin-top: 0.5rem;
+  font-size: 3rem;
 }
 
 #title {
-  font-size: 3.4rem;
+  text-align: center;
+  font-size: 4rem;
   font-weight: bold;
-
 }
+
+
 
 #category-wrapper {
   display: flex;
@@ -295,28 +316,34 @@ h1 {
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
-  width: 80vw;
+  width: 60vw;
+  background-color: white;
+  color: black;
 }
 
 .question-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 1rem;
   justify-content: space-between;
-  padding: 3rem 0 3rem 3rem;
+  padding: 3rem 3rem 3rem 3rem;
 }
 
 .label-wrapper {
+  padding: 3rem;
+  background-color: rgb(126, 26, 151);
+  color: white;
+  border-radius: 30px;
   display: flex;
   width: 100%;
+  justify-content: center;
 }
 
 .points {
-  /* display: block; */
   font-size: 1.2rem;
   color: #86c232;
-  width: 10%;
-  /* color: white; */
+  width: 8%;
+  text-align: right;
 }
 
 .question {
@@ -330,6 +357,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   max-width: 100%;
+  justify-content: center;
 }
 
 .input-wrapper .input,
@@ -353,7 +381,7 @@ h1 {
 .input-wrapper input[type="radio"] {
   appearance: none;
 
-  border: 2px solid white;
+  border: 2px solid black;
   border-radius: 50%;
   cursor: pointer;
   height: 1.6rem;
@@ -418,11 +446,11 @@ input::-webkit-inner-spin-button {
 }
 
 .input-wrapper .identification input[type="text"] {
-  background-color: transparent;
-  border-color: white;
+  background-color: rgb(126, 26, 151,0.2);
+  border-color: rgb(126, 26, 151);
   border-style: solid;
-  caret-color: white;
-  color: white;
+  caret-color: rgb(126, 26, 151);
+  color: black;
   font-size: 1.6rem;
   height: 50px;
   padding-left: 1rem;
@@ -430,9 +458,9 @@ input::-webkit-inner-spin-button {
 }
 
 .input-wrapper input[type="text"]:focus {
-  border-color: rgb(126, 26, 151);
+  border-color:  #ff98ff;;
   border-radius: 5px;
-  border-width: 2px;
+  border-width: 4px;
   outline: none;
 }
 
@@ -448,13 +476,13 @@ input::-webkit-inner-spin-button {
   border-color: transparent;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 1.5rem;
-  height: 5rem;
-  width: 15rem;
+  font-size: 2rem;
+  height: 7rem;
+  width: 20rem;
 }
 
 #submit-button:hover {
-  background-color: rgb(126, 26, 151);
+  background-color: #86c232;
   border-color: transparent;
   color: aliceblue;
 }
@@ -492,7 +520,7 @@ input::-webkit-inner-spin-button {
 }
 
 #progress-circle span {
-  color: rgb(126, 26, 151);
+  color: #86c232;
   cursor: default;
   display: block;
   line-height: 8em;
@@ -517,7 +545,7 @@ input::-webkit-inner-spin-button {
 }
 
 #value-bar {
-  border: 0.95em solid rgb(126, 26, 151);
+  border: 0.95em solid #86c232;
   border-radius: 50%;
   box-sizing: border-box;
   clip: rect(0, 3.5em, 8em, 0);
@@ -530,7 +558,7 @@ input::-webkit-inner-spin-button {
 
 /* Progress bar filling the whole right half for values above 50% */
 #progress-circle.over50 .first50-bar {
-  background-color: rgb(126, 26, 151);
+  background-color:#86c232;
   border-radius: 50%;
   clip: rect(0, 8em, 8em, 3.5em);
   height: 8em;
@@ -606,7 +634,7 @@ footer p {
   position: absolute;
   /* float: top; */
   top: 0;
-  right: 0;
+  right: 1rem;
   animation: float-in 3s ease-out;
   
 }
@@ -672,3 +700,5 @@ footer p {
   background-color: #E1AFAF;
   color: #790909;
 }
+
+

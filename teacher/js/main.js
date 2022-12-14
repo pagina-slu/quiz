@@ -289,7 +289,6 @@ $(document).ready(async () => {
         schedules.forEach(schedule => {
             console.log(schedule);
             let s = new Date(schedule.open_date);
-            console.log(s);
             hasSchedule = true;
             let scheduleWrapper = createDiv('schedule-wrapper');
             let scheduleDetails = document.createElement('span');
@@ -297,40 +296,17 @@ $(document).ready(async () => {
             scheduleDetails.textContent = `${schedule.open_date} to ${schedule.close_date}`;
             scheduleWrapper.appendChild(scheduleDetails);
 
-            let deleteButton = document.createElement('img');
-            deleteButton.src = 'images/delete.svg';
-            deleteButton.classList.add('delete-button');
-            deleteButton.addEventListener('click', () => {
-                let wrapper = createDiv('wrapper');
-                wrapper.style.display = 'flex';
-                wrapper.style.gap = '2rem';
-                let yesButton = createButton('modal-button', 'Yes');
-                yesButton.addEventListener('click', async () => {
-                    await $.ajax(`processing/delete_schedule.php?scheduleId=${schedule.id}`,
-                        {
-                            success: () => {
-                                console.log("Deleted schedule.");
-                                closeModal();
-                            }
-                        });
-                });
-
-                let noButton = createButton('modal-button', 'No');
-                noButton.addEventListener('click', () => {
-                    closeModal();
-                });
-                wrapper.appendChild(yesButton);
-                wrapper.appendChild(noButton);
-                setModalContent('Are you sure?', wrapper);
-                openModal();
-            });
-            scheduleWrapper.appendChild(deleteButton);
-
             container.appendChild(scheduleWrapper);
         });
         let addScheduleButton = createButton('add-schedule-button', 'Add new schedule');
         addScheduleButton.addEventListener('click', () => {
             setModalContent('Add new schedule', createScheduleForm(currentTest.testId));
+            openModal();
+        });
+
+        let editScheduleButton = createButton('edit-schedule-button', 'Edit the schedule');
+        editScheduleButton.addEventListener('click', () => {
+            setModalContent('Edit schedule', editScheduleForm(currentTest.testId));
             openModal();
         });
 
@@ -342,9 +318,12 @@ $(document).ready(async () => {
 
             scheduleWrapper.appendChild(scheduleDetails);
             container.appendChild(scheduleWrapper);
+            mainDiv.appendChild(addScheduleButton);
+        } else {
+            mainDiv.appendChild(editScheduleButton);
         }
 
-        mainDiv.appendChild(addScheduleButton);
+        // mainDiv.appendChild(addScheduleButton);
         mainDiv.appendChild(container);
     });
 });
@@ -460,7 +439,7 @@ function createQuestionForm(question, testId) {
     columnWrapper.append(upButton);
     columnWrapper.append(downButton);
     rowWrapper.appendChild(columnWrapper);
-    form.appendChild(rowWrapper);
+    // form.appendChild(rowWrapper);
     // Append points
     rowWrapper = createDiv('wrapper');
     rowWrapper.classList.add('row');
@@ -792,13 +771,10 @@ function createScheduleForm(testId) {
         let errorMessageContent = '';
         if (openDate.value == '') {
             errorMessageContent += 'Open date is empty!\n';
-        }
-
-        if (closeDate.value == '') {
+        } else if (closeDate.value == '') {
             errorMessageContent += 'Close date is empty!\n';
         }
-
-        if (openDate.value > closeDate.value) {
+        else if (openDate.value > closeDate.value) {
             errorMessageContent += 'Open date cannot be later than close date!';
         } else {
             form.appendChild(createHiddenInput('open-date', formatDateForSql(openDate.value)));
@@ -813,6 +789,69 @@ function createScheduleForm(testId) {
             $.ajax({
                 type: 'POST',
                 url: 'processing/new_schedule.php',
+                data: serialized,
+                dataType: 'text',
+                success: (e) => {
+                    console.log(e);
+                    closeModal();
+                    document.getElementById('schedules-button').click();
+                }
+            });
+        }
+    });
+
+    form.appendChild(createHiddenInput('test-id', testId));
+    form.appendChild(errorMessage);
+    form.appendChild(openDateLabel);
+    form.appendChild(openDate);
+    form.appendChild(closeDateLabel);
+    form.appendChild(closeDate);
+    form.appendChild(submitButton);
+
+    return form;
+}
+
+function editScheduleForm(testId) {
+    let form = document.createElement('form');
+    let openDateLabel = createLabel('open-date', 'Open Date');
+    let openDate = document.createElement('input');
+    openDate.setAttribute('type', 'datetime-local');
+    openDate.id = 'open-date';
+    // openDate.required = true;
+    let closeDateLabel = createLabel('close-date', 'Close Date');
+    let closeDate = document.createElement('input');
+    closeDate.setAttribute('type', 'datetime-local');
+    closeDate.id = 'close-date';
+
+    let errorMessage = document.createElement('p');
+    errorMessage.style.whiteSpace = 'pre';
+
+    let submitButton = document.createElement('button');
+    submitButton.textContent = 'Edit Schedule';
+    submitButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        let proceed = false;
+        let errorMessageContent = '';
+        if (openDate.value == '') {
+            errorMessageContent += 'Open date is empty!\n';
+        } else if (closeDate.value == '') {
+            errorMessageContent += 'Close date is empty!\n';
+        }
+        else if (openDate.value > closeDate.value) {
+            errorMessageContent += 'Open date cannot be later than close date!';
+        } else {
+            form.appendChild(createHiddenInput('open-date', formatDateForSql(openDate.value)));
+            form.appendChild(createHiddenInput('close-date', formatDateForSql(closeDate.value)));
+            proceed = true;
+        }
+
+        errorMessage.textContent = errorMessageContent;
+        if (proceed) {
+            let serialized = $(form).serialize();
+            console.log(serialized);
+            $.ajax({
+                type: 'POST',
+                url: 'processing/update_schedule.php',
                 data: serialized,
                 dataType: 'text',
                 success: (e) => {

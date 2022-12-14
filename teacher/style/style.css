@@ -314,6 +314,11 @@ form input[name="answer[]"] {
   width: unset;
 }
 
+.up-button, .down-button {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .choices-div,
 .answers-div {
   display: flex;

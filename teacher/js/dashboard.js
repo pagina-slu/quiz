@@ -24,7 +24,16 @@ $(document).ready(async () => {
         let settingsButton = document.createElement('img');
         settingsButton.src = 'images/ellipsis.svg';
         settingsButton.classList.add('settings-button');
+        let dropdown = document.createElement('ul');
+        dropdown.classList.add('dropdown');
+        let listItem = document.createElement('li');
+        listItem.textContent = "Rename";
+        dropdown.appendChild(listItem);
+        listItem = document.createElement('li');
+        listItem.textContent = 'Delete';
+        dropdown.appendChild(listItem);
         column.appendChild(settingsButton);
+        column.appendChild(dropdown);
         classDetails.appendChild(column);
 
         classCard.appendChild(classImage);

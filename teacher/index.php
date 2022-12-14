@@ -31,8 +31,8 @@ if (!isset($_SESSION['class-code'])) {
   <main id="main">
   </main>
 
-  <script src="../js/jquery-3.6.1.min.js"></script>
-  <script src="../js/functions.js"></script>
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/utility.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/functions.js"></script>
   <script src="js/logout.js"></script>
